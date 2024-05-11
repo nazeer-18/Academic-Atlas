@@ -1,12 +1,31 @@
 # Academic-Atlas
-"Our website serves AVV Chennai students by providing access to valuable resources such as previous years' papers, course-related capstone projects, and research works. It's a platform tailored to enhance students' academic journey by offering insightful materials for reference and study purposes."
 
+"Our website serves AVV Chennai students by providing access to valuable resources such as previous years' papers, course-related capstone projects, and research works. It's a platform tailored to enhance students' academic journey by offering insightful materials for reference and study purposes."
 
 # Key Features:
 
-<ul>
-  <li>Previous paper: Access to previous years papers</li>
-</ul>
+- **User Authentication:**
+
+  - Secure login system for Amrita Vishwa Vidyapeetham Chennai Campus students to access the portal with their credentials.
+
+- **Resource Management:**
+
+  - **Midterm Papers:** Students can conveniently search and access midterm papers based on their courses and academic years. If a midterm paper is not available, students can contribute by uploading the relevant document, fostering a collaborative and enriching learning experience.
+  - **Endterm Papers:** Similar to midterm papers, students can efficiently search and access endterm papers by course and academic year. They can also contribute missing endterm papers, expanding the repository for future batches.
+  - **Projects and Research Works:** Students can share their project submissions and research works associated with their courses and academic years, enabling future batches to access and learn from their contributions, promoting knowledge sharing and peer learning.
+
+- **Course Catalog:**
+
+  - Comprehensive catalog of courses offered at Amrita Vishwa Vidyapeetham Chennai Campus, added and maintained by administrators.
+
+- **Intuitive User Interface:**
+
+  - Intuitive sidebar navigation for easy access to midterm papers, endterm papers, projects, research works, and course information.
+  - Card-based layout for visually appealing and organized display of academic resources.
+
+- **User Roles and Permissions:**
+  - **Students:** Can access and contribute academic resources based on their courses and academic years, fostering a collaborative learning environment.
+  - **Administrators:** Manage and add courses to the catalog, ensuring an up-to-date list of offerings for students.
 
 # Technologies Used:
 
@@ -26,7 +45,9 @@
 </ul>
 
 # Contributing:
+
 We welcome contributions from the community to enhance Academic-Atlas. If you'd like to contribute, please fork the repository, make your changes, and submit a pull request for review.
+
 <h2 align="center"><b>Contributors</b></h2>
    
 <p align="center">
@@ -53,8 +74,8 @@ $ git clone https://github.com/nazeer-18/Academic-Atlas.git
 $ cd AcademicAtlas
 
 ```
-<img width="1440" alt="" src="https://github.com/nazeer-18/Academic-Atlas/assets/99654015/5118cef7-46f1-4265-b85f-0105c9951e98">
 
+<img width="1440" alt="" src="https://github.com/nazeer-18/Academic-Atlas/assets/99654015/5118cef7-46f1-4265-b85f-0105c9951e98">
 
 <!--
 - Open this folder in your favourite IDE. <br>
@@ -62,7 +83,6 @@ $ cd AcademicAtlas
   <br> -->
 <h3> Star the repo <h3>
 <img width="1440" alt="" src="https://github.com/nazeer-18/Academic-Atlas/assets/99654015/3df511ba-6500-49b0-b423-e8fa63b153b6">
-
 
 <h3> Contributing </h3>
 
@@ -109,6 +129,6 @@ $ git push origin <branch-name>
 
 - Navigate to the original repository and make a pull request
 
-
 # License:
+
 This project is licensed under the MIT License, allowing for open collaboration and usage.
