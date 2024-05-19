@@ -1,0 +1,98 @@
+.login-page{
+    height:92.8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-title{
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    text-align: center;
+}
+
+.text-red-merry{
+    color:#F00731;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Merryweather', serif;
+    text-decoration: none;
+}
+
+.login-form{
+    background-color: white;
+    border-radius: 25px;
+    margin: 10px auto;
+    padding: 7px 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+    width:60%;
+    min-width: 330px;
+    max-width:560px;
+}
+
+.login-form-component{
+    padding: 5px;
+    font-size:22px;
+    font-weight: 400;
+}
+
+.login-form-component label{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login-form-component input{
+    width: 95%;
+    margin-top: 5px;
+    padding: 10px 5px 4px;
+    border: 1px solid #007B7F;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    background: #E0E0E0;
+
+}
+
+.login-adds{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    margin: 0px 18px 0px 5px;
+}
+
+.remember-me input{
+    margin-right: 5px;
+}
+
+.login-btn{
+    width: 75%;
+    text-align: center;
+    margin: 7px auto;
+}
+
+.login-btn button{
+    background-color: #007B7F;
+    color: white;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 35px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.noacnt-signup{
+    text-align: center;
+    margin: 14px 0px;
+}
+
+.atlas-font{
+    font-family: 'Merryweather', serif;
+    font-weight: 400;
+    font-size: 20px;
+}
