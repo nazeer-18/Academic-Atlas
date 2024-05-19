@@ -1,0 +1,15 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-header{
+    background-color: #7389DD;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    padding-top:6px;
+    padding-bottom:3px;
+    font-family: 'monserrat', sans-serif;
+    font-size:36px;
+}
