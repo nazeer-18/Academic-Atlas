@@ -11,12 +11,12 @@ export default function Login() {
             <div className="login-form">
                 <form action="">
                     <div className="login-form-component">
-                        <label htmlFor="">College Email</label> <br />
-                        <input type="email" name="email" id="email" placeholder='Enter your email' />
+                        <label className="atlas-font" htmlFor="">College Email</label> <br />
+                        <input  className="atlas-input" type="email" name="email" id="email" placeholder='Enter your email' />
                     </div>
                     <div className="login-form-component">
-                        <label htmlFor="">Password</label> <br />
-                        <input type="password" name="password" id="password" placeholder='Enter your password' />
+                        <label className="atlas-font" htmlFor="">Password</label> <br />
+                        <input className="atlas-input" type="password" name="password" id="password" placeholder='Enter your password' />
                     </div>
                     <div className="login-adds">
                         <div className="remember-me">
@@ -24,11 +24,11 @@ export default function Login() {
                             <label className="atlas-font" htmlFor="remember-me">Remember Me!</label>
                         </div>
                         <div className="forgotPwd">
-                            <Link className='text-red-merry' to="/forgot-password">Forgot Password?</Link>
+                            <Link className='text-red-merry' to="/forgotpwd">Forgot Password?</Link>
                         </div>
                     </div>
                     <div className="login-btn">
-                        <button type="submit">Login</button>
+                        <button className='atlas-btn' type="submit">Login</button>
                     </div>
                 </form>
                 <div className="noacnt-signup atlas-font">

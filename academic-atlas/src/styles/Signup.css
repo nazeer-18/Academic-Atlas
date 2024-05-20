@@ -1,0 +1,32 @@
+.signup-page{
+    height:92.8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-form{
+    background-color: white;
+    margin-top: 11px;
+    padding: 10px 20px;
+    padding-top: 13px;
+    border-radius: 25px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+    width: 60%;
+    min-width: 330px;
+    max-width: 560px;
+}
+
+.signup-form-component{
+    margin-bottom: 12px;
+}
+
+.signup-btn{
+    width: 80%;
+    margin: 10px auto;
+}
+
+.signup-terms input{
+    margin: 0px 7px;
+}

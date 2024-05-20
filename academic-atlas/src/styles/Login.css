@@ -38,13 +38,13 @@
     font-weight: 400;
 }
 
-.login-form-component label{
-    font-size: 16px;
+.atlas-label{
+    font-size: 20px;
     font-weight: 400;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Merriweather', sans-serif;
 }
 
-.login-form-component input{
+.atlas-input{
     width: 95%;
     margin-top: 5px;
     padding: 10px 5px 4px;
@@ -74,7 +74,7 @@
     margin: 7px auto;
 }
 
-.login-btn button{
+.atlas-btn{
     background-color: #007B7F;
     color: white;
     width: 100%;
