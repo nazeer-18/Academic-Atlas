@@ -4,16 +4,18 @@ import './App.css';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
-import Signup from './components/Signup';
+import SignupMail from './components/SignupMail';
+import SignupAcnt from './components/SignupAcnt';
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signupmail" element={<SignupMail />} />
+        <Route path="/signupacnt" element={<SignupAcnt />} />
       </Routes>
     </BrowserRouter>
   );
