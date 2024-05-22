@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import SignupMail from './components/SignupMail';
 import SignupAcnt from './components/SignupAcnt';
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signupmail" element={<SignupMail />} />
         <Route path="/signupacnt" element={<SignupAcnt />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
   );
