@@ -10,6 +10,7 @@ import SignupAcnt from './components/SignupAcnt';
 import ForgotPassword from './components/ForgotPassword';
 import MainPage from './components/MainPage';
 import Contribute from './components/Contribute';
+import Forgot2pwd from './components/Forgot2pwd';
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/forgotpwd" element={<ForgotPassword />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/contribute" element={<Contribute />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/forgot2pwd" element={<Forgot2pwd />} />
       </Routes>
     </BrowserRouter>
   );
