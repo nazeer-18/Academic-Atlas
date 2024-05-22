@@ -1,0 +1,33 @@
+.signupmail-page{
+    height:92.8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupmail-form{
+    background-color: white;
+    margin-top: 11px;
+    padding: 10px 20px;
+    padding-top: 13px;
+    border-radius: 25px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+    width: 50%;
+    min-width: 330px;
+    max-width: 560px;
+    box-sizing: border-box;
+}
+
+.signupmail-form-component{
+    margin-bottom: 12px;
+}
+
+.signupmail-form-component input{
+    margin-top: 10px;
+}
+
+.signupmail-btn{
+    width: 75%;
+    margin: 10px auto;
+}

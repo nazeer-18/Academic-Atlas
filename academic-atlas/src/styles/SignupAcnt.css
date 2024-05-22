@@ -1,4 +1,10 @@
-.signup-page{
+.atlas-title{
+    font-family: 'montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.signup-acnt-page{
     height:92.8vh;
     display: flex;
     flex-direction: column;
@@ -6,7 +12,7 @@
     align-items: center;
 }
 
-.signup-form{
+.signup-acnt-form{
     background-color: white;
     margin-top: 11px;
     padding: 10px 20px;
@@ -18,15 +24,15 @@
     max-width: 560px;
 }
 
-.signup-form-component{
+.signup-acnt-form-component{
     margin-bottom: 12px;
 }
 
-.signup-btn{
+.signup-acnt-btn{
     width: 80%;
     margin: 10px auto;
 }
 
-.signup-terms input{
+.signup-acnt-terms input{
     margin: 0px 7px;
 }

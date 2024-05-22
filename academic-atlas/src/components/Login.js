@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function Login() {
     return (
         <div className="login-page">
-            <div className="login-title">
+            <div className="login-title atlas-title">
                 Login
             </div>
             <div className="login-form">
@@ -32,7 +32,7 @@ export default function Login() {
                     </div>
                 </form>
                 <div className="noacnt-signup atlas-font">
-                    Don't have an account? <Link to="/signup" className="text-red-merry">Sign Up</Link>
+                    Don't have an account? <Link to="/signupmail" className="text-red-merry">Sign Up</Link>
                 </div>
             </div>
         </div>
