@@ -13,3 +13,6 @@ connectDB.then(() => {
 }).catch(err => {
     console.log('Error connecting to MongoDB:', err.message);
 });
+
+const authRoute = require('./routes/auth');
+app.use('/api/auth', authRoute);

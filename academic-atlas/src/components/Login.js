@@ -1,8 +1,33 @@
-import React from 'react'
+import React,{useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../styles/Login.css'
 import { Link } from 'react-router-dom'
+import userService from '../services/userService'
 
 export default function Login() {
+    const [data,setData] = useState({
+        email:'',
+        password:''
+    })
+    const Navigate = useNavigate();
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try{
+            const response = await userService.login(data);
+            const sucess = response.data.success;
+            if(sucess){
+                setTimeout(()=>{
+                    Navigate('/')
+                },2000)
+            }else{
+                alert('Login Failed');
+            }
+        }   
+        catch(err){
+            console.log(err);
+            alert('Login Failed');
+        }
+    }
     return (
         <div className="login-page">
             <div className="login-title atlas-title">
@@ -12,11 +37,23 @@ export default function Login() {
                 <form action="">
                     <div className="login-form-component">
                         <label className="atlas-font" htmlFor="">College Email</label> <br />
-                        <input  className="atlas-input" type="email" name="email" id="email" placeholder='Enter your email' />
+                        <input 
+                            className="atlas-input" 
+                            type="email" 
+                            name="email" 
+                            id="email"
+                            onChange = {(e)=>setData({...data,email:e.target.value})} 
+                            placeholder='Enter your email' />
                     </div>
                     <div className="login-form-component">
                         <label className="atlas-font" htmlFor="">Password</label> <br />
-                        <input className="atlas-input" type="password" name="password" id="password" placeholder='Enter your password' />
+                        <input 
+                            className="atlas-input" 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            onChange = {(e)=>setData({...data,password:e.target.value})}
+                            placeholder='Enter your password' />
                     </div>
                     <div className="login-adds">
                         <div className="remember-me">
@@ -28,7 +65,12 @@ export default function Login() {
                         </div>
                     </div>
                     <div className="login-btn">
-                        <button className='atlas-btn' type="submit">Login</button>
+                        <button
+                            className='atlas-btn'
+                            onClick={handleLogin}
+                        >
+                            Login
+                        </button>
                     </div>
                 </form>
                 <div className="noacnt-signup atlas-font">
