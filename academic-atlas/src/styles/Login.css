@@ -61,7 +61,7 @@
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    margin: 0px 18px 0px 5px;
+    margin: 0px 18px 10px 5px;
 }
 
 .remember-me input{
@@ -84,6 +84,8 @@
     font-size: 16px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .noacnt-signup{
