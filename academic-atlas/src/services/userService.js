@@ -5,6 +5,10 @@ class userService {
     login(data){
         return axios.post(server_url + 'api/auth/login',data);
     }
+    
+    resetpwd(data){
+        return axios.post(server_url + 'api/auth/resetpwd',data);
+    }
 }
 
 export default new userService();
