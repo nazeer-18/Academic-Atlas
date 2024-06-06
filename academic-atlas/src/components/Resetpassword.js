@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react"
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import "../styles/Resetpassword.css";
 import userService from "../services/userService";
 export default function Resetpassword() {
-    const [data, setData] = React.useState({    pwd: "",    cnfpwd: ""  });
+    const [data, setData] = useState({    pwd: "",    cnfpwd: ""  });
     const Navigate = useNavigate();
-    console.log(data);
     const handlereset = async(e) => {
         e.preventDefault();
         if(data.pwd !== data.cnfpwd){
             alert("Passwords do not match");
         }
-        else{
-            alert("Password reset successful");
+        else{ 
+            alert("Reset Password Successful")
             try{
-                const response = await userService.resetpwd(data.pwd);
+                const response = await userService.resetpwd("naz@123",data.pwd);
                 const sucess = response.data.success;
                 if(sucess){
                     setTimeout(()=>{
@@ -26,7 +25,7 @@ export default function Resetpassword() {
                 }
             }   
             catch(err){
-                console.log(err);
+                
                 alert('Reset Password Failed');
             }
         }
