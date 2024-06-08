@@ -56,8 +56,10 @@ export default function Navbar() {
                 </div>
             </div>
             <div className="navbar-header">
+                <Link to="/">
                 <img src={logoImage} alt="logo" />
                 Academic Atlas
+                </Link>
             </div>
         </div>
     );

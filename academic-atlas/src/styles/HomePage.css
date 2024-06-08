@@ -88,6 +88,10 @@
     align-items: center;
 }
 
+.home-item:hover{
+    background-color: #1B079D;
+}
+
 @media(max-width:1000px){
     .greeting-img{
         display: none;

@@ -16,6 +16,13 @@
     font-size:36px;
 }
 
+.navbar-header a{
+    text-decoration: none;
+    color: white;  
+    display: flex;
+    align-items: center;
+}
+
 .navbar-header img{
     width: 80px;
     height:50px;
