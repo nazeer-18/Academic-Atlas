@@ -5,11 +5,18 @@
 
 .navbar-header{
     background-color: #1B079D;
-    color: white;
-    text-align: center;
+    color: white; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
     padding-top:6px;
     padding-bottom:3px;
     font-family: 'monserrat', sans-serif;
     font-size:36px;
+}
+
+.navbar-header img{
+    width: 45px;
+    margin-right: 9px;
 }
