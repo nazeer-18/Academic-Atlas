@@ -45,12 +45,12 @@
 }
 
 .login-form{
-    background-color: white;
+    background-color: whitesmoke;
     border-radius: 25px;
     margin: 10px auto;
     padding: 7px 10px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
-    width:60%;
+    width:100%;
     min-width: 330px;
     max-width:560px;
 }

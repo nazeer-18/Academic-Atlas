@@ -1,8 +1,14 @@
 import React from "react";
 import "../styles/SignupAcnt.css";
+import SignUpAcntImg from '../assets/SignUpAcntIcon.svg'
 export default function SignupAcnt() {
     return (
         <div className="signup-acnt-page">
+            <div className="signup-acnt-img">
+                <img src={SignUpAcntImg} alt="SignUpAcnt" />
+            </div>
+            <div className="signup-acnt-content">
+                
             <div className="signup-acnt-title atlas-title">
                 Signup
             </div>
@@ -32,6 +38,7 @@ export default function SignupAcnt() {
                         <button className="atlas-btn" type="submit">Create account</button>
                     </div>
                 </form>
+            </div>
             </div>
         </div>
     );

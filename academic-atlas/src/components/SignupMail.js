@@ -1,9 +1,14 @@
 import React from 'react'
 import '../styles/SignupMail.css'
+import SignUpMailIconImg from '../assets/SignUpMailIcon.svg'
 
 export default function SignupMail() {
     return (
         <div className="signupmail-page">
+            <div className="signupmail-img">
+                <img src={SignUpMailIconImg} alt="signupmail" />
+            </div>
+            <div className="signupmail-content">
             <div className="atlas-title signupmail-title">
                 Signup
             </div>
@@ -21,6 +26,9 @@ export default function SignupMail() {
                     </div>
                 </form>
             </div>
+
+            </div>
+            
         </div>
     )
 }
