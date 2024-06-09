@@ -7,7 +7,6 @@ import { faBars,faHouse,faFileLines ,faDiagramProject, faPlus,faAnglesLeft} from
 
 export default function Navbar() {
     const handleSideNav = () => {
-        const hamburger = document.querySelector('.hamburger');
         const hiddenSideNav = document.querySelector('.hidden-side-nav');
         hiddenSideNav.classList.toggle('show-side-nav');
     }
@@ -22,27 +21,27 @@ export default function Navbar() {
                         <FontAwesomeIcon icon={faAnglesLeft}  />  Go Back
                     </div>
                     <div className="sidenav-content">
-                        <Link>
+                        <Link to="/">
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faHouse} />Home
                             </div>
                         </Link> 
-                        <Link to="/midsem">
+                        <Link to="/main?value=Mid Sem Papers">
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Midsem Papers
                             </div>
                         </Link> 
-                        <Link to="/endsem">
+                        <Link to="/main?value=End Sem Papers">
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Endsem Papers
                             </div>
                         </Link>  
-                        <Link to="/project">
+                        <Link to="/main?value=Projects">
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faDiagramProject} />Projects
                             </div>
                         </Link> 
-                        <Link to="/research">
+                        <Link to="/main?value=Research papers">
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Research Papers
                             </div>

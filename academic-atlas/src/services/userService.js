@@ -11,4 +11,5 @@ class userService {
     }
 }
 
-export default new userService();
+const newService = new userService();
+export default newService;
