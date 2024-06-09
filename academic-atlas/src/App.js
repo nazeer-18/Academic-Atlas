@@ -8,7 +8,7 @@ import Resetpassword from './components/Resetpassword';
 import SignupMail from './components/SignupMail';
 import SignupAcnt from './components/SignupAcnt';
 import ForgotPassword from './components/ForgotPassword';
-
+import MainPage from './components/MainPage';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/signupmail" element={<SignupMail />} />
         <Route path="/signupacnt" element={<SignupAcnt />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
-
+        <Route path="/main" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   );

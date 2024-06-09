@@ -1,5 +1,6 @@
 import React from 'react'
-import  '../styles/HomePage.css'
+import { Link } from 'react-router-dom'
+import '../styles/HomePage.css'
 import landingIcon from '../assets/landingPageIcon.svg'
 
 export default function HomePage() {
@@ -17,11 +18,21 @@ export default function HomePage() {
                 </div>
             </div>
             <div className="home-content">
-                <div className="home-item">Mid Sem Papers</div>
-                <div className="home-item">End Sem Papers</div>
-                <div className="home-item">Projects</div>
-                <div className="home-item">Research Papers</div>
-                <div className="home-item">Courses</div>
+                <Link to="/main?value=Mid Sem Papers">
+                    <div className="home-item">Mid Sem Papers</div>
+                </Link>
+                <Link to="/main?value=End Sem Papers">
+                    <div className="home-item">End Sem Papers</div>
+                </Link>
+                <Link to="/main?value=Projects">
+                    <div className="home-item">Projects</div>
+                </Link>
+                <Link to="/main?value=Research Papers">
+                    <div className="home-item">Research Papers</div>
+                </Link>
+                <Link to="courses">
+                    <div className="home-item">Courses</div>
+                </Link>
             </div>
         </div>
     )

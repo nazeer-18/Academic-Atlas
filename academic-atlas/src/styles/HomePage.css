@@ -92,6 +92,12 @@
     background-color: #1B079D;
 }
 
+.home-content a{
+    text-decoration: none;
+    color: white;
+    margin: 0px auto;
+}
+
 @media(max-width:1000px){
     .greeting-img{
         display: none;
