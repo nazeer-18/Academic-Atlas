@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import "../styles/Resetpassword.css";
 import userService from "../services/userService";
+import ResetpwdImg from '../assets/ResetpwdIcon.svg'
 export default function Resetpassword() {
     const [data, setData] = useState({    pwd: "",    cnfpwd: ""  });
     const Navigate = useNavigate();
@@ -33,6 +34,10 @@ export default function Resetpassword() {
     }
     return (
         <div className="Resetpassword-page">
+             <div className="Resetpwd-img">
+                <img src={ResetpwdImg} alt="Resetpwd" />
+            </div>
+            <div className="Resetpwd-content">
             <div className="Resetpassword-title">
                 <h1>Reset your password</h1>
             </div>
@@ -74,6 +79,8 @@ export default function Resetpassword() {
                     </div>
                 </form>
             </div>
+            </div>
+            
         </div>
     );
 }

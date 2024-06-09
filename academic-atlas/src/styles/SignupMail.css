@@ -1,23 +1,51 @@
 .signupmail-page{
-    height:92.8vh;
+    height:90vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-wrap: wrap; 
+    justify-content: space-around;
     align-items: center;
 }
+.signupmail-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    width: 35vw;
+    margin: 10px;
+    padding: 2px;
+}
+
+.signupmail-img img{
+    min-width: 340px;
+}
+
+.signupmail-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    min-width: 320px;
+    margin: 10px;
+}
+.signupmail-title{
+   
+    text-align: center;
+}
+               
+            
 
 .signupmail-form{
-    background-color: white;
+    background-color: whitesmoke;
     margin-top: 11px;
     padding: 10px 20px;
     padding-top: 13px;
     border-radius: 25px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
-    width: 50%;
+    width: 100%;
     min-width: 330px;
     max-width: 560px;
     box-sizing: border-box;
 }
+
 
 .signupmail-form-component{
     margin-bottom: 12px;
@@ -30,4 +58,17 @@
 .signupmail-btn{
     width: 75%;
     margin: 10px auto;
+}
+
+@media(max-width:925px){
+    .signupmail-page{
+        justify-content: center;
+    }
+    .signupmail-content{
+        margin: 10px 0px;
+        width: 100vw;;
+    }
+    .signupmail-img{
+        width:80vw;
+    }
 }

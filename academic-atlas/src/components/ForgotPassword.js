@@ -1,9 +1,15 @@
 import React from 'react';
 import '../styles/ForgotPassword.css';
 import { Link } from 'react-router-dom';
+import ForgotpwdImg from '../assets/ForgotPasswordIcon.svg';
 export default function ForgotPassword(){
     return (
         <div className="forgot-password-page">
+
+            <div className="Forgotpwd-img">
+                <img src={ForgotpwdImg} alt="Forgotpwd" />
+            </div>
+            <div className="Forgotpwd-content">
             <div className="forgot-password-title">
                 Forgot Password
             </div>
@@ -21,6 +27,8 @@ export default function ForgotPassword(){
                     </div>
                 </form>
             </div>
+            </div>
+            
         </div>
     )
 }
