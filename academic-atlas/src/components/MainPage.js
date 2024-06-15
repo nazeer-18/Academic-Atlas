@@ -1,17 +1,31 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import ResultItem from './ResultItem';
 import '../styles/MainPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
-import MainPageIcon from '../assets/MainPageIcon.svg'
 
 
 export default function MainPage() {
-    const [query, setQuery] = useState(new URLSearchParams(window.location.search));
-    const [value, setValue] = useState(query.get('value'));
-    useEffect(()=>{
-        setQuery(new URLSearchParams(window.location.search));
-        setValue(query.get('value'));
-    },[query])
+    const location = useLocation();
+    const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
+    const year = new Date().getFullYear();
+    const years = [];
+    for (let i = year; i >= 2021; i--) {
+        years.push(i + "-" + (i + 1));
+    }
+
+    useEffect(() => {
+        setValue(new URLSearchParams(location.search).get('value'));
+        // eslint-disable-next-line
+    }, [location])
+
+    const clearFilters = () => {
+        document.getElementById('filterByYear').value = "";
+        document.getElementById('filterByBranch').value = "";
+        document.getElementById('filterByCourse').value = "";
+    }
+
     return (
         <div className="mainpage">
 
@@ -31,7 +45,14 @@ export default function MainPage() {
                                     Academic Year
                                 </div>
                                 <div className="filter-choice">
-                                    2023-2024
+                                    <select name="mainpage-years-filter" id="filterByYear">
+                                        <option value="">Choose Academic Year</option>
+                                        {
+                                            years.map((year) => {
+                                                return <option value={year} key={year}>{year}</option>
+                                            })
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +62,14 @@ export default function MainPage() {
                                     Branch
                                 </div>
                                 <div className="filter-choice">
-                                    CSE
+                                    <select name="mainpage-branch-filter" id="filterByBranch">
+                                        <option value="">Choose Branch</option>
+                                        <option value="CSE">CSE</option>
+                                        <option value="ECE">ECE</option>
+                                        <option value="ME">ME</option>
+                                        <option value="CE">CE</option>
+                                        <option value="EE">EE</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -51,13 +79,23 @@ export default function MainPage() {
                                     Course
                                 </div>
                                 <div className="filter-choice">
-                                    Computer Networks
+                                    <select name="mainpage-course-filter" id="filterByCourse">
+                                        <option value="">Choose Course</option>
+                                        <option value="B.Tech">Data structures & Algorithms</option>
+                                        <option value="M.Tech">19cse 318 principles of Artificial Intelligence</option>
+                                        <option value="Phd">Phd</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="mainpage-apply-btn">
-                        <button>Apply</button>
+                        <button onClick={clearFilters}>
+                            Clear All
+                        </button>
+                        <button>
+                            Apply
+                        </button>
                     </div>
                 </div>
             </div>
@@ -65,13 +103,10 @@ export default function MainPage() {
             <div className="mainpage-results">
                 <div className="mainpage-results-txt">
                     Results
-                </div>  
+                </div>
                 <div className="mainpage-result-container">
-                    <div className="result-img">
-                        <img src={MainPageIcon} alt="MainPageIcon" />
-                    </div>
                     <div className="result-container">
-                        result item
+                        <ResultItem /> 
                     </div>
                 </div>
             </div>

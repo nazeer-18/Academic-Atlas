@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import logoImage from '../assets/logo.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars,faHouse,faFileLines ,faDiagramProject, faPlus,faAnglesLeft} from '@fortawesome/free-solid-svg-icons';
+import { faBars,faHouse,faFileLines ,faDiagramProject, faPlus,faAnglesLeft,faUser,faAnglesRight} from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
     const handleSideNav = () => {
         const hiddenSideNav = document.querySelector('.hidden-side-nav');
         hiddenSideNav.classList.toggle('show-side-nav');
+    }
+    const handleProfile = () =>{
+        const hiddenProfile = document.querySelector('.hidden-profile');
+        hiddenProfile.classList.toggle('show-profile');
     }
     return (
         <div className="nav-page">
@@ -21,32 +25,32 @@ export default function Navbar() {
                         <FontAwesomeIcon icon={faAnglesLeft}  />  Go Back
                     </div>
                     <div className="sidenav-content">
-                        <Link to="/">
+                        <Link to="/" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faHouse} />Home
                             </div>
                         </Link> 
-                        <Link to="/main?value=Mid Sem Papers">
+                        <Link to="/main?value=Mid Sem Papers" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Midsem Papers
                             </div>
                         </Link> 
-                        <Link to="/main?value=End Sem Papers">
+                        <Link to="/main?value=End Sem Papers" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Endsem Papers
                             </div>
                         </Link>  
-                        <Link to="/main?value=Projects">
+                        <Link to="/main?value=Projects" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faDiagramProject} />Projects
                             </div>
                         </Link> 
-                        <Link to="/main?value=Research papers">
+                        <Link to="/main?value=Research papers" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Research Papers
                             </div>
                         </Link>
-                        <Link to="/contribute">
+                        <Link to="/contribute" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faPlus} />Contribute Resource
                             </div>
@@ -59,6 +63,17 @@ export default function Navbar() {
                 <img src={logoImage} alt="logo" />
                 Academic Atlas
                 </Link>
+            </div>
+            <div className="user-icon">
+                <FontAwesomeIcon icon={faUser} onClick={handleProfile} />
+                <div className="hidden-profile">
+                <div className="profile-head" onClick={handleProfile}>
+                        Go Back <FontAwesomeIcon icon={faAnglesRight}  />  
+                    </div>
+                    <div className="">
+                        TBD
+                    </div>
+                </div>
             </div>
         </div>
     );
