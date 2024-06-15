@@ -19,6 +19,10 @@ const userSchema = new Schema({
     mobile :{
         type: Number,
         required: true,
+    },
+    type:{
+        type: String,
+        default: 'user' // user, admin
     }
 })
 

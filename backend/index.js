@@ -16,3 +16,6 @@ connectDB.then(() => {
 
 const authRoute = require('./routes/auth');
 app.use('/api/auth', authRoute);
+
+const resourceRoute = require('./routes/resources');
+app.use('/api/resources', resourceRoute); 
