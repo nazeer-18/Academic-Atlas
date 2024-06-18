@@ -3,28 +3,35 @@ const resourceRouter = express.Router();
 const exam = require('../models/exam');
 const capstone = require('../models/capstone');
 
-resourceRouter.post('/getexam', async(req, res) => {
-    try{
-        const academicYear = req.query.academicYear || "";
-        const branch = req.query.branch || "";
-        const course = req.query.course || "";
-        const category = req.query.category || "";
-        const examPapers = await exam.find({academicYear: academicYear, branch: branch, course: course});
-        res.json({examPapers: examPapers, success: true})
+resourceRouter.post('/getexam', async (req, res) => {
+    try {
+        const academicYear = req.body.academicYear;
+        const branch = req.body.branch;
+        const course = req.body.course; 
+        let query = {};
+        if(academicYear) query.academicYear = academicYear;
+        if(branch) query.branch = branch;
+        if(course) query.course = course;
+
+        const examPapers = await exam.find(query);
+        console.log(examPapers)
+        res.json({ examPapers: examPapers, success: true })
     }
-    catch(err){
-        res.json({message: err, success: false});
+    catch (err) {
+        res.json({ message: err, success: false });
     }
 });
 
-resourceRouter.post('/addexam', async(req, res) => {
-    try{
+resourceRouter.post('/addexam', async (req, res) => {
+    try {
         const category = req.body.category;
         const academicYear = req.body.academicYear;
         const branch = req.body.branch;
         const course = req.body.course;
         const pdfFile = req.body.pdfFile;
         const author = req.body.author;
+        console.log("req Inside add exam")
+        console.log(req.body)
         const newResource = new exam({
             category: category,
             academicYear: academicYear,
@@ -33,36 +40,37 @@ resourceRouter.post('/addexam', async(req, res) => {
             pdfFile: pdfFile,
             author: author
         })
-        if(newResource){
-            res.json({message: "Resource already exists", success: false});
+        const isExisting = await exam.findOne({ category: category, academicYear: academicYear, branch: branch, course: course });
+        if (isExisting) {
+            res.status(400).json({ message: "Resource already exists", success: false });
         }
-        else{
+        else {
             newResource.save();
-            res.json({message: "Resource added successfully", success: true});
+            res.status(200).json({ message: "Resource added successfully", success: true });
         }
-    }catch(err){
-        res.json({message: err, success: false});
+    } catch (err) {
+        res.status(400).json({ message: err, success: false });
     }
 });
 
 
-resourceRouter.post('/getcapstone', async(req, res) => {
-    try{
+resourceRouter.post('/getcapstone', async (req, res) => {
+    try {
         const academicYear = req.query.academicYear || "";
         const branch = req.query.branch || "";
         const course = req.query.course || "";
-        const capstones = await capstone.find({academicYear: academicYear, branch: branch, course: course});
-        res.json({capstones: capstones, success: true})
+        const capstones = await capstone.find({ academicYear: academicYear, branch: branch, course: course });
+        res.json({ capstones: capstones, success: true })
     }
-    catch(err){
-        res.json({message: err, success: false});
+    catch (err) {
+        res.json({ message: err, success: false });
     }
 });
 
 
-resourceRouter.post('/addcapstone', async(req, res) => {
-    try{
-        const {title, description, academicYear, branch, courseTags, faculties, students, url} = req.body;
+resourceRouter.post('/addcapstone', async (req, res) => {
+    try {
+        const { title, description, academicYear, branch, courseTags, faculties, students, url } = req.body;
         const newResource = new capstone({
             title: title,
             description: description,
@@ -73,15 +81,15 @@ resourceRouter.post('/addcapstone', async(req, res) => {
             students: students,
             url: url
         })
-        if(newResource){
-            res.json({message: "Resource already exists", success: false});
+        if (newResource) {
+            res.json({ message: "Resource already exists", success: false });
         }
-        else{
+        else {
             newResource.save();
-            res.json({message: "Resource added successfully", success: true});
+            res.json({ message: "Resource added successfully", success: true });
         }
-    }catch(err){
-        res.json({message: err, success: false});
+    } catch (err) {
+        res.json({ message: err, success: false });
     }
 });
 
