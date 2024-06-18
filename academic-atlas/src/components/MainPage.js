@@ -5,12 +5,15 @@ import '../styles/MainPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
+import trackService from '../services/trackService';
 
 
 export default function MainPage() {
     const location = useLocation();
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
     const [examPapers, setExamPapers] = useState([{}]);
+    const [branches, setBranches] = useState([]);
+    const [courses, setCourses] = useState([]);
     const year = new Date().getFullYear();
     const years = [];
     for (let i = year; i >= 2021; i--) {
@@ -19,11 +22,23 @@ export default function MainPage() {
 
     useEffect(() => {
         setValue(new URLSearchParams(location.search).get('value'));
+        const getTracks = async () => {
+            try {
+                const response = await trackService.getBranches();
+                setBranches(response.data.branches);
+                const response2 = await trackService.getCourses();
+                setCourses(response2.data.courses);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        getTracks();
         // eslint-disable-next-line
     }, [location])
 
     const handleSearch = async () => {
-            try {
+        try {
             const academicYear = document.getElementById('filterByYear').value;
             const branch = document.getElementById('filterByBranch').value;
             const course = document.getElementById('filterByCourse').value;
@@ -41,11 +56,11 @@ export default function MainPage() {
         document.getElementById('filterByCourse').value = "";
         handleSearch();
     }
-    useEffect(()=>{
+    useEffect(() => {
         handleSearch();
         // eslint-disable-next-line
-    
-    },[])
+
+    }, [])
 
     return (
         <div className="mainpage">
@@ -85,11 +100,11 @@ export default function MainPage() {
                                 <div className="filter-choice">
                                     <select name="mainpage-branch-filter" id="filterByBranch">
                                         <option value="">Choose Branch</option>
-                                        <option value="CSE">CSE</option>
-                                        <option value="ECE">ECE</option>
-                                        <option value="ME">ME</option>
-                                        <option value="CE">CE</option>
-                                        <option value="EE">EE</option>
+                                        {
+                                            branches.map((branch) => {
+                                                return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
+                                            })
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -102,9 +117,11 @@ export default function MainPage() {
                                 <div className="filter-choice">
                                     <select name="mainpage-course-filter" id="filterByCourse">
                                         <option value="">Choose Course</option>
-                                        <option value="B.Tech">Data structures & Algorithms</option>
-                                        <option value="M.Tech">19cse 318 principles of Artificial Intelligence</option>
-                                        <option value="Phd">Phd</option>
+                                        {
+                                            courses.map((course) => {
+                                                return <option value={course.course} key={course._id}>{course.course}</option>
+                                            })
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -133,7 +150,7 @@ export default function MainPage() {
                             examPapers.map((examPaper, index) => {
                                 return <ResultItem key={examPaper._id} examPaper={examPaper} />
                             })
-                        } 
+                        }
                     </div>
                 </div>
             </div>
