@@ -19,3 +19,6 @@ app.use('/api/auth', authRoute);
 
 const resourceRoute = require('./routes/resources');
 app.use('/api/resources', resourceRoute); 
+
+const trackRoute = require('./routes/track');
+app.use('/api/track', trackRoute);
