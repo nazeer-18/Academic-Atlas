@@ -16,11 +16,16 @@ trackRoute.post('/addBranch',async(req,res)=>{
                 success: true,
                 message: 'Branch added successfully'
             })
+        }else{
+            return res.status(400).json({
+                success: false,
+                message: 'Branch already exists'
+            })
         }
     }catch(err){
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
-            message: 'Branch already exists'
+            message: 'Internal server error'
         })
     }
 });
@@ -38,11 +43,16 @@ trackRoute.post('/addCourse',async(req,res)=>{
                 success: true,
                 message: 'Course added successfully'
             })
+        }else{
+            return res.status(400).json({
+                success: false,
+                message: 'Course already exists'
+            })
         }
     }catch(err){
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
-            message: 'Course already exists'
+            message: 'Internal server error'
         })
     }
 });
