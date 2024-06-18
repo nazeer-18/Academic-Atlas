@@ -4,11 +4,13 @@ import ResultItem from './ResultItem';
 import '../styles/MainPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
+import resourceService from '../services/resourceService';
 
 
 export default function MainPage() {
     const location = useLocation();
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
+    const [examPapers, setExamPapers] = useState([{}]);
     const year = new Date().getFullYear();
     const years = [];
     for (let i = year; i >= 2021; i--) {
@@ -20,11 +22,30 @@ export default function MainPage() {
         // eslint-disable-next-line
     }, [location])
 
+    const handleSearch = async () => {
+            try {
+            const academicYear = document.getElementById('filterByYear').value;
+            const branch = document.getElementById('filterByBranch').value;
+            const course = document.getElementById('filterByCourse').value;
+            const response = await resourceService.getExam(academicYear, branch, course)
+            console.log(response.data)
+            setExamPapers(response.data.examPapers);
+        }
+        catch (err) {
+            alert(err);
+        }
+    }
     const clearFilters = () => {
         document.getElementById('filterByYear').value = "";
         document.getElementById('filterByBranch').value = "";
         document.getElementById('filterByCourse').value = "";
+        handleSearch();
     }
+    useEffect(()=>{
+        handleSearch();
+        // eslint-disable-next-line
+    
+    },[])
 
     return (
         <div className="mainpage">
@@ -93,7 +114,9 @@ export default function MainPage() {
                         <button onClick={clearFilters}>
                             Clear All
                         </button>
-                        <button>
+                        <button
+                            onClick={handleSearch}
+                        >
                             Apply
                         </button>
                     </div>
@@ -106,7 +129,11 @@ export default function MainPage() {
                 </div>
                 <div className="mainpage-result-container">
                     <div className="result-container">
-                        <ResultItem /> 
+                        {
+                            examPapers.map((examPaper, index) => {
+                                return <ResultItem key={examPaper._id} examPaper={examPaper} />
+                            })
+                        } 
                     </div>
                 </div>
             </div>
