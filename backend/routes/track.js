@@ -57,5 +57,35 @@ trackRoute.post('/addCourse',async(req,res)=>{
     }
 });
 
+trackRoute.get('/getBranches',async(req,res)=>{
+    try{
+        const branches = await Track.find({branch: {$ne: null}});
+        return res.status(200).json({
+            success: true,
+            branches: branches
+        })
+    }catch(err){
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+});
+
+trackRoute.get('/getCourses',async(req,res)=>{
+    try{
+        const courses = await Track.find({course: {$ne: null}});
+        return res.status(200).json({
+            success: true,
+            courses: courses
+        })
+    }catch(err){
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+});
+
 
 module.exports = trackRoute;
