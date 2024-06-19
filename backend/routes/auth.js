@@ -55,5 +55,58 @@ authRoute.post('/register',async(req,res)=>{
         })
     }
 })
+//verify email route
+authRoute.post('/verify',async(req,res)=>{
+    try{
+    const {email} = req.body;
+    const user = await User .findOne({email: email})
+    if(!user){
+        return res.status(400).json({
+            success: false,
+            message: 'User not found, please register'
+        })
+    }
+    else{
+        return res.status(200).json({
+            success: true,
+            message: 'User found'
+        })
+    }
+    }    
+    catch(err){
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+})
+//reset password route
+authRoute.post('/reset',async(req,res)=>{
+    try{
+    const {email,password} = req.body;
+    const user = await User
+    .findOne ({email: email})
+    if(!user){
+        return res.status(400).json({
+            success: false,
+            message: 'User not found'
+        })
+    }
+    else{
+        user.password = password;
+        user.save();
+        return res.status(200).json({
+            success: true,
+            message: 'Password reset successfully'
+        })
+    }    
+    }
+    catch(err){
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+} )
 
 module.exports = authRoute;
