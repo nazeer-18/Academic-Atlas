@@ -1,30 +1,33 @@
 import React from 'react';
-import '../styles/Forgot2pwd.css';
+import '../styles/ForgotPassword.css';
 import { Link } from 'react-router-dom';
-export default function Forgot2pwd(){
+import Forgot2pwdImg from '../assets/OTP.svg';
+export default function ForgotPassword(){
     return (
-        <div className="forgot2pwd-page">
-            <div className="forgot2pwd-title">
+        <div className="forgot-password-page">
+            <div className="Forgotpwd-img">
+                <img src={Forgot2pwdImg} alt="Forgot2pwd" />
+            </div>
+            <div className="Forgotpwd-content">
+            <div className="forgot-password-title">
                 Forgot Password
             </div>
-            <div className="forgot2pwd-form">
+            <div className="forgot-password-form">
                 <form action="">
-                    <div className="forgot2pwd-form-component">
-                        <label className="atlas-font" htmlFor="">College Email</label> <br />
-                        <input className="atlas-input" type="email" name="email" id="email" placeholder='Enter your email' />
+                    <div className="forgot-password-form-component">
+                        <label className="atlas-font" htmlFor="">Please enter the code sent to your email</label> <br />
+                        <input className="atlas-input" type="email" name="email" id="email" placeholder='Enter the code' />
                     </div>
-                    <div className='forgot2pwd-message'>
-                        <p className='atlas-font'>A code has been sent to your email. Please enter the code below.</p>
-                        <p className='atlas-font'>Didn't receive the code? <Link to="/forgot2pwd" className="text-red-merry">Resend</Link></p>
-                    </div>            
-                    <div className='forgot2pwd-code'>
-                        <input className="atlas-input" type="text" name="code" id="code" placeholder='Enter the code' />
+                    <div className="forgot-password-adds a">
+                    Didn't receive the code?<Link to="/forgot2pwd" className="text-red-merry">Resend</Link>
                     </div>
-                    <div className="forgot2pwd-btn">
-                        <button className='atlas-btn' type="submit">continue</button>
+                    <div className="forgot-password-btn">
+                        <button className='atlas-btn' type="submit">Submit</button>
                     </div>
                 </form>
             </div>
+            </div>
+            
         </div>
     )
 }
