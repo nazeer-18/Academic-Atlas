@@ -57,7 +57,6 @@ export default function MainPage() {
     useEffect(() => {
         handleSearch();
         // eslint-disable-next-line
-
     }, [])
 
     return (
