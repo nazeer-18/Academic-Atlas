@@ -22,6 +22,10 @@ const examSchema = new Schema({
         type: String, //url of the file on google drive
         required: true,
     },
+    fileId:{
+        type: String, //id of the file on google drive
+        required: true,
+    },
     date : {
         type: Date,
         default: Date.now,

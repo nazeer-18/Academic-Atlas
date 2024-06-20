@@ -145,7 +145,7 @@ export default function MainPage() {
                     <div className="result-container">
                         {
                             examPapers.map((examPaper, index) => {
-                                return <ResultItem key={index} examPaper={examPaper} />
+                                return <ResultItem key={index} examPaper={examPaper} index={index}/>
                             })
                         }
                     </div>
