@@ -37,6 +37,10 @@ class resourceService {
             throw error;
         } 
     }
+
+    getThumbnail(fileId) {
+        return axios.get(`${server_url}/api/resources/getThumbnail/${fileId}`);
+    }
 }
 const newService = new resourceService();
 export default newService;

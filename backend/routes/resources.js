@@ -120,6 +120,20 @@ resourceRouter.get('/download/:fileId', async (req, res) => {
     }
 })
 
+resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
+    try{
+        const fileId = req.params.fileId;
+        const response = await drive.files.get({
+            fileId: fileId,
+            fields: 'thumbnailLink'
+        });
+        res.json({ thumbnailLink: response.data.thumbnailLink, success: true });
+    }
+    catch(err){
+        res.status(500).json({ message: err.message, success: false });
+    }
+});
+
 resourceRouter.post('/getcapstone', async (req, res) => {
     try {
         const { academicYear, branch, course } = req.body;

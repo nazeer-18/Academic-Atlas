@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import '../styles/ResultItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
@@ -6,19 +6,34 @@ import resourceService from '../services/resourceService';
 
 export default function ResultItem(props) {
     const { examPaper, index } = props;
-    const { author, academicYear, branch, course,category, fileUrl,fileId} = examPaper;
+    const [thumbnail, setThumbnail] = useState(null);
+    const { author, academicYear, branch, course, category, fileUrl, fileId } = examPaper;
 
     const showOptions = () => {
         document.querySelector(`#hidden-options-${index}`).classList.toggle('show-options');
     };
 
-    const handleDownload =async (fileId) => {
-        try{
-            const fileName = academicYear + "-" + course +"-"+ category;
-            console.log(fileName)
-            await resourceService.downloadPdf(fileId,fileName);
+    useEffect(() => {
+        const fetchThumbnail = async () => {
+            try {
+                const response = await resourceService.getThumbnail(fileId);
+                setThumbnail(response.data.thumbnailLink);
+            }
+            catch (err) {
+                console.log(err)
+            }
         }
-        catch(err){
+        fetchThumbnail();
+    }, [fileId])
+
+
+    const handleDownload = async (fileId) => {
+        try {
+            const fileName = academicYear + "-" + course + "-" + category;
+            console.log(fileName)
+            await resourceService.downloadPdf(fileId, fileName);
+        }
+        catch (err) {
             console.log(err)
         }
     }
@@ -33,10 +48,10 @@ export default function ResultItem(props) {
                     <a href={fileUrl} target="_blank" rel="noreferrer">
                         <div>View</div>
                     </a>
-                    <div onClick={()=>{handleDownload({fileId})}}>Download</div>
+                    <div onClick={() => { handleDownload({ fileId }) }}>Download</div>
                 </div>
                 <span className="result-item-img">
-                    <img src="https://lh3.googleusercontent.com/drive-storage/AJQWtBPhVonAgMj6rjZv0iB0sZjD6aqO6U2zM94eODPc0zyI3aK4YLIu2NPPxMTHWOUNkRb0X0V1QkjLTG2isx5wLCXxYQ2V7jA0E4cz=s220" alt="result" />
+                    <img src={thumbnail} alt="result" />
                 </span>
                 <div className="result-ay result-item-detail">
                     <span className="result-item-label">Academic Year</span> &nbsp;
