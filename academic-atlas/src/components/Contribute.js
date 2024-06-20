@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import resourceService from '../services/resourceService';
 import '../styles/ContributePage.css';
+import trackService from '../services/trackService';
 
 export default function Contribute() {
     const [data, setData] = useState({
@@ -14,10 +15,32 @@ export default function Contribute() {
         Description: '',
         pdfFile: null,
     });
+    const [branches, setBranches] = useState([]);
+    const year = new Date().getFullYear();
+    const years = [];
+    for (let i = year; i >= 2021; i--) {
+        years.push(i + "-" + (i + 1));
+    }
+    const [courses, setCourses] = useState([]);
+    useEffect(() => { 
+        const getTracks = async () => {
+            try {
+                const response = await trackService.getBranches();
+                setBranches(response.data.branches);
+                const response2 = await trackService.getCourses();
+                setCourses(response2.data.courses);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        getTracks();
+        // eslint-disable-next-line
+    }, [])
 
-    const handleFileChange = (e) => {
+    function handleFileChange(e) {
         setData({ ...data, pdfFile: e.target.files[0] });
-    };
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -65,7 +88,7 @@ export default function Contribute() {
                     >
                         <option value="">Select Type</option>
                         <option value="capstone">Projects</option>
-                        <option value="capstone">Research Papers</option>
+                        <option value="research">Research Papers</option>
                         <option value="exam">Mid/End sem papers</option>
                     </select>
                 </div>
@@ -73,7 +96,7 @@ export default function Contribute() {
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
 
                     {
-                        data && data.category === 'capstone' &&
+                        data && data.category === 'capstone'  && 
                         <>
                             <label className="contributefields" htmlFor="title">Author: </label>
                             <input
@@ -113,44 +136,83 @@ export default function Contribute() {
                     }
 
                     {
-                        data && data.category !== '' &&
+                        data && data.category === 'research'  && 
                         <>
-
                             <label className="contributefields" htmlFor="title">Author: </label>
-                            <input 
+                            <input
                                 type="text"
                                 name="author"
                                 placeholder="Enter author of your research paper"
                                 value={data.author}
                                 onChange={handleChange}
                             /> <br />
+                            <label className="resultfields" htmlFor="title">Title: </label>
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="Enter title of your research paper"
+                                value={data.title}
+                                onChange={handleChange}
+                            /> <br />
+
+                            <label className="contributefields" htmlFor="title">Description: </label>
+                            <input
+                                type="text"
+                                name="Description"
+                                placeholder="Enter Description of your research paper"
+                                value={data.Description}
+                                onChange={handleChange}
+                            /> <br />
+
+                            <label className="contributefields" htmlFor="title">Link: </label>
+                            <input
+                                type="text"
+                                name="Link"
+                                placeholder="Paste the github link of your research paper"
+                                value={data.Link}
+                                onChange={handleChange}
+                            /> <br />
+                        </>
+                    }
+
+
+                    {
+                        data && data.category !== '' &&
+                        <>
+
 
                             <label className="contributefields" htmlFor="title">Year: </label>
-                            <input
-                                type="text"
-                                name="academicYear"
-                                placeholder="Enter in which year project is done"
+                            <select name="academicYear" id="filterByYear"
                                 value={data.academicYear}
                                 onChange={handleChange}
-                            /> <br />
+                            >
+                                <option value="">Choose Academic Year</option>
+                                {
+                                    years.map((year) => {
+                                        return <option value={year} key={year}>{year}</option>
+                                    })
+                                }
+                            </select> <br />                            
 
-                            <label className="contributefields" htmlFor="title">Branch: </label>
-                            <input
-                                type="text"
-                                name="branch"
-                                placeholder="Enter your department"
-                                value={data.branch}
-                                onChange={handleChange}
-                            /> <br />
+                            <label className="contributefields" htmlFor="title">Branch: </label>    
+                            <select name="mainpage-branch-filter" id="filterByBranch">
+                                        <option value="">Choose Branch</option>
+                                        {
+                                            branches.map((branch) => {
+                                                return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
+                                            })
+                                        }
+                            </select> <br />                                    
 
                             <label className="contributefields" htmlFor="title">Courses: </label>
-                            <input
-                                type="text"
-                                name="course"
-                                placeholder="Enter the courses related to your project"
-                                value={data.course}
-                                onChange={handleChange}
-                            /> <br />
+                           <select name="mainpage-course-filter" id="filterByCourse">
+                                        <option value="">Choose Course</option>
+                                        {
+                                            courses.map((course) => {
+                                                return <option value={course.course} key={course._id}>{course.course}</option>
+                                            })
+                                        }
+                                    </select> <br />
 
                             <input
                                 type="file"
