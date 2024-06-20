@@ -18,8 +18,8 @@ const examSchema = new Schema({
         type: String,
         required: true,
     },
-    pdfFile :{
-        type: Buffer,
+    fileUrl :{
+        type: String, //url of the file on google drive
         required: true,
     },
     date : {

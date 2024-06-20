@@ -7,7 +7,6 @@ import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
 
-
 export default function MainPage() {
     const location = useLocation();
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
@@ -42,8 +41,7 @@ export default function MainPage() {
             const academicYear = document.getElementById('filterByYear').value;
             const branch = document.getElementById('filterByBranch').value;
             const course = document.getElementById('filterByCourse').value;
-            const response = await resourceService.getExam(academicYear, branch, course)
-            console.log(response.data)
+            const response = await resourceService.getExam(academicYear, branch, course) 
             setExamPapers(response.data.examPapers);
         }
         catch (err) {
@@ -59,7 +57,6 @@ export default function MainPage() {
     useEffect(() => {
         handleSearch();
         // eslint-disable-next-line
-
     }, [])
 
     return (
@@ -148,7 +145,7 @@ export default function MainPage() {
                     <div className="result-container">
                         {
                             examPapers.map((examPaper, index) => {
-                                return <ResultItem key={examPaper._id} examPaper={examPaper} />
+                                return <ResultItem key={index} examPaper={examPaper} />
                             })
                         }
                     </div>

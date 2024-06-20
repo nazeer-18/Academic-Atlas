@@ -35,6 +35,11 @@
     box-sizing: border-box;
 }
 
+.hidden-options a{
+    list-style: none;
+    text-decoration: none;
+}
+
 .hidden-options div{
     border-bottom: 1px solid black; 
 }

@@ -1,0 +1,92 @@
+.contribute-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 7px 2px;
+    margin: 30px auto;
+    background-color: white;
+    border-radius: 18px;
+    width: 90vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 10px solid white;
+    justify-content: space-around;
+}
+.contribute-header {
+    background-color: #290BEA;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    padding: 12px;
+    font-size: 1.39em;
+    font-family: 'monserrat', sans-serif;
+    border-radius: 12px;
+    width:100%;
+
+    
+}
+.contribute-content {
+    width: 90vw;
+    background-color: white;
+    margin: 15px auto;
+    border-radius: 12px;
+    padding: 15px 10px;
+    font-weight:700;
+
+    
+
+}
+
+.contributequestion{
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 7px;
+    color:#290BEA;
+    padding: 0 10px;
+  
+
+}
+label{
+    font-size: 17px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    
+}
+
+
+input{
+    width: 300px;
+    background-color: #f5dede; 
+    border-radius: 10px;
+    padding: 7px 13px;
+    margin: 3px 3px;
+    font-size: 1.1em; 
+
+}
+
+
+select {
+    width: 300px;
+    background-color:rgb(169, 165, 235); 
+    border-radius: 10px;
+    padding: 7px 13px;
+    margin: 3px 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1.1em; 
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #296FE0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #290BEA;
+}
