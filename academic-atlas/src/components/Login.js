@@ -14,6 +14,8 @@ export default function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            console.log("ell")
+            console.log(data)
             const response = await userService.login(data);
             const sucess = response.data.success;
             if (sucess) {
@@ -26,7 +28,7 @@ export default function Login() {
         }
         catch (err) {
             console.log(err);
-            alert('Login Failed');
+            alert('server error');
         }
     }
     return (
