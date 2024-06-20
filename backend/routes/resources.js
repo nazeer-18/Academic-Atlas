@@ -44,7 +44,7 @@ resourceRouter.post('/getexam', async (req, res) => {
 });
 
 resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
-    try {
+    try { 
         const { category, academicYear, branch, course, author } = req.body;
         const file = req.file;
         if (!file) {
@@ -57,7 +57,10 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             return res.status(409).json({ message: "Resource already exists", success: false });
         }
 
-        const fileMetadata = { name: file.originalname };
+        const fileMetadata = { 
+            name: file.originalname,
+            parents: [process.env.GOOGLE_DRIVE_FOLDER_ID]
+        };
         //using readstream to read the file and upload it to google drive
         const media = { mimeType: file.mimetype, body: fs.createReadStream(file.path) };
         const response = await drive.files.create({
