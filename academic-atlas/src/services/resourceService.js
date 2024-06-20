@@ -2,7 +2,7 @@ import axios from 'axios';
 const server_url = 'https://academic-atlas-server.onrender.com';
 
 class resourceService {
-    addExam(formData) { 
+    addExam(formData) {
         return axios.post(`${server_url}/api/resources/addexam`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
