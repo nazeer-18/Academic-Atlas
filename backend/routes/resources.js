@@ -7,6 +7,7 @@ const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
+const axios = require('axios');
 
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -69,14 +70,17 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             fields: 'id, webViewLink'
         });
 
-        const fileUrl = response.data.webViewLink;
-        const thumbnailResponse = await drive.files.get({
-            fileId: response.data.id,
-            fields: 'thumbnailLink'
+        const fileUrl = response.data.webViewLink; 
+        const filePath = path.join(uploadDir, file.filename); 
+        const newResource = new exam({
+            category: category,
+            academicYear: academicYear,
+            branch: branch,
+            course: course,
+            fileUrl: fileUrl,
+            author: author
         });
-        
-        const filePath = path.join(uploadDir, file.filename);
-
+        await newResource.save();
         // Delete the file after processing it from the server
         fs.unlink(filePath, (err) => {
             if (err) {
@@ -86,15 +90,6 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             }
         });
 
-        const newResource = new exam({
-            category: category,
-            academicYear: academicYear,
-            branch: branch,
-            course: course,
-            fileUrl: fileUrl, 
-            author: author
-        });
-        await newResource.save();
         return res.status(200).json({ message: "Resource added successfully", success: true });
     }
     catch (err) {

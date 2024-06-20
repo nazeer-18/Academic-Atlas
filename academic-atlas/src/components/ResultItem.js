@@ -26,7 +26,7 @@ export default function ResultItem(props) {
                     <div>Download</div>
                 </div>
                 <span className="result-item-img">
-                    <img src={thumbnailUrl} alt="result" />
+                    <img src="https://lh3.googleusercontent.com/drive-storage/AJQWtBPhVonAgMj6rjZv0iB0sZjD6aqO6U2zM94eODPc0zyI3aK4YLIu2NPPxMTHWOUNkRb0X0V1QkjLTG2isx5wLCXxYQ2V7jA0E4cz=s220" alt="result" />
                 </span>
                 <div className="result-ay result-item-detail">
                     <span className="result-item-label">Academic Year</span> &nbsp;
