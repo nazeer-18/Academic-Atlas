@@ -44,7 +44,7 @@ resourceRouter.post('/getexam', async (req, res) => {
 });
 
 resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
-    try { 
+    try {
         const { category, academicYear, branch, course, author } = req.body;
         const file = req.file;
         if (!file) {
@@ -53,11 +53,11 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
 
         const tmpResource = await exam.findOne({ category: category, academicYear: academicYear, branch: branch, course: course });
 
-        if(tmpResource){
+        if (tmpResource) {
             return res.status(409).json({ message: "Resource already exists", success: false });
         }
 
-        const fileMetadata = { 
+        const fileMetadata = {
             name: file.originalname,
             parents: [process.env.GOOGLE_DRIVE_FOLDER_ID]
         };
@@ -68,7 +68,13 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             media: media,
             fields: 'id, webViewLink'
         });
+
         const fileUrl = response.data.webViewLink;
+        const thumbnailResponse = await drive.files.get({
+            fileId: response.data.id,
+            fields: 'thumbnailLink'
+        });
+        
         const filePath = path.join(uploadDir, file.filename);
 
         // Delete the file after processing it from the server
@@ -85,16 +91,16 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             academicYear: academicYear,
             branch: branch,
             course: course,
-            fileUrl: fileUrl,
+            fileUrl: fileUrl, 
             author: author
         });
         await newResource.save();
         return res.status(200).json({ message: "Resource added successfully", success: true });
-    } 
+    }
     catch (err) {
-    console.log(err)
-    res.status(500).json({ message: err.message, success: false });
-}
+        console.log(err)
+        res.status(500).json({ message: err.message, success: false });
+    }
 });
 
 resourceRouter.post('/getcapstone', async (req, res) => {
