@@ -70,13 +70,17 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
         });
 
         const fileUrl = response.data.webViewLink;
-        const thumbnailResponse = await drive.files.get({
-            fileId: response.data.id,
-            fields: 'thumbnailLink'
-        });
-        
         const filePath = path.join(uploadDir, file.filename);
-
+        const newResource = new exam({
+            category: category,
+            academicYear: academicYear,
+            branch: branch,
+            course: course,
+            fileUrl: fileUrl,
+            author: author,
+            fileId: response.data.id
+        });
+        await newResource.save();
         // Delete the file after processing it from the server
         fs.unlink(filePath, (err) => {
             if (err) {
@@ -86,19 +90,46 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             }
         });
 
-        const newResource = new exam({
-            category: category,
-            academicYear: academicYear,
-            branch: branch,
-            course: course,
-            fileUrl: fileUrl, 
-            author: author
-        });
-        await newResource.save();
         return res.status(200).json({ message: "Resource added successfully", success: true });
     }
     catch (err) {
         console.log(err)
+        res.status(500).json({ message: err.message, success: false });
+    }
+});
+
+resourceRouter.get('/download/:fileId', async (req, res) => {
+    const fileId = req.params.fileId;
+    try {
+        const response = await drive.files.get({
+            fileId: fileId,
+            alt: 'media'
+        }, { responseType: 'stream' });
+        res.setHeader('Content-Disposition', 'attachment');
+        response.data
+            .on('end', () => {
+                console.log('Done downloading file.');
+            })
+            .on('error', (err) => {
+                console.error('Error downloading file.');
+                res.status(500).send('Error downloading file.');
+            })
+            .pipe(res);
+    } catch (err) {
+        res.status(500).json({ message: err.message, success: false });
+    }
+})
+
+resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
+    try {
+        const fileId = req.params.fileId;
+        const response = await drive.files.get({
+            fileId: fileId,
+            fields: 'thumbnailLink'
+        });
+        res.json({ thumbnailLink: response.data.thumbnailLink, success: true });
+    }
+    catch (err) {
         res.status(500).json({ message: err.message, success: false });
     }
 });

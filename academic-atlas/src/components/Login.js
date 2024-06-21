@@ -4,8 +4,11 @@ import '../styles/Login.css'
 import { Link } from 'react-router-dom'
 import userService from '../services/userService'
 import LoginImg from '../assets/LoginIcon.svg'
+import { useUser } from '../contexts/userContext'
 
 export default function Login() {
+    const { user, setUser } = useUser();
+    const [message, setMessage] = useState('');
     const [data, setData] = useState({
         email: '',
         password: ''
@@ -16,17 +19,22 @@ export default function Login() {
         try {
             const response = await userService.login(data);
             const sucess = response.data.success;
+            setMessage(response.data.message);
             if (sucess) {
+                console.log(response.data);
+                setUser(response.data.user);
                 setTimeout(() => {
+                    setMessage('');
                     Navigate('/')
                 }, 2000)
-            } else {
-                alert('Login Failed');
             }
         }
         catch (err) {
             console.log(err);
-            alert('Login Failed');
+            setMessage('Server is Down, please try again later');
+            setTimeout(() => {
+                setMessage('');
+            }, 2000)
         }
     }
     return (
@@ -70,6 +78,12 @@ export default function Login() {
                                 <Link className='text-red-merry' to="/forgotpwd">Forgot Password?</Link>
                             </div>
                         </div>
+                        {
+                            message !== '' &&
+                            <div className="login-reponse-msg">
+                                {message}
+                            </div>
+                        }
                         <div className="login-btn">
                             <button
                                 className='atlas-btn'

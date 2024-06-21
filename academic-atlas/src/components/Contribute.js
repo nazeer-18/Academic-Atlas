@@ -6,15 +6,16 @@ import trackService from '../services/trackService';
 export default function Contribute() {
     const [data, setData] = useState({
         title: '',
-        category: '',
+        Description: '',
+        Link: '',
         author: '',
+        category: '',
         academicYear: '',
         branch: '',
         course: '',
-        Link: '',
-        Description: '',
         pdfFile: null,
     });
+
     const [branches, setBranches] = useState([]);
     const year = new Date().getFullYear();
     const years = [];
@@ -38,6 +39,9 @@ export default function Contribute() {
         // eslint-disable-next-line
     }, [])
 
+    const [choice, setChoice] = useState('');
+
+
     function handleFileChange(e) {
         setData({ ...data, pdfFile: e.target.files[0] });
     }
@@ -59,9 +63,6 @@ export default function Contribute() {
         formData.append('Link', data.Link);
         formData.append('Description', data.Description);
         formData.append('pdfFile', data.pdfFile);
-        for (let key of formData.keys()) {
-            console.log(key, formData.get(key));
-        }
         try {
             const res = await resourceService.addExam(formData);
             if (res.data.success) {
@@ -82,12 +83,12 @@ export default function Contribute() {
                 </div>
                 <div className="contribute-content">
                     <label className='contributequestion' for="typefields">What would you like to contribute today ?</label>
-                    <select id="contribution" name="category"
-                        value={data.category}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select Type</option>
-                        <option value="capstone">Projects</option>
+                    <select 
+                        id="contribution" 
+                        name="contribution-choice" 
+                        onChange={(e) => setChoice((e.target.value==='projects'||e.target.value==='research')?"capstone":e.target.value)}>
+                        <option value="">Select Type</option>  
+                        <option value="projects">Projects</option> 
                         <option value="research">Research Papers</option>
                         <option value="exam">Mid/End sem papers</option>
                     </select>
@@ -96,16 +97,10 @@ export default function Contribute() {
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
 
                     {
-                        data && data.category === 'capstone'  && 
+  
+                        choice === 'capstone' &&
+
                         <>
-                            <label className="contributefields" htmlFor="title">Author: </label>
-                            <input
-                                type="text"
-                                name="author"
-                                placeholder="Enter author of your research paper"
-                                value={data.author}
-                                onChange={handleChange}
-                            /> <br />
                             <label className="resultfields" htmlFor="title">Title: </label>
                             <input
                                 type="text"
@@ -136,8 +131,16 @@ export default function Contribute() {
                     }
 
                     {
-                        data && data.category === 'research'  && 
+ 
+                        choice !== '' &&
                         <>
+                            <label className="contributefields" htmlFor="category">Category: </label>
+                            <select name="category" onChange={handleChange}>
+                                <option value="">Select Category</option>
+                                <option value="mid-sem">Mid Sem</option>
+                                <option value="end-sem">End Sem</option>
+                            </select> <br />
+ 
                             <label className="contributefields" htmlFor="title">Author: </label>
                             <input
                                 type="text"

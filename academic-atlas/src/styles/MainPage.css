@@ -136,6 +136,10 @@
     align-items: center;
 }
 
+option{
+    width:320px;
+}
+
 @media(max-width:570px){
     .mainpage-filters-container{
         display: block;
