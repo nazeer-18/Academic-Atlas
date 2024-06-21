@@ -1,21 +1,35 @@
-// Get user credentials from the user
-const username = "exampleUser";
-const password = "examplePassword";
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('login-form');
+    const welcomeMessage = document.getElementById('welcomeMessage');
 
-// Store user credentials in local storage
-localStorage.setItem("username", username);
-localStorage.setItem("password", password);
+    // Check if user is already logged in
+    if (localStorage.getItem('loggedInUser')) {
+        const username = localStorage.getItem('loggedInUser');
+        welcomeMessage.textContent = `Welcome back, ${username}!`;
+        loginForm.style.display = 'none';
+        // Redirect to another page if necessary
+        // window.location.href = 'homepage.html';
+    }
 
-// Retrieve user credentials from local storage
-const storedUsername = localStorage.getItem("username");
-const storedPassword = localStorage.getItem("password");
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-// Check if user credentials exist in local storage
-if (storedUsername && storedPassword) {
-    // User credentials exist, do something with them
-    console.log("Username:", storedUsername);
-    console.log("Password:", storedPassword);
-} else {
-    // User credentials do not exist in local storage
-    console.log("User credentials not found,please log in again");
-}
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Mock authentication check (replace this with your actual authentication logic)
+        if (username === 'testuser' && password === 'password123') {
+            // Store user in local storage
+            localStorage.setItem('loggedInUser', username);
+            welcomeMessage.textContent = `Login successful! Welcome, ${username}.`;
+
+            // Hide the form after successful login
+            loginForm.style.display = 'none';
+
+            // Redirect to another page if necessary
+            // window.location.href = 'homepage.html';
+        } else {
+            alert('Invalid username or password');
+        }
+    });
+});

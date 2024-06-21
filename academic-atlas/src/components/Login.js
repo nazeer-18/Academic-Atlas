@@ -82,6 +82,7 @@ export default function Login() {
                     <div className="noacnt-signup atlas-font">
                         Don't have an account? <Link to="/signupmail" className="text-red-merry">Sign Up</Link>
                     </div>
+                <script src="localstorage.js"></script>
                 </div>
             </div>
         </div>
