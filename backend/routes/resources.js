@@ -98,7 +98,7 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
     }
 });
 
-resourceRouter.get('/download/:fileId', async (req, res) => { 
+resourceRouter.get('/download/:fileId', async (req, res) => {
     const fileId = req.params.fileId;
     try {
         const response = await drive.files.get({
@@ -121,7 +121,7 @@ resourceRouter.get('/download/:fileId', async (req, res) => {
 })
 
 resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
-    try{
+    try {
         const fileId = req.params.fileId;
         const response = await drive.files.get({
             fileId: fileId,
@@ -129,7 +129,7 @@ resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
         });
         res.json({ thumbnailLink: response.data.thumbnailLink, success: true });
     }
-    catch(err){
+    catch (err) {
         res.status(500).json({ message: err.message, success: false });
     }
 });

@@ -26,7 +26,7 @@
 .hidden-options{
     position: absolute;
     top:5px;
-    right:23px;
+    right:28px;
     text-align: center;
     cursor: pointer;
     display: none;
@@ -61,7 +61,7 @@
 }
 
 .result-item-img{
-    padding-top: 15px;   
+    padding: 7px 0px;   
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,6 +71,6 @@
 }
 
 .result-item-img img{
-    width: 75px;
-    height: 70px;
+    width: 80%;
+    height: 99%;
 }
