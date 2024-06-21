@@ -11,10 +11,12 @@ import ForgotPassword from './components/ForgotPassword';
 import MainPage from './components/MainPage';
 import Contribute from './components/Contribute';
 import Forgot2pwd from './components/Forgot2pwd';
+import { UserProvider } from './contexts/userContext';
 
 function App() {
   return (
     <BrowserRouter>
+      <UserProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -27,6 +29,7 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/forgot2pwd" element={<Forgot2pwd />} />
       </Routes>
+      </UserProvider>
     </BrowserRouter>
   );
 }

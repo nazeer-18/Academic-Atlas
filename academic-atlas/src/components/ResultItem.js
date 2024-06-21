@@ -54,13 +54,13 @@ export default function ResultItem(props) {
                     <img src={thumbnail} alt="result" />
                 </span>
                 <div className="result-ay result-item-detail">
-                    <span className="result-item-label">Academic Year</span> &nbsp;
+                    <span className="result-item-label"></span> &nbsp;
                     <span className="result-item-value">{academicYear}</span> <br />
-                    <span className="result-item-label">Branch</span> &nbsp;
+                    <span className="result-item-label"></span> &nbsp;
                     <span className="result-item-value">{branch}</span> <br />
-                    <span className="result-item-label">Course</span> &nbsp;
+                    <span className="result-item-label"></span> &nbsp;
                     <span className="result-item-value">{course}</span> <br />
-                    <span className="result-item-label">Author</span> &nbsp;
+                    <span className="result-item-label">Publisher:</span> &nbsp;
                     <span className="result-item-value">{author}</span> <br />
                 </div>
             </div>

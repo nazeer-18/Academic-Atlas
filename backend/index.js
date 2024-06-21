@@ -2,14 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
-const cors = require('cors'); 
+const cors = require('cors');
 const http = require('http');
-const allowedOrigins = ['http://localhost:3000','https://academic-atlas-asc.netlify.app']
+const https = require('https');
+const allowedOrigins = ['http://localhost:3000', 'https://academic-atlas-asc.netlify.app']
 app.use(cors())
 const { URL } = require('url');
 app.use((req, res, next) => {
     const origin = req.headers.origin;
-    if(allowedOrigins.includes(origin)){
+    if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');

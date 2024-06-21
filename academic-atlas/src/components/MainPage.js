@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react' 
+import { useLocation,useNavigate } from 'react-router-dom'
 import ResultItem from './ResultItem';
 import '../styles/MainPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
+import { useUser } from '../contexts/userContext'
 
 export default function MainPage() {
     const location = useLocation();
+    const { user } = useUser();
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(user.email===''){
+            setTimeout(()=>{
+                navigate('/login')
+            })
+        }
+    },[])
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
     const [examPapers, setExamPapers] = useState([{}]);
     const [branches, setBranches] = useState([]);
@@ -40,7 +50,7 @@ export default function MainPage() {
         try {
             const academicYear = document.getElementById('filterByYear').value;
             const branch = document.getElementById('filterByBranch').value;
-            const course = document.getElementById('filterByCourse').value;
+            const course = document.getElementById('filterByCourse').value; 
             const response = await resourceService.getExam(academicYear, branch, course) 
             setExamPapers(response.data.examPapers);
         }
@@ -143,7 +153,8 @@ export default function MainPage() {
                 </div>
                 <div className="mainpage-result-container">
                     <div className="result-container">
-                        {
+                        {   
+                            examPapers.length === 0 ? <div className="no-results">No Results Found</div> :
                             examPapers.map((examPaper, index) => {
                                 return <ResultItem key={index} examPaper={examPaper} index={index}/>
                             })

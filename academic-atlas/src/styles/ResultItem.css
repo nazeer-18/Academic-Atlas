@@ -1,5 +1,5 @@
 .result-item-container{
-    background-color: #bedef4;
+    background-color: #bec2c58a;
     margin: 10px;
     padding: 0px;
     border-radius: 18px;
@@ -10,7 +10,7 @@
 .three-dots{
     position: absolute;
     top:4px;
-    right:7px;
+    right:0px;
     cursor: pointer;
 }
 
@@ -67,7 +67,7 @@
     align-items: center;
     width:100%;
     height:100px;
-    background-color: rgb(201, 196, 196);
+    background-color:rgb(233 233 233);
 }
 
 .result-item-img img{
