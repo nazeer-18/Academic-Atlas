@@ -9,7 +9,7 @@ export default function Footer() {
                 <div className="footer-logo">
                     <img src={logo} alt="Logo" />
                 </div>
-                 <div className="footer-copyright">©2024 Academic Atlas</div>
+                <div className="footer-copyright">©2024 Academic Atlas</div>
                 <div className="footer-links">
                     <div className="footer-link">
                         <a href="/about-us">About Us</a>

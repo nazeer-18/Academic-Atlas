@@ -4,11 +4,15 @@ import '../styles/Login.css'
 import { Link } from 'react-router-dom'
 import userService from '../services/userService'
 import LoginImg from '../assets/LoginIcon.svg'
-import { useUser } from '../contexts/userContext' 
+import { useUser } from '../contexts/userContext'
+import { FaEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function Login() {
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
     const [message, setMessage] = useState('');
+    const [showPwd, setShowPwd] = useState(false);
+    const [checked,setChecked] = useState(false);
     const [success, setSuccess] = useState(false);
     const [data, setData] = useState({
         email: '',
@@ -29,7 +33,7 @@ export default function Login() {
                     setMessage('');
                     Navigate('/')
                 }, 2000)
-            }else{
+            } else {
                 setTimeout(() => {
                     setMessage('');
                 }, 2000)
@@ -67,17 +71,34 @@ export default function Login() {
                         </div>
                         <div className="login-form-component">
                             <label className="atlas-font" htmlFor="">Password</label> <br />
-                            <input
-                                className="atlas-input"
-                                type="password"
-                                name="password"
-                                id="password"
-                                onChange={(e) => setData({ ...data, password: e.target.value })}
-                                placeholder='Enter your password' />
+                            <div className="password-group password-input-group">
+                                <input
+                                    className="atlas-input"
+                                    type={showPwd ? "text" : "password"}
+                                    name="password"
+                                    id="password"
+                                    onChange={(e) => setData({ ...data, password: e.target.value })}
+                                    placeholder='Enter your password' />
+                                <span
+                                    className="eye-display"
+                                    onClick={() => setShowPwd((prev) => !prev)}>
+                                    {showPwd
+                                        ? (<FaRegEyeSlash title="hide" />)
+                                        : (<FaEye title="show" />)
+                                    }
+                                </span>
+                            </div>
                         </div>
                         <div className="login-adds">
                             <div className="remember-me">
-                                <input type="checkbox" name="remember-me" id="remember-me" />
+                                <input
+                                    title={checked ? "unMark" : "Mark"}
+                                    type="checkbox"
+                                    name="remember-me"
+                                    checked={checked}
+                                    onChange={() => setChecked(!checked)}
+                                    id="remember-me"
+                                />
                                 <label className="atlas-font" htmlFor="remember-me">Remember Me!</label>
                             </div>
                             <div className="forgotPwd">

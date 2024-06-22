@@ -23,11 +23,11 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (sideNavRef.current && !sideNavRef.current.contains(event.target) && 
+            if (sideNavRef.current && !sideNavRef.current.contains(event.target) &&
                 !event.target.closest('.hamburger')) {
                 setIsSideNavOpen(false);
             }
-            if (profileRef.current && !profileRef.current.contains(event.target) && 
+            if (profileRef.current && !profileRef.current.contains(event.target) &&
                 !event.target.closest('.user-icon')) {
                 setIsProfileOpen(false);
             }
@@ -54,22 +54,22 @@ export default function Navbar() {
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faHouse} />Home
                             </div>
-                        </Link> 
+                        </Link>
                         <Link to="/main?value=Mid Sem Papers" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Midsem Papers
                             </div>
-                        </Link> 
+                        </Link>
                         <Link to="/main?value=End Sem Papers" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Endsem Papers
                             </div>
-                        </Link>  
+                        </Link>
                         <Link to="/main?value=Projects" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faDiagramProject} />Projects
                             </div>
-                        </Link> 
+                        </Link>
                         <Link to="/main?value=Research papers" onClick={handleSideNav}>
                             <div className="sidenav-item">
                                 <FontAwesomeIcon icon={faFileLines} />Research Papers
@@ -93,7 +93,7 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faUser} />
                 <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
                     <div className="profile-head" onClick={handleProfile}>
-                        Go Back <FontAwesomeIcon icon={faAnglesRight} />  
+                        Go Back <FontAwesomeIcon icon={faAnglesRight} />
                     </div>
                     <div className="">
                         TBD

@@ -83,6 +83,18 @@
     background: #E0E0E0;
 }
 
+.password-input-group{
+    position: relative;
+}
+
+.eye-display{
+    margin: 0px;
+    padding: 10px;
+    position: absolute;
+    right: 0px;
+    top: 2px;
+}
+
 .login-adds{
     display: flex;
     justify-content: space-between;
@@ -151,6 +163,7 @@
 @media(max-width:666px){
     .login-page{
         justify-content: center;
+        flex-direction: column;
     }
     .login-adds{
         width:auto;
