@@ -6,36 +6,42 @@ import userService from '../services/userService'
 
 export default function SignupMail() {
     const navigate = useNavigate();
-    const [mail, setMail] = useState('');
+    const [mail, setMail] = useState(null);
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const handleMailVerification = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await userService.verify(mail);
-            const status = response.data.success;
-            setSuccess(status);
-            if (status) {
-                const otp = response.data.otp;
-                setMessage("Proceeding with email verification");
-                setTimeout(() => {
-                    navigate('/verifyotp', {
-                        state: {
-                            otp: otp,
-                            email: mail
-                        }
-                    })
-                }, 1500)
-            } else {
-                setMessage("User already exists with this email. Please login.");
-                setTimeout(() => {
-                    navigate('/login')
-                }, 1000)
+        const form = document.getElementById('atlas-form');
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            form.reportValidity();
+        } else {
+
+            try {
+                const response = await userService.verify(mail);
+                const status = response.data.success;
+                setSuccess(status);
+                if (status) {
+                    const otp = response.data.otp;
+                    setMessage("Proceeding with email verification");
+                    setTimeout(() => {
+                        navigate('/verifyotp', {
+                            state: {
+                                otp: otp,
+                                email: mail
+                            }
+                        })
+                    }, 1500)
+                } else {
+                    setMessage("User already exists with this email. Please login.");
+                    setTimeout(() => {
+                        navigate('/login')
+                    }, 1000)
+                }
             }
-        }
-        catch (err) {
-            console.log(err)
-            setMessage("Internal server error");
+            catch (err) {
+                console.log(err)
+                setMessage("Internal server error");
+            }
         }
         setTimeout(() => {
             setMessage('');
@@ -51,7 +57,7 @@ export default function SignupMail() {
                     Signup
                 </div>
                 <div className="signupmail-form">
-                    <form>
+                    <form id="atlas-form">
                         <div className="signupmail-form-component">
                             <label className="atlas-font" htmlFor="email">College Email</label> <br />
                             <input

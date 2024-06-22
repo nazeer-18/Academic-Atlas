@@ -57,6 +57,7 @@ export default function OtpPage() {
                                 type="email"
                                 name="email"
                                 id="email"
+                                required
                                 placeholder='Enter the code' />
                         </div>
                         <div className="OtpPage-adds">

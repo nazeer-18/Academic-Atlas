@@ -12,7 +12,7 @@ export default function Login() {
     const { setUser } = useUser();
     const [message, setMessage] = useState('');
     const [showPwd, setShowPwd] = useState(false);
-    const [checked,setChecked] = useState(false);
+    const [checked, setChecked] = useState(false);
     const [success, setSuccess] = useState(false);
     const [data, setData] = useState({
         email: '',
@@ -20,31 +20,36 @@ export default function Login() {
     })
     const Navigate = useNavigate();
     const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await userService.login(data);
-            const sucess = response.data.success;
-            setMessage(response.data.message);
-            if (sucess) {
-                setSuccess(true);
-                console.log(response.data);
-                setUser(response.data.user);
-                setTimeout(() => {
-                    setMessage('');
-                    Navigate('/')
-                }, 2000)
-            } else {
+        const form = document.getElementById('atlas-form');
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            form.reportValidity();
+        } else {
+            try {
+                const response = await userService.login(data);
+                const sucess = response.data.success;
+                setMessage(response.data.message);
+                if (sucess) {
+                    setSuccess(true);
+                    console.log(response.data);
+                    setUser(response.data.user);
+                    setTimeout(() => {
+                        setMessage('');
+                        Navigate('/')
+                    }, 2000)
+                } else {
+                    setTimeout(() => {
+                        setMessage('');
+                    }, 2000)
+                }
+            }
+            catch (err) {
+                console.log(err);
+                setMessage('Server is Down, please try again later');
                 setTimeout(() => {
                     setMessage('');
                 }, 2000)
             }
-        }
-        catch (err) {
-            console.log(err);
-            setMessage('Server is Down, please try again later');
-            setTimeout(() => {
-                setMessage('');
-            }, 2000)
         }
     }
     return (
@@ -58,7 +63,7 @@ export default function Login() {
                     Login
                 </div>
                 <div className="login-form">
-                    <form action="">
+                    <form id="atlas-form">
                         <div className="login-form-component">
                             <label className="atlas-font" htmlFor="">College Email</label> <br />
                             <input
