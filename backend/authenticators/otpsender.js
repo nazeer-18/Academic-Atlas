@@ -15,7 +15,7 @@ const sendOTPEmail = async (emailId, userName, otp) => {
     const mailContent = {
         from: process.env.ADMIN_MAIL,
         to: emailId,
-        subject: 'Otp to reset your password',
+        subject: 'Otp to verify your email',
         html: `
             <p>Dear ${userName},</p>
             <p>We have received a request to verify your email address. To complete the verification process, please use the One-Time Password (OTP) provided below:</p>

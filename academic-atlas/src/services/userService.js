@@ -5,6 +5,9 @@ class userService {
     login(data) {
         return axios.post(server_url + '/api/auth/login', data);
     }
+    register(data) {
+        return axios.post(server_url + '/api/auth/register', data);
+    }
     resetpwd(email, password) {
         return axios.post(server_url + '/api/auth/resetpwd', { email, password });
     }
