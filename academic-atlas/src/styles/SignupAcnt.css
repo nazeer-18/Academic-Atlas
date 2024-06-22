@@ -3,13 +3,12 @@
     font-size: 32px;
     font-weight: 700;
 }
+
 .signup-acnt-title{
-text-align: center;
-    
+    text-align: center;
 }
 
-.signup-acnt-page{
-    height:90vh;
+.signup-acnt-page{ 
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;

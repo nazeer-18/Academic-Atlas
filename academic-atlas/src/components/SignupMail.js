@@ -8,33 +8,38 @@ export default function SignupMail() {
     const navigate = useNavigate();
     const [mail, setMail] = useState('');
     const [message, setMessage] = useState('');
-    const [success,setSuccess] = useState(false);
-    const handleMailVerification = async (e) => { 
+    const [success, setSuccess] = useState(false);
+    const handleMailVerification = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await userService.verify(mail);
             const status = response.data.success;
-            setSuccess(status); 
-            if(status){
+            setSuccess(status);
+            if (status) {
                 const otp = response.data.otp;
                 setMessage("Proceeding with email verification");
-                setTimeout(()=>{
-                    navigate('/verifyotp')
-                },1500)
-            }else{
+                setTimeout(() => {
+                    navigate('/verifyotp', {
+                        state: {
+                            otp: otp,
+                            email: mail
+                        }
+                    })
+                }, 1500)
+            } else {
                 setMessage("User already exists with this email. Please login.");
-                setTimeout(()=>{
+                setTimeout(() => {
                     navigate('/login')
-                },1000)
+                }, 1000)
             }
         }
-        catch(err){
+        catch (err) {
             console.log(err)
             setMessage("Internal server error");
         }
-        setTimeout(()=>{
+        setTimeout(() => {
             setMessage('');
-        },2000)
+        }, 2000)
     }
     return (
         <div className="signupmail-page">
@@ -69,7 +74,7 @@ export default function SignupMail() {
                             </div>
                         }
                         <div className="signupmail-btn">
-                            <button 
+                            <button
                                 className="atlas-btn"
                                 onClick={handleMailVerification}>
                                 Proceed and verify email

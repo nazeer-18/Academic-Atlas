@@ -1,5 +1,4 @@
-.signupmail-page{
-    height:90vh;
+.signupmail-page{ 
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;

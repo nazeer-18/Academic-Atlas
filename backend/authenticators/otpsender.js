@@ -29,7 +29,7 @@ const sendOTPEmail = async (emailId, userName, otp) => {
             <p>Note:</p>
             <ol>
                 <li>Do not share your OTP with anyone.</li>
-                <li>If you encounter any issues, please contact our support team at support@example.com.</li>
+                <li>If you encounter any issues, please contact our support team at academicatlas.ase@gmail.com.</li>
             </ol>
         `
     };

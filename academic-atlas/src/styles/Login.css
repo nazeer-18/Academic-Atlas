@@ -1,5 +1,4 @@
-.login-page{
-    height:90vh;
+.login-page{ 
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;

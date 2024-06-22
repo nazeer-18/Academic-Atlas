@@ -1,56 +1,47 @@
-.text-red-merry{
-  color: #F00731;
-  font-size: 20px;
-  font-weight: 400;
-  font-family: 'Merryweather', serif;
-  text-decoration: none;
+.OtpPage{ 
+  display: flex; 
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
 }
-.forgot2pwd-page{
-  height: 92.8vh;
+
+.OtpPage-img{
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  width: 35vw;
+  margin: 10px;
+  padding: 2px;
 }
-.forgot2pwd-title{
+
+.OtpPage-title{
     font-size: 32px;
     font-weight: 700;
     font-family: 'Montserrat', sans-serif;
     color: black;
     text-align: center;
 }
-.forgot2pwd-form{
+
+.OtpPage-form{
   background-color: white;
   border-radius: 25px;
   margin: 10px auto;
   padding: 7px 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  width: 60%;
+  width: 35vw;
   min-width: 330px;
   max-width: 560px;
 }
-.forgot2pwd-btn{
-    width: 75%;
+
+.OtpPage-btn{
+    width: 85%;
+    font-size: 1.5rem;
     text-align: center;
     margin: 7px auto;
 }
-.atlas-btn{
-    background-color: #007B7F;
-    color: white;
-    width: 100%;
-    border: none;
-    padding: 10px;
-    border-radius: 35px;
-    font-size: 16px;
-    font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
-}
-.forgot2pwd-message{
-    font-size: 20px;
-    font-weight: 400;
-    font-family: 'Merryweather', serif;
-    text-align: center;
-}
-.forgot2pwd-form{
+
+.OtpPage-form{
     padding: 15px;
     font-size: 22px;
     font-weight: 400;

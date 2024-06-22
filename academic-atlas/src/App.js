@@ -11,6 +11,7 @@ import OtpPage from './components/OtpPage';
 import Resetpassword from './components/Resetpassword';
 import MainPage from './components/MainPage';
 import Contribute from './components/Contribute'; 
+import Footer from './components/Footer';
 import { UserProvider } from './contexts/userContext';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/main" element={<MainPage />} />
         <Route path="/contribute" element={<Contribute />} />
       </Routes>
+      <Footer />
       </UserProvider>
     </BrowserRouter>
   );
