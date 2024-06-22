@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react' 
-import { useLocation,useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ResultItem from './ResultItem';
-import '../styles/MainPage.css'
+import '../styles/MainPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
-import { useUser } from '../contexts/userContext'
+import { useUser } from '../contexts/userContext';
 
 export default function MainPage() {
     const location = useLocation();
     const { user } = useUser();
     const navigate = useNavigate();
-    useEffect(()=>{
-        if(user.email===''){
-            setTimeout(()=>{
-                navigate('/login')
-            })
+
+    useEffect(() => {
+        if (user.email === '') {
+            setTimeout(() => {
+                navigate('/login');
+            });
         }
-    },[])
+    }, []);
+
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
     const [examPapers, setExamPapers] = useState([{}]);
     const [branches, setBranches] = useState([]);
@@ -36,42 +38,46 @@ export default function MainPage() {
                 const response = await trackService.getBranches();
                 setBranches(response.data.branches);
                 const response2 = await trackService.getCourses();
-                setCourses(response2.data.courses);
-            }
-            catch (err) {
+                const sortedCourses = response2.data.courses.sort((a, b) => {
+                    const nameA = a.course.substring(a.course.indexOf(' ') + 1);
+                    const nameB = b.course.substring(b.course.indexOf(' ') + 1);
+                    return nameA.localeCompare(nameB);
+                });
+                setCourses(sortedCourses);
+            } catch (err) {
                 console.log(err);
             }
-        }
+        };
         getTracks();
-        // eslint-disable-next-line
-    }, [location])
+        
+    }, [location]);
 
     const handleSearch = async () => {
         try {
             const academicYear = document.getElementById('filterByYear').value;
             const branch = document.getElementById('filterByBranch').value;
-            const course = document.getElementById('filterByCourse').value; 
-            const response = await resourceService.getExam(academicYear, branch, course) 
+            const course = document.getElementById('filterByCourse').value;
+            const response = await resourceService.getExam(academicYear, branch, course);
             setExamPapers(response.data.examPapers);
-        }
-        catch (err) {
+        } catch (err) {
             alert(err);
         }
-    }
+    };
+
     const clearFilters = () => {
         document.getElementById('filterByYear').value = "";
         document.getElementById('filterByBranch').value = "";
         document.getElementById('filterByCourse').value = "";
         handleSearch();
-    }
+    };
+
     useEffect(() => {
         handleSearch();
         // eslint-disable-next-line
-    }, [])
+    }, []);
 
     return (
         <div className="mainpage">
-
             <div className="main-query">
                 <div className="mainpage-heading">
                     <FontAwesomeIcon icon={faFileLines} /> {value}
@@ -80,7 +86,6 @@ export default function MainPage() {
                     <FontAwesomeIcon icon={faSliders} /> Filters
                 </div>
                 <div className="filter-group">
-
                     <div className="mainpage-filters-container">
                         <div className="mainpage-year mainpage-filter-item">
                             <div className="filter-container">
@@ -90,11 +95,9 @@ export default function MainPage() {
                                 <div className="filter-choice">
                                     <select name="mainpage-years-filter" id="filterByYear">
                                         <option value="">Choose Academic Year</option>
-                                        {
-                                            years.map((year) => {
-                                                return <option value={year} key={year}>{year}</option>
-                                            })
-                                        }
+                                        {years.map((year) => {
+                                            return <option value={year} key={year}>{year}</option>;
+                                        })}
                                     </select>
                                 </div>
                             </div>
@@ -107,11 +110,9 @@ export default function MainPage() {
                                 <div className="filter-choice">
                                     <select name="mainpage-branch-filter" id="filterByBranch">
                                         <option value="">Choose Branch</option>
-                                        {
-                                            branches.map((branch) => {
-                                                return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
-                                            })
-                                        }
+                                        {branches.map((branch) => {
+                                            return <option value={branch.branch} key={branch._id}>{branch.branch}</option>;
+                                        })}
                                     </select>
                                 </div>
                             </div>
@@ -124,11 +125,9 @@ export default function MainPage() {
                                 <div className="filter-choice">
                                     <select name="mainpage-course-filter" id="filterByCourse">
                                         <option value="">Choose Course</option>
-                                        {
-                                            courses.map((course) => {
-                                                return <option value={course.course} key={course._id}>{course.course}</option>
-                                            })
-                                        }
+                                        {courses.map((course) => {
+                                            return <option value={course.course} key={course._id}>{course.course}</option>;
+                                        })}
                                     </select>
                                 </div>
                             </div>
@@ -138,9 +137,7 @@ export default function MainPage() {
                         <button onClick={clearFilters}>
                             Clear All
                         </button>
-                        <button
-                            onClick={handleSearch}
-                        >
+                        <button onClick={handleSearch}>
                             Apply
                         </button>
                     </div>
@@ -153,16 +150,16 @@ export default function MainPage() {
                 </div>
                 <div className="mainpage-result-container">
                     <div className="result-container">
-                        {   
-                            examPapers.length === 0 ? <div className="no-results">No Results Found</div> :
+                        {examPapers.length === 0 ? (
+                            <div className="no-results">No Results Found</div>
+                        ) : (
                             examPapers.map((examPaper, index) => {
-                                return <ResultItem key={index} examPaper={examPaper} index={index}/>
+                                return <ResultItem key={index} examPaper={examPaper} index={index} />;
                             })
-                        }
+                        )}
                     </div>
                 </div>
             </div>
-
         </div>
-    )
+    );
 }
