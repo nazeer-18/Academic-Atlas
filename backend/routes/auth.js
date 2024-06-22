@@ -31,18 +31,18 @@ authRoute.post('/register', async (req, res) => {
     const { userName, email, password } = req.body;
     console.log(userName, email, password)
     const user = await User.findOne({ email: email })
-    if (user) {
-        return res.json({
-            success: false,
-            message: 'User already exists'
-        })
-    }
-    const newUser = new User({
-        userName: userName,
-        email: email,
-        password: password 
-    })
     try {
+        if (user) {
+            return res.json({
+                success: false,
+                message: 'User already exists'
+            })
+        }
+        const newUser = new User({
+            userName: userName,
+            email: email,
+            password: password
+        })
         await newUser.save()
         return res.json({
             success: true,
@@ -50,6 +50,7 @@ authRoute.post('/register', async (req, res) => {
         })
     }
     catch (err) {
+        console.log(err)
         return res.json({
             success: false,
             message: 'User not registered, please try again later'
@@ -61,7 +62,7 @@ authRoute.post('/register', async (req, res) => {
 authRoute.post('/verify-mail', async (req, res) => {
     try {
         const { email } = req.body;
-        const user = await User.findOne({ email: email }); 
+        const user = await User.findOne({ email: email });
         if (user) {
             return res.json({
                 success: false,
@@ -70,7 +71,7 @@ authRoute.post('/verify-mail', async (req, res) => {
         else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            sendOTPEmail(email,userName,otp); 
+            sendOTPEmail(email, userName, otp);
             return res.json({
                 success: true,
                 otp: otp
