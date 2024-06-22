@@ -53,6 +53,7 @@
     width:100%;
     min-width: 330px;
     max-width:560px;
+    box-sizing: border-box;
 }
 
 .login-form-component{

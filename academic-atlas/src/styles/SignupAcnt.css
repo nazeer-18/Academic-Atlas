@@ -48,6 +48,7 @@ text-align: center;
     width: 60%;
     min-width: 330px;
     max-width: 560px;
+    box-sizing: border-box;
 }
 
 .signup-acnt-form-component{
@@ -69,7 +70,7 @@ text-align: center;
     }
     .signup-acntlogin-content{
         margin: 10px 0px;
-        width: 100vw;;
+        width: 100vw;
     }
     .signup-acnt-img{
         width:80vw;

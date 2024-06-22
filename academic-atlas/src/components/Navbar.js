@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import logoImage from '../assets/logo.jpg';
@@ -14,6 +14,9 @@ export default function Navbar() {
         const hiddenProfile = document.querySelector('.hidden-profile');
         hiddenProfile.classList.toggle('show-profile');
     }
+    useEffect(()=>{
+        console.log('Navbar rendered');
+    })
     return (
         <div className="nav-page">
             <div className="side-nav">

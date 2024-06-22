@@ -75,7 +75,7 @@ export default function Login() {
                                 <label className="atlas-font" htmlFor="remember-me">Remember Me!</label>
                             </div>
                             <div className="forgotPwd">
-                                <Link className='text-red-merry' to="/forgotpwd">Forgot Password?</Link>
+                                <Link className='text-red-merry' to="/forgotpassword">Forgot Password?</Link>
                             </div>
                         </div>
                         {
