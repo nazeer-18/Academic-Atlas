@@ -20,9 +20,9 @@ export default function Login() {
     })
     const Navigate = useNavigate();
     const handleLogin = async (e) => {
+        e.preventDefault();
         const form = document.getElementById('atlas-form');
         if (!form.checkValidity()) {
-            e.preventDefault();
             form.reportValidity();
         } else {
             try {
@@ -71,6 +71,7 @@ export default function Login() {
                                 type="email"
                                 name="email"
                                 id="email"
+                                required
                                 onChange={(e) => setData({ ...data, email: e.target.value })}
                                 placeholder='Enter your email' />
                         </div>
@@ -82,6 +83,7 @@ export default function Login() {
                                     type={showPwd ? "text" : "password"}
                                     name="password"
                                     id="password"
+                                    required
                                     onChange={(e) => setData({ ...data, password: e.target.value })}
                                     placeholder='Enter your password' />
                                 <span

@@ -3,19 +3,20 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/SignupMail.css'
 import SignUpMailIconImg from '../assets/SignUpMailIcon.svg'
 import userService from '../services/userService'
+import {useUser} from '../contexts/userContext'
 
 export default function SignupMail() {
+    const {user,setUser} = useUser();
     const navigate = useNavigate();
     const [mail, setMail] = useState(null);
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const handleMailVerification = async (e) => {
+        e.preventDefault();
         const form = document.getElementById('atlas-form');
         if (!form.checkValidity()) {
-            e.preventDefault();
             form.reportValidity();
         } else {
-
             try {
                 const response = await userService.verify(mail);
                 const status = response.data.success;
@@ -23,14 +24,23 @@ export default function SignupMail() {
                 if (status) {
                     const otp = response.data.otp;
                     setMessage("Proceeding with email verification");
-                    setTimeout(() => {
-                        navigate('/verifyotp', {
-                            state: {
-                                otp: otp,
-                                email: mail
-                            }
-                        })
-                    }, 1500)
+                    if (otp) {
+                        setTimeout(()=>{
+                            setMessage("Otp sent succesfully")
+                        },1000)
+                        setTimeout(() => {
+                            setUser({...user,email:mail})
+                            navigate('/verifyotp', {
+                                state: {
+                                    otp: otp,
+                                    email: mail
+                                }
+                            })
+                        }, 2500)
+                    }
+                    else {
+                        setMessage("unable to send mail.Please try later")
+                    }
                 } else {
                     setMessage("User already exists with this email. Please login.");
                     setTimeout(() => {

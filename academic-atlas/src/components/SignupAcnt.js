@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "../styles/SignupAcnt.css";
 import SignUpAcntImg from '../assets/SignUpAcntIcon.svg'
+import {useUser} from '../contexts/userContext'
 
 export default function SignupAcnt() {
+    const {user} = useUser();
     const [data, setData] = useState({
         name: "",
         password: "",
@@ -38,6 +40,7 @@ export default function SignupAcnt() {
                                     className="atlas-input"
                                     type="email"
                                     disabled
+                                    value={user.email}
                                     id="email"
                                     name="email" />
                             </div>

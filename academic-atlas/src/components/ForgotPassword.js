@@ -17,7 +17,13 @@ export default function ForgotPassword() {
                     <form action="">
                         <div className="forgot-password-form-component">
                             <label className="atlas-font" htmlFor="">College Email</label> <br />
-                            <input className="atlas-input" type="email" name="email" id="email" placeholder='Enter your email' />
+                            <input
+                                className="atlas-input"
+                                type="email" 
+                                name="email"
+                                id="email"
+                                required
+                                placeholder='Enter your email' />
                         </div>
                         <div className="forgot-password-adds a">
                             Remember your password ?<Link to="/login" className="text-red-merry">Login</Link>
