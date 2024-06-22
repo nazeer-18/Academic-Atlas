@@ -4,11 +4,12 @@ import '../styles/Login.css'
 import { Link } from 'react-router-dom'
 import userService from '../services/userService'
 import LoginImg from '../assets/LoginIcon.svg'
-import { useUser } from '../contexts/userContext'
+import { useUser } from '../contexts/userContext' 
 
 export default function Login() {
     const { user, setUser } = useUser();
     const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false);
     const [data, setData] = useState({
         email: '',
         password: ''
@@ -21,11 +22,16 @@ export default function Login() {
             const sucess = response.data.success;
             setMessage(response.data.message);
             if (sucess) {
+                setSuccess(true);
                 console.log(response.data);
                 setUser(response.data.user);
                 setTimeout(() => {
                     setMessage('');
                     Navigate('/')
+                }, 2000)
+            }else{
+                setTimeout(() => {
+                    setMessage('');
                 }, 2000)
             }
         }
@@ -80,7 +86,7 @@ export default function Login() {
                         </div>
                         {
                             message !== '' &&
-                            <div className="login-reponse-msg">
+                            <div className={`login-reponse-msg ${success}`}>
                                 {message}
                             </div>
                         }
@@ -96,7 +102,7 @@ export default function Login() {
                     <div className="noacnt-signup atlas-font">
                         Don't have an account? <Link to="/signupmail" className="text-red-merry">Sign Up</Link>
                     </div>
-                <script src="localstorage.js"></script>
+                    <script src="localstorage.js"></script>
                 </div>
             </div>
         </div>

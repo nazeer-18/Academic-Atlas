@@ -8,13 +8,13 @@ authRoute.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     if (!user) {
-        return res.status(400).json({
+        return res.json({
             success: false,
             message: 'User not found'
         })
     }
     if (user.password !== password) {
-        return res.status(400).json({
+        return res.json({
             success: false,
             message: 'Invalid password'
         })
@@ -32,7 +32,7 @@ authRoute.post('/register', async (req, res) => {
     console.log(userName, email, password, mobile)
     const user = await User.findOne({ email: email })
     if (user) {
-        return res.status(400).json({
+        return res.json({
             success: false,
             message: 'User already exists'
         })
@@ -45,39 +45,37 @@ authRoute.post('/register', async (req, res) => {
     })
     try {
         newUser.save()
-        return res.status(200).json({
+        return res.json({
             success: true,
             message: 'User registered successfully'
         })
     }
     catch (err) {
-        return res.status(400).json({
+        return res.json({
             success: false,
             message: 'User not registered'
         })
     }
 })
 //verify email route
-authRoute.post('/verify', async (req, res) => {
+authRoute.post('/verify-mail', async (req, res) => { 
     try {
         const { email } = req.body;
         const user = await User.findOne({ email: email })
-        if (!user) {
-            return res.status(400).json({
+        if (user) {
+            return res.json({
                 success: false,
-                message: 'User not found, please register'
             })
         }
         else {
             sendOTPEmail(email, user.userName);
-            return res.status(200).json({
-                success: true,
-                message: 'OTP sent successfully'
+            return res.json({
+                success: true, 
             })
         }
     }
     catch (err) {
-        return res.status(500).json({
+        return res.json({
             success: false,
             message: 'Internal server error'
         })

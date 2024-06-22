@@ -26,6 +26,7 @@
     justify-content: center; 
     min-width: 320px;
     margin: 10px;
+    width:35vw;
 }
 
 .login-title{
@@ -57,9 +58,12 @@
 }
 
 .login-form-component{
-    padding: 5px;
+    padding: 5px 10px;
     font-size:22px;
     font-weight: 400;
+    width:100%;
+    margin: 5px auto;
+    box-sizing: border-box; 
 }
 
 .atlas-label{
@@ -69,7 +73,7 @@
 }
 
 .atlas-input{
-    width: 95%;
+    width: 100%;
     margin-top: 5px;
     padding: 10px 5px;
     border: 1px solid #007B7F;
@@ -78,14 +82,16 @@
     font-weight: 400;
     font-family: 'Montserrat', sans-serif;
     background: #E0E0E0;
-
 }
 
 .login-adds{
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    margin: 0px 18px 10px 5px;
+    margin: 0px 18px 7px 5px; 
+    width: 100%;
+    min-width: 320px;
+    box-sizing: border-box;
 }
 
 .remember-me input{
@@ -93,7 +99,7 @@
 }
 
 .login-btn{
-    width: 75%;
+    width: 90%;
     text-align: center;
     margin: 7px auto;
 }
@@ -101,7 +107,7 @@
 .atlas-btn{
     background-color: #296FE0;
     color: white;
-    width: 100%;
+    width: 90%;
     border: none;
     padding: 10px;
     border-radius: 35px;
@@ -123,13 +129,36 @@
     font-size: 20px;
 }
 
+.login-reponse-msg{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Merryweather', serif;
+    color: #F00731;
+    background-color: rgb(214, 222, 214);
+    border-radius: 18px;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+.true{
+    color: #0A7A0A; 
+}
+
+.false{
+    color: #F00731;
+}
+
 @media(max-width:666px){
     .login-page{
         justify-content: center;
     }
+    .login-adds{
+        width:auto;
+    }
     .login-content{
         margin: 10px 0px;
-        width: 100vw;;
+        width: 100vw;
     }
     .login-img{
         width:80vw;

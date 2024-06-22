@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/ForgotPassword.css';
+import '../styles/OtpPage.css';
 import { Link } from 'react-router-dom';
 import Forgot2pwdImg from '../assets/OTP.svg';
-export default function ForgotPassword(){
+export default function OtpPage(){
     return (
         <div className="forgot-password-page">
             <div className="Forgotpwd-img">
