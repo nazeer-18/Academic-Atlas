@@ -1,28 +1,21 @@
 const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
-dotenv.config();
-// Generate a random 6-digit OTP
-const generateOTP = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-};
+require('dotenv').config();
 
-// Send OTP email
-const sendOTPEmail = async (userEmail, userName) => {
-    const otp = generateOTP();
-    // Create a transporter object using your email service credentials
-    let transporter = nodemailer.createTransport({
-        service: 'gmail', // Replace with your email service
-        auth: {
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
         user: process.env.ADMIN_MAIL,
         pass: process.env.MAIL_PASSWORD
     },
-    });
+});
 
-    // Set up email data
-    let mailOptions = {
-        from: '"Academic atlas" <your-email@gmail.com>', // Sender address
-        to: userEmail, // List of receivers
-        subject: 'Your OTP for Verification', // Subject line
+const serverUrl = process.env.SERVER_URL;
+
+const sendOTPEmail = async (emailId, userName, otp) => {
+    const mailContent = {
+        from: process.env.ADMIN_MAIL,
+        to: emailId,
+        subject: 'Otp to reset your password',
         html: `
             <p>Dear ${userName},</p>
             <p>We have received a request to verify your email address. To complete the verification process, please use the One-Time Password (OTP) provided below:</p>
@@ -41,14 +34,14 @@ const sendOTPEmail = async (userEmail, userName) => {
         `
     };
 
-    // Send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailContent, (error, info) => {
         if (error) {
-            return console.log(error);
+            console.log('Error occurred while sending mail');
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
         }
-        console.log('Message sent: %s', info.messageId);
     });
 };
 
-// Call the function with the user's email and name
 module.exports = sendOTPEmail;

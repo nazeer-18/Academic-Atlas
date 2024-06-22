@@ -13,13 +13,14 @@ export default function SignupMail() {
         e.preventDefault();
         try{
             const response = await userService.verify(mail);
-            const success = response.data.success;
-            setSuccess(success);
-            if(success){
-                setTimeout(()=>{
-                    navigate('/verify-otp')
-                },1500)
+            const status = response.data.success;
+            setSuccess(status); 
+            if(status){
+                const otp = response.data.otp;
                 setMessage("Proceeding with email verification");
+                setTimeout(()=>{
+                    navigate('/verifyotp')
+                },1500)
             }else{
                 setMessage("User already exists with this email. Please login.");
                 setTimeout(()=>{

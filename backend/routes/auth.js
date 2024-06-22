@@ -57,30 +57,36 @@ authRoute.post('/register', async (req, res) => {
         })
     }
 })
+
 //verify email route
-authRoute.post('/verify-mail', async (req, res) => { 
+authRoute.post('/verify-mail', async (req, res) => {
     try {
         const { email } = req.body;
-        const user = await User.findOne({ email: email })
+        const user = await User.findOne({ email: email }); 
         if (user) {
             return res.json({
                 success: false,
             })
         }
         else {
-            sendOTPEmail(email, user.userName);
+            const userName = email;
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            sendOTPEmail(email,userName,otp); 
             return res.json({
-                success: true, 
+                success: true,
+                otp: otp
             })
         }
     }
     catch (err) {
-        return res.json({
+        console.log(err)
+        return res.status(500).json({
             success: false,
             message: 'Internal server error'
         })
     }
 })
+
 //reset password route
 authRoute.post('/reset', async (req, res) => {
     try {
