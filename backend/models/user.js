@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     userName :{
         type: String,
-        required: true,
-        unique: true,
+        required: true
     },
     email : {
         type: String,
@@ -15,11 +14,7 @@ const userSchema = new Schema({
     password : {
         type: String,
         required: true,
-    },
-    mobile :{
-        type: Number,
-        required: true,
-    },
+    }, 
     role:{
         type: String,
         default: 'user' // user, admin

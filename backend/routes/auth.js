@@ -28,8 +28,8 @@ authRoute.post('/login', async (req, res) => {
 
 //register route
 authRoute.post('/register', async (req, res) => {
-    const { userName, email, password, mobile } = req.body;
-    console.log(userName, email, password, mobile)
+    const { userName, email, password } = req.body;
+    console.log(userName, email, password)
     const user = await User.findOne({ email: email })
     if (user) {
         return res.json({
@@ -40,20 +40,19 @@ authRoute.post('/register', async (req, res) => {
     const newUser = new User({
         userName: userName,
         email: email,
-        password: password,
-        mobile: mobile
+        password: password 
     })
     try {
-        newUser.save()
+        await newUser.save()
         return res.json({
             success: true,
-            message: 'User registered successfully'
+            message: 'User registered successfully, Please login to continue'
         })
     }
     catch (err) {
         return res.json({
             success: false,
-            message: 'User not registered'
+            message: 'User not registered, please try again later'
         })
     }
 })

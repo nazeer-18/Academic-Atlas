@@ -30,8 +30,7 @@ export default function Login() {
                 const sucess = response.data.success;
                 setMessage(response.data.message);
                 if (sucess) {
-                    setSuccess(true);
-                    console.log(response.data);
+                    setSuccess(true); 
                     setUser(response.data.user);
                     setTimeout(() => {
                         setMessage('');

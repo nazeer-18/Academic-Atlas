@@ -8,7 +8,7 @@ import {useUser} from '../contexts/userContext'
 export default function SignupMail() {
     const {user,setUser} = useUser();
     const navigate = useNavigate();
-    const [mail, setMail] = useState(null);
+    const [mail, setMail] = useState(null); 
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const handleMailVerification = async (e) => {
