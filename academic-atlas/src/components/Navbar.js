@@ -1,31 +1,53 @@
-import React,{useEffect} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import logoImage from '../assets/logo.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars,faHouse,faFileLines ,faDiagramProject, faPlus,faAnglesLeft,faUser,faAnglesRight} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHouse, faFileLines, faDiagramProject, faPlus, faAnglesLeft, faUser, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
+    const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const sideNavRef = useRef(null);
+    const profileRef = useRef(null);
+
     const handleSideNav = () => {
-        const hiddenSideNav = document.querySelector('.hidden-side-nav');
-        hiddenSideNav.classList.toggle('show-side-nav');
+        setIsSideNavOpen(!isSideNavOpen);
+        setIsProfileOpen(false);
     }
-    const handleProfile = () =>{
-        const hiddenProfile = document.querySelector('.hidden-profile');
-        hiddenProfile.classList.toggle('show-profile');
+
+    const handleProfile = () => {
+        setIsProfileOpen(!isProfileOpen);
+        setIsSideNavOpen(false);
     }
-    useEffect(()=>{
-        console.log('Navbar rendered');
-    })
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sideNavRef.current && !sideNavRef.current.contains(event.target) && 
+                !event.target.closest('.hamburger')) {
+                setIsSideNavOpen(false);
+            }
+            if (profileRef.current && !profileRef.current.contains(event.target) && 
+                !event.target.closest('.user-icon')) {
+                setIsProfileOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <div className="nav-page">
             <div className="side-nav">
                 <div className="hamburger" onClick={handleSideNav}>
                     <FontAwesomeIcon icon={faBars} />
                 </div>
-                <div className="hidden-side-nav">
+                <div className={`hidden-side-nav ${isSideNavOpen ? 'show-side-nav' : ''}`} ref={sideNavRef}>
                     <div className="sidenav-head" onClick={handleSideNav}>
-                        <FontAwesomeIcon icon={faAnglesLeft}  />  Go Back
+                        <FontAwesomeIcon icon={faAnglesLeft} />  Go Back
                     </div>
                     <div className="sidenav-content">
                         <Link to="/" onClick={handleSideNav}>
@@ -63,15 +85,15 @@ export default function Navbar() {
             </div>
             <div className="navbar-header">
                 <Link to="/">
-                <img src={logoImage} alt="logo" />
-                Academic Atlas
+                    <img src={logoImage} alt="logo" />
+                    Academic Atlas
                 </Link>
             </div>
-            <div className="user-icon">
-                <FontAwesomeIcon icon={faUser} onClick={handleProfile} />
-                <div className="hidden-profile">
-                <div className="profile-head" onClick={handleProfile}>
-                        Go Back <FontAwesomeIcon icon={faAnglesRight}  />  
+            <div className="user-icon" onClick={handleProfile}>
+                <FontAwesomeIcon icon={faUser} />
+                <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
+                    <div className="profile-head" onClick={handleProfile}>
+                        Go Back <FontAwesomeIcon icon={faAnglesRight} />  
                     </div>
                     <div className="">
                         TBD
