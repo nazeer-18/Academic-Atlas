@@ -12,6 +12,7 @@ import Resetpassword from './components/Resetpassword';
 import MainPage from './components/MainPage';
 import Contribute from './components/Contribute'; 
 import Footer from './components/Footer';
+import ContactUs from './components/ContactUs';
 import { UserProvider } from './contexts/userContext';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/resetpassword" element={<Resetpassword />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/contribute" element={<Contribute />} />
+        <Route path="/contactus" element={<ContactUs />} />
       </Routes>
       <Footer />
       </UserProvider>

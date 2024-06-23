@@ -23,7 +23,7 @@ export default function Footer() {
                             <a href="/faq">FAQ</a>
                         </div>
                         <div className="footer-link">
-                            <a href="/contact-support">Contact/Support</a>
+                            <a href="/ContactUs">Contact/Support</a>
                         </div>
                     </div>
                 </div>
