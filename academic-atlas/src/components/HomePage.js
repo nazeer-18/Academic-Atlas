@@ -41,9 +41,9 @@ export default function HomePage() {
                 <Link to="/main?value=Research Papers">
                     <div className="home-item">Research Papers</div>
                 </Link>
-                <Link to="courses">
+                {/* <Link to="courses">
                     <div className="home-item">Courses</div>
-                </Link>
+                </Link> */}
             </div>
         </div>
     )
