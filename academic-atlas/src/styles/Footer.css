@@ -1,5 +1,5 @@
 .footer-page {
-    background-color: #96999b;
+    background-color: #4056aab0;
     padding: 5px;
     height: 50px;  
     bottom: 0;
@@ -43,5 +43,5 @@
 }
 
 .footer-link a:hover {
-    color: #007bff;
+    color: #290BEA
 }

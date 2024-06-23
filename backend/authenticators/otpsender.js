@@ -11,16 +11,19 @@ const transporter = nodemailer.createTransport({
 
 const serverUrl = process.env.SERVER_URL;
 
-const sendOTPEmail = async (emailId, userName, otp) => {
+const sendOTPEmail = async (emailId, userName, otp, choice) => {
+    let subject = '';
     const mailContent = {
         from: process.env.ADMIN_MAIL,
         to: emailId,
-        subject: 'Otp to verify your email',
+        subject: (choice === "mail") ? 'Email verification for Academic Atlas' : "Otp to reset password for Academic Atlas",
         html: `
             <p>Dear ${userName},</p>
-            <p>We have received a request to verify your email address. To complete the verification process, please use the One-Time Password (OTP) provided below:</p>
+            <p>Greetings from Academic Atlas!</p>
+            ${choice === "mail" ? `<p>Thank you for registering with us. Please verify your email address to complete the registration process.</p>` : `<p>We have received a request to reset your password. To complete the password reset process, please use the One-Time Password (OTP) provided below:</p>`}
+            <hr>
             <h2>Your OTP: ${otp}</h2>
-            <p>Please enter this OTP in the verification screen to confirm your email address. This OTP is valid for the next 10 minutes.</p>
+            <hr>
             <p>If you did not request this verification, please ignore this email. Your account will remain secure.</p>
             <p>Thank you for using our service!</p>
             <p>Best regards,</p>

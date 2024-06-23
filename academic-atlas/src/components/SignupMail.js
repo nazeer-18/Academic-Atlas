@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/SignupMail.css'
 import SignUpMailIconImg from '../assets/SignUpMailIcon.svg'
 import userService from '../services/userService'
-import {useUser} from '../contexts/userContext'
+import { useUser } from '../contexts/userContext'
 
 export default function SignupMail() {
-    const {user,setUser} = useUser();
+    const { user, setUser } = useUser();
     const navigate = useNavigate();
-    const [mail, setMail] = useState(null); 
+    const [mail, setMail] = useState(null);
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const handleMailVerification = async (e) => {
@@ -25,15 +25,16 @@ export default function SignupMail() {
                     const otp = response.data.otp;
                     setMessage("Proceeding with email verification");
                     if (otp) {
-                        setTimeout(()=>{
-                            setMessage("Otp sent succesfully")
-                        },1000)
                         setTimeout(() => {
-                            setUser({...user,email:mail})
+                            setMessage("Otp sent succesfully")
+                        }, 1000)
+                        setTimeout(() => {
+                            setUser({ ...user, email: mail })
                             navigate('/verifyotp', {
                                 state: {
                                     otp: otp,
-                                    email: mail
+                                    email: mail,
+                                    choice: "signup"
                                 }
                             })
                         }, 2500)
@@ -78,7 +79,7 @@ export default function SignupMail() {
                                 id="email"
                                 name="email"
                                 required
-                                placeholder="Enter your college email" />
+                                placeholder="Enter your email" />
                         </div>
                         <div>
                             By continuing, you agree to our <span className="text-red-merry">Terms of Service</span> and <span className="text-red-merry">Privacy Policy</span>
