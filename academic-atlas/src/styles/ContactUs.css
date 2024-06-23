@@ -4,14 +4,12 @@
     align-items: center;
     padding: 50px;
     background-color: #e6f0fa;
-    min-height: 100vh;
 }
 
-h1 {
+.contact-page h1 {
     color: #333;
     margin-bottom: 20px;
-    font-family:dancing script;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 .contact-card {
@@ -22,6 +20,10 @@ h1 {
     padding-top: 10px;
     max-width: 400px;
     text-align: center;
+}
+.contact-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .contact-card h2 {
