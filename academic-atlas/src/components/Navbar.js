@@ -113,7 +113,7 @@ export default function Navbar() {
                                 <FontAwesomeIcon icon={faHandsHelping} /> My Contributions
                             </div>
                         </Link>
-                        <Link to="/change-password" onClick={handleProfile}>
+                        <Link to="/updatePassword" onClick={handleProfile}>
                             <div className="profile-item">
                                 <FontAwesomeIcon icon={faKey} /> Change Password
                             </div>
