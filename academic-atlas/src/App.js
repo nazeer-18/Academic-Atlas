@@ -13,6 +13,7 @@ import MainPage from './components/MainPage';
 import Contribute from './components/Contribute'; 
 import Footer from './components/Footer';
 import MyContributions from './components/MyContributions';
+import UpdatePassword from './components/UpdatePassword';
 import { UserProvider } from './contexts/userContext';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/main" element={<MainPage />} />
         <Route path="/contribute" element={<Contribute />} />
         <Route path="/myContributions" element={<MyContributions/>}/>
+        <Route path="/updatePassword" element={<UpdatePassword/>}/>
       </Routes>
       <Footer />
       </UserProvider>
