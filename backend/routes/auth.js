@@ -71,8 +71,40 @@ authRoute.post('/verify-mail', async (req, res) => {
         else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            sendOTPEmail(email, userName, otp);
+            sendOTPEmail(email, userName, otp, "mail");
             return res.json({
+                success: true,
+                otp: otp
+            })
+        }
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+})
+
+//verify forgot email route
+authRoute.post('/verify-forgot-mail', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({
+            email: email
+        });
+        if (!user) {
+            return res.json({
+                success: false,
+                message: 'User not found, please register first'
+            })
+        }
+        else {
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            sendOTPEmail(email, user.userName, otp, "forgot");
+            return res.json({
+                message: "Otp sent successfully",
                 success: true,
                 otp: otp
             })
@@ -94,22 +126,22 @@ authRoute.post('/reset', async (req, res) => {
         const user = await User
             .findOne({ email: email })
         if (!user) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: 'User not found'
             })
         }
         else {
             user.password = password;
-            user.save();
-            return res.status(200).json({
+            await user.save();
+            return res.json({
                 success: true,
                 message: 'Password reset successfully'
             })
         }
     }
     catch (err) {
-        return res.status(500).json({
+        return res.json({
             success: false,
             message: 'Internal server error'
         })

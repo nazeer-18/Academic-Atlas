@@ -12,6 +12,7 @@ export default function OtpPage() {
     const [success, setSuccess] = useState(false);
     const [otp, setOtp] = useState(null);
     const email = location.state.email;
+    const next = (location.state.choice==="signup")?"/signupacnt":"/resetpassword";
     useEffect(() => {
         setOtp(location.state.otp);
         if (location.state.otp === null) {
@@ -24,7 +25,7 @@ export default function OtpPage() {
             setMessage("OTP verified successfully");
             setSuccess(true);
             setTimeout(() => {
-                navigate('/signupacnt', {
+                navigate(next, {
                     state: {
                         email: email
                     }

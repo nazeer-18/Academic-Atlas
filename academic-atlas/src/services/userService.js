@@ -12,7 +12,10 @@ class userService {
         return axios.post(server_url + '/api/auth/resetpwd', { email, password });
     }
     verify(email) {
-        return axios.post(server_url + '/api/auth/verify-mail', { email });
+        return axios.post(server_url + '/api/auth/verify-mail', { email, });
+    }
+    verifyForgot(email) {
+        return axios.post(server_url + '/api/auth/verify-forgot-mail', { email });
     }
 }
 
