@@ -12,7 +12,9 @@ import Resetpassword from './components/Resetpassword';
 import MainPage from './components/MainPage';
 import Contribute from './components/Contribute'; 
 import Footer from './components/Footer'; 
+import Faq from './components/Faq';
 import ContactUs from './components/ContactUs'; 
+import Curriculum from './components/Curriculum';
 import MyContributions from './components/MyContributions'; 
 import { UserProvider } from './contexts/userContext';
 
@@ -33,6 +35,8 @@ function App() {
         <Route path="/contribute" element={<Contribute />} /> 
         <Route path="/contactus" element={<ContactUs />} /> 
         <Route path="/myContributions" element={<MyContributions/>}/> 
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/curriculum" element={<Curriculum />} />
       </Routes>
       <Footer />
       </UserProvider>
