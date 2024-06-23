@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+.my-contributions {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.my-contributions h1 {
+  text-align: center;
+  color: black;
+  margin-bottom: 40px;
+  font-size: 2.8em;
+  font-weight: 600;
+  letter-spacing: -1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.my-contributions h1::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #6c5ce7;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.contributions-container {
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.contribution-card {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  width: 180px;
+}
+
+.contribution-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #6c5ce7;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.contribution-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(108, 92, 231, 0.15);
+}
+
+.contribution-card:hover::before {
+  transform: scaleX(1);
+}
+
+.card-icon {
+  font-size: 2.4em;
+  color: #6c5ce7;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card-content {
+  flex-grow: 1;
+  display: flex;
+  width: 180px;;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contribution-card h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.contribution-card p {
+  color: #7f8c8d;
+  margin-bottom: 15px;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.count {
+  font-weight: 600;
+  color: #6c5ce7;
+  font-size: 1.2em;
+}
+
+.manage-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #6c5ce7;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85em;
+  margin-top: 15px;
+}
+
+.manage-btn:hover {
+  background-color: #5649c9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+.arrow-icon {
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+}
+
+.manage-btn:hover .arrow-icon {
+  transform: translateX(3px);
+}
+
+@media (max-width: 1024px) {
+  .contributions-container {
+    flex-wrap: wrap;
+  }
+
+  .contribution-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-contributions h1 {
+    font-size: 2.4em;
+  }
+  
+  .contributions-container {
+    flex-direction: column;
+  }
+
+  .contribution-card {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}

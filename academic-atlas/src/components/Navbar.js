@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 import logoImage from '../assets/logo.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faHouse, faFileLines, faDiagramProject, faPlus, faAnglesLeft, faUser, faAnglesRight, faSignOutAlt, faUserEdit, faKey, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHouse, faFileLines, faDiagramProject, faPlus, faAnglesLeft, faUser,faSignOutAlt, faUserEdit, faKey, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
+import {useUser} from '../contexts/userContext';
 
 export default function Navbar() {
+    const navigate = useNavigate();
+    const {user,setUser} = useUser();
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const sideNavRef = useRef(null);
@@ -17,8 +20,15 @@ export default function Navbar() {
     }
 
     const handleProfile = () => {
-        setIsProfileOpen(!isProfileOpen);
-        setIsSideNavOpen(false);
+        if(user.email!==''){
+            setIsProfileOpen(!isProfileOpen);
+            setIsSideNavOpen(false);
+        }
+    }
+
+    const handleLogout = () => {
+        setUser({email:'',name:'',role:''});
+        navigate("/login")
     }
 
     useEffect(() => {
@@ -93,26 +103,24 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faUser} />
                 <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
                     <div className="profile-content">
-                        <Link to="/edit-profile" onClick={handleProfile}>
+                        <Link to="/view-profile" onClick={handleProfile}>
                             <div className="profile-item">
-                                <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
+                                <FontAwesomeIcon icon={faUserEdit} /> View Profile
+                            </div>
+                        </Link>
+                        <Link to="/myContributions" onClick={handleProfile}>
+                            <div className="profile-item">
+                                <FontAwesomeIcon icon={faHandsHelping} /> My Contributions
                             </div>
                         </Link>
                         <Link to="/change-password" onClick={handleProfile}>
                             <div className="profile-item">
                                 <FontAwesomeIcon icon={faKey} /> Change Password
                             </div>
-                        </Link>
-                        <Link to="/my-contributions" onClick={handleProfile}>
-                            <div className="profile-item">
-                                <FontAwesomeIcon icon={faHandsHelping} /> My Contributions
-                            </div>
-                        </Link>
-                        <Link to="/logout" onClick={handleProfile}>
-                            <div className="profile-item">
+                        </Link> 
+                            <div className="profile-item" onClick={handleLogout}>
                                 <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-                            </div>
-                        </Link>
+                            </div> 
                     </div>
                 </div>
             </div>
