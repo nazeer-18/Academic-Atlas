@@ -11,6 +11,14 @@ export default function Navbar() {
     const {user,setUser} = useUser();
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [hideButtons,setHideButtons] = useState(false);
+    useEffect(()=>{
+        if(user.userName===''){
+            setHideButtons(true);
+        }else{
+            setHideButtons(false);
+        }
+    },[user])
     const sideNavRef = useRef(null);
     const profileRef = useRef(null);
 
@@ -23,11 +31,12 @@ export default function Navbar() {
         if(user.email!==''){
             setIsProfileOpen(!isProfileOpen);
             setIsSideNavOpen(false);
-        }
+        }   
     }
 
     const handleLogout = () => {
         setUser({email:'',name:'',role:''});
+        localStorage.removeItem('loggedInUser');
         navigate("/login")
     }
 
@@ -51,6 +60,9 @@ export default function Navbar() {
 
     return (
         <div className="nav-page">
+            {
+                !hideButtons &&
+
             <div className="side-nav">
                 <div className="hamburger" onClick={handleSideNav}>
                     <FontAwesomeIcon icon={faBars} />
@@ -93,12 +105,15 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+            }
             <div className="navbar-header">
                 <Link to="/">
                     <img src={logoImage} alt="logo" />
                     Academic Atlas
                 </Link>
             </div>
+            {
+                !hideButtons &&
             <div className="user-icon" onClick={handleProfile}>
                 <FontAwesomeIcon icon={faUser} />
                 <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
@@ -124,6 +139,7 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+    }
         </div>
     );
 }
