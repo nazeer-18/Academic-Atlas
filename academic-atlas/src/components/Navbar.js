@@ -93,19 +93,19 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faUser} />
                 <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
                     <div className="profile-content">
-                        <Link to="/edit-profile" onClick={handleProfile}>
+                        <Link to="/view-profile" onClick={handleProfile}>
                             <div className="profile-item">
-                                <FontAwesomeIcon icon={faUserEdit} /> Edit Profile
+                                <FontAwesomeIcon icon={faUserEdit} /> View Profile
+                            </div>
+                        </Link>
+                        <Link to="/myContributions" onClick={handleProfile}>
+                            <div className="profile-item">
+                                <FontAwesomeIcon icon={faHandsHelping} /> My Contributions
                             </div>
                         </Link>
                         <Link to="/change-password" onClick={handleProfile}>
                             <div className="profile-item">
                                 <FontAwesomeIcon icon={faKey} /> Change Password
-                            </div>
-                        </Link>
-                        <Link to="/my-contributions" onClick={handleProfile}>
-                            <div className="profile-item">
-                                <FontAwesomeIcon icon={faHandsHelping} /> My Contributions
                             </div>
                         </Link>
                         <Link to="/logout" onClick={handleProfile}>
