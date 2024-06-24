@@ -38,6 +38,7 @@ export default function Navbar() {
         setUser({email:'',name:'',role:''});
         localStorage.removeItem('loggedInUser');
         navigate("/login")
+        window.location.reload();
     }
 
     useEffect(() => {

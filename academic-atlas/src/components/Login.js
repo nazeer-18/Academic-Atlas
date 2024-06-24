@@ -36,13 +36,15 @@ export default function Login() {
             try {
                 const response = await userService.login(data);
                 const success = response.data.success;
+                setSuccess(success)
                 setMessage(response.data.message);
                 if (success) {
-                    setSuccess(true); 
                     const userData = response.data.user;
                     setUser(userData);
-                    if(checked){
+                    if (checked) {
                         localStorage.setItem('loggedInUser', JSON.stringify(userData));
+                    } else {
+                        setUser(response.data.user);
                     }
                     setTimeout(() => {
                         setMessage('');
