@@ -120,7 +120,7 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
 })
 
 //reset password route
-authRoute.post('/reset', async (req, res) => {
+authRoute.post('/resetpassword', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User
@@ -137,6 +137,35 @@ authRoute.post('/reset', async (req, res) => {
             return res.json({
                 success: true,
                 message: 'Password reset successfully'
+            })
+        }
+    }
+    catch (err) {
+        return res.json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+})
+
+//change name
+authRoute.post('/change-name', async (req, res) => {
+    try {
+        const { email, userName } = req.body; 
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+        else {
+            user.userName = userName;
+            await user.save(); 
+            return res.json({
+                success: true,
+                message: 'Name changed successfully',
+                user:user
             })
         }
     }

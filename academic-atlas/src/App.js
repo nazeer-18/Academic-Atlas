@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
@@ -21,20 +21,42 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import RegisterRoutes from './components/RegisterRoutes';
 import ViewProfile from './components/ViewProfile';
 import Feedback from './components/Feedback';
+import userService from './services/userService'
 import { UserProvider } from './contexts/userContext';
 
-function App() { 
+function App() {
   useEffect(() => {
-    const clearSessionStorage = () => {
-      sessionStorage.clear();
+    const reDirectLogin = async () => {
+      if (window.location.pathname === '/login') return;
       const userInLocalStorage = localStorage.getItem('loggedInUser');
-      if (!userInLocalStorage && window.location.pathname !== '/login') {
-        window.location.href="/login";
+      const userInSessionStorage = sessionStorage.getItem('loggedInUser');
+      if (!userInLocalStorage && !userInSessionStorage && window.location.pathname !== '/login') {
+        window.location.href = "/login";
+      } else {
+        try {
+          const user = (userInLocalStorage) ? JSON.parse(userInLocalStorage) : JSON.parse(userInSessionStorage);
+          const response = await userService.login(user);
+          const success = response.data.success;
+          const userData = response.data.user;
+          if (!success) {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = "/login";
+          } else {
+            if (userInLocalStorage) {
+              localStorage.setItem('loggedInUser', JSON.stringify(userData));
+            } else {
+              sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
       }
-    };
-    window.addEventListener('load', clearSessionStorage);
+    }
+    window.addEventListener('load', reDirectLogin);
     return () => {
-      window.removeEventListener('load', clearSessionStorage);
+      window.removeEventListener('load', reDirectLogin);
     };
   }, []);
   return (

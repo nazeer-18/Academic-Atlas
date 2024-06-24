@@ -10,10 +10,22 @@ export function UserProvider({ children }) {
     });
     const [logged, setLogged] = useState(false);
     useEffect(() => {
-        const userInLocalStorage = localStorage.getItem('loggedInUser');
-        if (userInLocalStorage) {
-            setLogged(true);
-            setUser(JSON.parse(userInLocalStorage));
+        const resetUser =()=>{
+            const userInLocalStorage = localStorage.getItem('loggedInUser');
+            const userInSessionStorage = sessionStorage.getItem('loggedInUser');
+            if (userInLocalStorage) {
+                setLogged(true);
+                setUser(JSON.parse(userInLocalStorage));
+            }
+            else if (userInSessionStorage) {
+                setLogged(true);
+                setUser(JSON.parse(userInSessionStorage));
+            }
+        }
+        resetUser();
+        window.addEventListener('load',resetUser);
+        return()=>{
+            window.removeEventListener('load',resetUser);
         }
     }, []);
     return (

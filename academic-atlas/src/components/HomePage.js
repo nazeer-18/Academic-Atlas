@@ -5,7 +5,10 @@ import landingIcon from '../assets/landingPageIcon.svg'
 import { useUser } from '../contexts/userContext'
 
 export default function HomePage() {
-    const { user } = useUser();
+    const { user ,setUser} = useUser();
+    useEffect(()=>{ 
+        setUser(user)
+    },[user])
     return (
         <div className="home-page">
             <div className="home-greeting">

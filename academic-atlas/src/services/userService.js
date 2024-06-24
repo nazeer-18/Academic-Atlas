@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server_url = 'http://localhost:8080' || 'https://academic-atlas-server.onrender.com';
+const server_url = 'https://academic-atlas-server.onrender.com';
 
 class userService {
     login(data) {
@@ -16,6 +16,9 @@ class userService {
     }
     verifyForgot(email) {
         return axios.post(server_url + '/api/auth/verify-forgot-mail', { email });
+    }
+    changeName(email, userName) {
+        return axios.post(server_url + '/api/auth/change-name', { email, userName });
     }
 }
 
