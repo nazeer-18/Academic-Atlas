@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import '../styles/Login.css'
-import { Link } from 'react-router-dom'
-import userService from '../services/userService'
-import LoginImg from '../assets/LoginIcon.svg'
-import { useUser } from '../contexts/userContext'
-import { FaEye } from "react-icons/fa";
-import { FaRegEyeSlash } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
+import { Link } from 'react-router-dom';
+import userService from '../services/userService';
+import LoginImg from '../assets/LoginIcon.svg';
+import { useUser } from '../contexts/userContext';
+import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 
 export default function Login() {
     const { setUser } = useUser();
@@ -17,8 +16,17 @@ export default function Login() {
     const [data, setData] = useState({
         email: '',
         password: ''
-    })
+    });
     const Navigate = useNavigate();
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            setUser(JSON.parse(loggedInUser));
+            Navigate(-1);
+        }
+    }, [Navigate, setUser]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         const form = document.getElementById('atlas-form');
@@ -27,19 +35,23 @@ export default function Login() {
         } else {
             try {
                 const response = await userService.login(data);
-                const sucess = response.data.success;
+                const success = response.data.success;
                 setMessage(response.data.message);
-                if (sucess) {
+                if (success) {
                     setSuccess(true); 
-                    setUser(response.data.user);
+                    const userData = response.data.user;
+                    setUser(userData);
+                    if(checked){
+                        localStorage.setItem('loggedInUser', JSON.stringify(userData));
+                    }
                     setTimeout(() => {
                         setMessage('');
-                        Navigate('/')
-                    }, 2000)
+                        Navigate('/');
+                    }, 2000);
                 } else {
                     setTimeout(() => {
                         setMessage('');
-                    }, 2000)
+                    }, 2000);
                 }
             }
             catch (err) {
@@ -47,24 +59,24 @@ export default function Login() {
                 setMessage('Server is Down, please try again later');
                 setTimeout(() => {
                     setMessage('');
-                }, 2000)
+                }, 2000);
             }
         }
     }
+
     return (
         <div className="login-page">
             <div className="login-img">
                 <img src={LoginImg} alt="login" />
             </div>
             <div className="login-content">
-
                 <div className="login-title atlas-title">
                     Login
                 </div>
                 <div className="login-form">
                     <form id="atlas-form">
                         <div className="login-form-component">
-                            <label className="atlas-font" htmlFor="">College Email</label> <br />
+                            <label className="atlas-font" htmlFor=" ">College Email</label> <br />
                             <input
                                 className="atlas-input"
                                 type="email"
@@ -75,7 +87,7 @@ export default function Login() {
                                 placeholder='Enter your email' />
                         </div>
                         <div className="login-form-component">
-                            <label className="atlas-font" htmlFor="">Password</label> <br />
+                            <label className="atlas-font" htmlFor=" ">Password</label> <br />
                             <div className="password-group password-input-group">
                                 <input
                                     className="atlas-input"
@@ -88,10 +100,7 @@ export default function Login() {
                                 <span
                                     className="eye-display"
                                     onClick={() => setShowPwd((prev) => !prev)}>
-                                    {showPwd
-                                        ? (<FaRegEyeSlash title="hide" />)
-                                        : (<FaEye title="show" />)
-                                    }
+                                    {showPwd ? (<FaRegEyeSlash title="hide" />) : (<FaEye title="show" />)}
                                 </span>
                             </div>
                         </div>
@@ -113,7 +122,7 @@ export default function Login() {
                         </div>
                         {
                             message !== '' &&
-                            <div className={`login-reponse-msg ${success}`}>
+                            <div className={`login-response-msg ${success ? 'success' : 'error'}`}>
                                 {message}
                             </div>
                         }
@@ -129,7 +138,6 @@ export default function Login() {
                     <div className="noacnt-signup atlas-font">
                         Don't have an account? <Link to="/signupmail" className="text-red-merry">Sign Up</Link>
                     </div>
-                    <script src="localstorage.js"></script>
                 </div>
             </div>
         </div>

@@ -1,13 +1,11 @@
-import React,{useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ForgotPassword.css';
 import { Link } from 'react-router-dom';
 import ForgotpwdImg from '../assets/ForgotPasswordIcon.svg';
-import userService from '../services/userService';
-import { useUser } from '../contexts/userContext';
+import userService from '../services/userService'; 
 
-export default function ForgotPassword() {
-    const { user, setUser } = useUser();
+export default function ForgotPassword() { 
     const navigate = useNavigate();
     const [mail, setMail] = useState(null);
     const [message, setMessage] = useState('');
@@ -22,6 +20,7 @@ export default function ForgotPassword() {
                 const response = await userService.verifyForgot(mail);
                 const status = response.data.success;
                 setSuccess(status);
+                setMessage(response.data.message);
                 if (status) {
                     const otp = response.data.otp;
                     setMessage("Proceeding with email verification");
@@ -43,7 +42,6 @@ export default function ForgotPassword() {
                         setMessage("unable to send mail.Please try later")
                     }
                 } else {
-                    setMessage("User already exists with this email. Please login.");
                     setTimeout(() => {
                         navigate('/login')
                     }, 1000)
