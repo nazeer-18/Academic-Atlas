@@ -26,7 +26,7 @@ function App() {
     const clearSessionStorage = () => {
       sessionStorage.clear();
       const userInLocalStorage = localStorage.getItem('loggedInUser');
-      if (!userInLocalStorage) {
+      if (!userInLocalStorage && window.location.pathname !== '/login') {
         window.location.href="/login";
       }
     };
