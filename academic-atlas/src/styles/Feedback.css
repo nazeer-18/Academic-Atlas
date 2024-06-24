@@ -4,28 +4,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   font-family: 'Poppins', sans-serif;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .feedback-page-content {
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  width: 90%;
+  width: 95%;
   transition: all 0.3s ease;
+  max-height: 70vh;
+  min-height: 50vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .feedback-page-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(108, 92, 231, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(108, 92, 231, 0.15);
 }
 
 .feedback-page-title {
   color: #333;
-  font-size: 2.5em;
+  font-size: 2em;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -33,18 +39,19 @@
 .feedback-page-subtitle {
   color: #666;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .feedback-page-form {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .feedback-page-rating {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .feedback-page-star-input {
@@ -54,54 +61,170 @@
 .feedback-page-star-icon {
   cursor: pointer;
   transition: all 0.2s ease;
+  font-size: 30px;
 }
 
 .feedback-page-star-icon:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .feedback-page-textarea {
-  height: 150px;
-  padding: 15px;
-  margin-bottom: 30px;
+  flex-grow: 1;
+  min-height: 120px;
+  padding: 10px;
+  margin-bottom: 20px;
   border: 2px solid #ddd;
   border-radius: 10px;
   resize: vertical;
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   transition: all 0.3s ease;
 }
 
 .feedback-page-textarea:focus {
   border-color: #667eea;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.25);
 }
 
 .feedback-page-submit-btn {
-  padding: 15px 30px;
+  padding: 10px 20px;
   background-color: #6c5ce7;
   color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 40px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  align-self: center;
 }
 
 .feedback-page-submit-btn:hover {
-    background-color: #5649c9;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+  background-color: #5649c9;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(108, 92, 231, 0.4);
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .feedback-page-content {
   animation: fadeIn 0.5s ease-out;
+}
+
+/* Media Queries for Responsiveness */
+
+@media screen and (max-width: 768px) {
+  .feedback-page-content {
+    padding: 15px;
+  }
+
+  .feedback-page-title {
+    font-size: 1.8em;
+  }
+
+  .feedback-page-subtitle {
+    font-size: 0.85em;
+  }
+
+  .feedback-page-submit-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .feedback-page-content {
+    padding: 10px;
+  }
+
+  .feedback-page-title {
+    font-size: 1.6em;
+  }
+
+  .feedback-page-subtitle {
+    font-size: 0.75em;
+  }
+
+  .feedback-page-star-icon {
+    font-size: 25px;
+  }
+
+  .feedback-page-textarea {
+    font-size: 13px;
+    min-height: 100px;
+  }
+
+  .feedback-page-submit-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .feedback-page-content {
+    padding: 10px;
+    max-height: 90vh;
+  }
+
+  .feedback-page-title {
+    font-size: 1.6em;
+    margin-bottom: 5px;
+  }
+
+  .feedback-page-subtitle {
+    font-size: 0.75em;
+    margin-bottom: 10px;
+  }
+
+  .feedback-page-rating {
+    margin-bottom: 10px;
+  }
+
+  .feedback-page-star-icon {
+    font-size: 25px;
+  }
+
+  .feedback-page-textarea {
+    min-height: 70px;
+    margin-bottom: 10px;
+  }
+
+  .feedback-page-submit-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .feedback-page-content {
+    padding: 8px;
+  }
+
+  .feedback-page-title {
+    font-size: 1.4em;
+  }
+
+  .feedback-page-subtitle {
+    font-size: 0.7em;
+    margin-bottom: 5px;
+  }
+
+  .feedback-page-star-icon {
+    font-size: 20px;
+  }
+
+  .feedback-page-textarea {
+    min-height: 50px;
+    margin-bottom: 5px;
+  }
+
+  .feedback-page-submit-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
 }
