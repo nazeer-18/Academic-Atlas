@@ -31,7 +31,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: #4a90e2;
+  background-color: #6c5ce7;
   color: white;
   display: flex;
   justify-content: center;
@@ -81,7 +81,7 @@
 }
 
 .view-profile-edit-button {
-  background-color: #4a90e2;
+  background-color:#6c5ce7;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -93,7 +93,7 @@
 }
 
 .view-profile-edit-button:hover {
-  background-color: #3a7bc8;
+  background-color: #5649c9;
 }
 
 .view-profile-edit-name-container {
@@ -126,23 +126,23 @@
 }
 
 .view-profile-save-button {
-  background-color: #4a90e2;
+  background-color: #6c5ce7;
   color: white;
   border: none;
 }
 
 .view-profile-save-button:hover {
-  background-color: #3a7bc8;
+  background-color: #5649c9;
 }
 
 .view-profile-cancel-button {
-  background-color: #e0e0e0;
+  background-color: #f0eeee;
   color: #333;
   border: none;
 }
 
 .view-profile-cancel-button:hover {
-  background-color: #d0d0d0;
+  background-color:#e0e0e0;
 }
 
 @media (max-width: 600px) {
