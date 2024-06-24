@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 import logoImage from '../assets/logo.jpg';
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHouse, faFileLines, faDiagramProject, faPlus, faAnglesLeft, faUser, faSignOutAlt, faUserEdit, faKey, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '../contexts/userContext';
@@ -120,7 +121,7 @@ export default function Navbar() {
                     <FontAwesomeIcon icon={faUser} />
                     <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
                         <div className="profile-content">
-                            <Link to="/view-profile" onClick={handleProfile}>
+                            <Link to="/viewProfile" onClick={handleProfile}>
                                 <div className="profile-item">
                                     <FontAwesomeIcon icon={faUserEdit} /> View Profile
                                 </div>
@@ -133,6 +134,11 @@ export default function Navbar() {
                             <Link to="/updatePassword" onClick={handleProfile}>
                                 <div className="profile-item">
                                     <FontAwesomeIcon icon={faKey} /> Change Password
+                                </div>
+                            </Link>
+                            <Link to="/feedback" onClick={handleProfile}>
+                                <div className="profile-item">
+                                    <FontAwesomeIcon icon={faCommentDots} /> Feedback
                                 </div>
                             </Link>
                             <div className="profile-item" onClick={handleLogout}>

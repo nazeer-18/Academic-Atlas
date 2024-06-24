@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+.view-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e1f2fe;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.view-profile-card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  transition: all 0.3s ease;
+}
+
+.view-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.view-profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #6c5ce7;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 16px rgba(74, 144, 226, 0.3);
+}
+
+.view-profile-title {
+  font-size: 28px;
+  color: #2c3e50;
+  margin: 0;
+  font-weight: 600;
+}
+
+.view-profile-info {
+  text-align: left;
+}
+
+.view-profile-info-group {
+  margin-bottom: 30px;
+}
+
+.view-profile-label {
+  font-weight: 500;
+  color: #7f8c8d;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-profile-name-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.view-profile-name, .view-profile-email {
+  font-size: 18px;
+  color: #34495e;
+  margin: 0;
+  font-weight: 400;
+}
+
+.view-profile-edit-button {
+  background-color:#6c5ce7;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.view-profile-edit-button:hover {
+  background-color: #5649c9;
+}
+
+.view-profile-edit-name-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.view-profile-edit-name-input {
+  flex-grow: 1;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.view-profile-edit-name-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.view-profile-save-button, .view-profile-cancel-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.view-profile-save-button {
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+}
+
+.view-profile-save-button:hover {
+  background-color: #5649c9;
+}
+
+.view-profile-cancel-button {
+  background-color: #f0eeee;
+  color: #333;
+  border: none;
+}
+
+.view-profile-cancel-button:hover {
+  background-color:#e0e0e0;
+}
+
+@media (max-width: 600px) {
+  .view-profile-card {
+    padding: 30px;
+  }
+
+  .view-profile-picture {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
+
+  .view-profile-title {
+    font-size: 24px;
+  }
+
+  .view-profile-name, .view-profile-email {
+    font-size: 16px;
+  }
+
+  .view-profile-edit-name-container {
+    flex-direction: column;
+  }
+
+  .view-profile-save-button, .view-profile-cancel-button {
+    width: 100%;
+  }
+}

@@ -17,8 +17,10 @@ import Faq from './components/Faq';
 import ContactUs from './components/ContactUs';
 import Curriculum from './components/Curriculum';
 import MyContributions from './components/MyContributions';
-import ProtectedRoutes from './components/ProtectedRoutes'
-import RegisterRoutes from './components/RegisterRoutes'
+import ProtectedRoutes from './components/ProtectedRoutes';
+import RegisterRoutes from './components/RegisterRoutes';
+import ViewProfile from './components/ViewProfile';
+import Feedback from './components/Feedback';
 import { UserProvider } from './contexts/userContext';
 
 function App() { 
@@ -60,6 +62,8 @@ function App() {
             <Route path="/updatePassword" element={<UpdatePassword />} />
             <Route path="/contribute" element={<Contribute />} />
             <Route path="/myContributions" element={<MyContributions />} />
+            <Route path="/viewProfile" element={<ViewProfile />} />
+            <Route path="/feedback" element={<Feedback />} />
           </Route>
 
           {/*Access to all*/}
