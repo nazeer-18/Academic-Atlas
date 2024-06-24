@@ -19,11 +19,12 @@ export default function Footer() {
                     <a href="/ContactUs">Contact/Support</a>
                 </div>
                 <div className="footer-link">
-                    <a href="/faq">FAQ</a>
-                </div>
-                <div className="footer-link">
                     <a href="/curriculum">Curriculum</a>
                 </div>
+                <div className="footer-link">
+                    <a href="/faq">FAQ</a>
+                </div>
+                
             </div>
         </div>
     );
