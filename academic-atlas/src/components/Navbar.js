@@ -120,7 +120,7 @@ export default function Navbar() {
                     <FontAwesomeIcon icon={faUser} />
                     <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
                         <div className="profile-content">
-                            <Link to="/view-profile" onClick={handleProfile}>
+                            <Link to="/viewProfile" onClick={handleProfile}>
                                 <div className="profile-item">
                                     <FontAwesomeIcon icon={faUserEdit} /> View Profile
                                 </div>
