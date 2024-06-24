@@ -4,8 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f0f4f8;
+  background-color: #e1f2fe;
   padding: 20px;
   font-family: 'Poppins', sans-serif;
 }

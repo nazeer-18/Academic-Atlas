@@ -45,7 +45,7 @@ const ViewProfile = () => {
                   onChange={handleNameChange}
                   className="view-profile-edit-name-input"
                 />
-                <button onClick={handleNameSubmit} className="view-profile-save-button">Save</button>
+                <button onClick={handleNameSubmit} className="view-profile-save-button">Update</button>
                 <button onClick={() => setIsEditing(false)} className="view-profile-cancel-button">Cancel</button>
               </div>
             ) : (
