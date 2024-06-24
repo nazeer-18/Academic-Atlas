@@ -1,11 +1,13 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ForgotPassword.css';
 import { Link } from 'react-router-dom';
 import ForgotpwdImg from '../assets/ForgotPasswordIcon.svg';
-import userService from '../services/userService'; 
+import userService from '../services/userService';
+import {useUser} from '../contexts/userContext'
 
-export default function ForgotPassword() { 
+export default function ForgotPassword() {
+    const {user,setUser} = useUser();
     const navigate = useNavigate();
     const [mail, setMail] = useState(null);
     const [message, setMessage] = useState('');
@@ -22,18 +24,19 @@ export default function ForgotPassword() {
                 setSuccess(status);
                 setMessage(response.data.message);
                 if (status) {
+                    setUser({ ...user, email: mail })
                     const otp = response.data.otp;
                     setMessage("Proceeding with email verification");
                     if (otp) {
                         setTimeout(() => {
                             setMessage("Otp sent succesfully")
                         }, 1000)
-                        setTimeout(() => { 
+                        setTimeout(() => {
                             navigate('/verifyotp', {
                                 state: {
                                     otp: otp,
                                     email: mail,
-                                    choice:"forgotPassword"
+                                    choice: "forgotPassword"
                                 }
                             })
                         }, 2500)

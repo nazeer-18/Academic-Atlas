@@ -8,7 +8,8 @@ import { useUser } from '../contexts/userContext';
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 
 export default function Login() {
-    const { setUser } = useUser();
+    const { setUser,setLogged } = useUser();
+    const navigate = useNavigate();
     const [message, setMessage] = useState('');
     const [showPwd, setShowPwd] = useState(false);
     const [checked, setChecked] = useState(false);
@@ -17,16 +18,6 @@ export default function Login() {
         email: '',
         password: ''
     });
-    const Navigate = useNavigate();
-
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        if (loggedInUser) {
-            setUser(JSON.parse(loggedInUser));
-            Navigate(-1);
-        }
-    }, [Navigate, setUser]);
-
     const handleLogin = async (e) => {
         e.preventDefault();
         const form = document.getElementById('atlas-form');
@@ -35,28 +26,31 @@ export default function Login() {
         } else {
             try {
                 const response = await userService.login(data);
-                const success = response.data.success;
-                setSuccess(success)
+                setSuccess(response.data.success);
+                const status = response.data.success;
                 setMessage(response.data.message);
-                if (success) {
+                if (status) {
+                    setLogged(true);
                     const userData = response.data.user;
-                    setUser(userData);
+                    setUser(userData); 
                     if (checked) {
                         localStorage.setItem('loggedInUser', JSON.stringify(userData));
-                    } else {
-                        setUser(response.data.user);
+                    }else{ 
+                        sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
                     }
                     setTimeout(() => {
                         setMessage('');
-                        Navigate('/');
+                        navigate('/');
                     }, 2000);
                 } else {
+                    setLogged(false);
                     setTimeout(() => {
                         setMessage('');
                     }, 2000);
                 }
             }
             catch (err) {
+                setLogged(false);
                 console.log(err);
                 setMessage('Server is Down, please try again later');
                 setTimeout(() => {

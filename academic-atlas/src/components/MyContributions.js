@@ -44,26 +44,26 @@ function MyContributions() {
     <div className="my-contributions">
       <h1>My Contributions</h1>
       <div className="contributions-container">
-        <ContributionCard 
-          title="Endsem Papers" 
+        <ContributionCard
+          title="Endsem Papers"
           count={contributionCounts.endsem}
           manageLink="/manage-contributions/endsem"
           icon={faFileLines}
         />
-        <ContributionCard 
-          title="Midsem Papers" 
+        <ContributionCard
+          title="Midsem Papers"
           count={contributionCounts.midsem}
           manageLink="/manage-contributions/midsem"
           icon={faFileLines}
         />
-        <ContributionCard 
-          title="Projects" 
+        <ContributionCard
+          title="Projects"
           count={contributionCounts.project}
           manageLink="/manage-contributions/project"
           icon={faProjectDiagram}
         />
-        <ContributionCard 
-          title="Research Papers" 
+        <ContributionCard
+          title="Research Papers"
           count={contributionCounts.research}
           manageLink="/manage-contributions/research"
           icon={faFileLines}

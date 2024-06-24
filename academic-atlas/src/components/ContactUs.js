@@ -6,7 +6,7 @@ export default function ContactUs() {
     return (
         <div className="contact-page">
             <h1>Contact Us</h1>
-            
+
             <div className="contact-card">
                 <h2>Have any Queries/suggestions?</h2>
                 <p>Please feel free to reach out to us at:</p>

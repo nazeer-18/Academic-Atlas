@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -17,28 +17,52 @@ import Faq from './components/Faq';
 import ContactUs from './components/ContactUs';
 import Curriculum from './components/Curriculum';
 import MyContributions from './components/MyContributions';
+import ProtectedRoutes from './components/ProtectedRoutes'
+import RegisterRoutes from './components/RegisterRoutes'
 import { UserProvider } from './contexts/userContext';
 
 function App() {
+  useEffect(() => {
+    const clearSessionStorage = () => {
+      sessionStorage.clear();
+    };
+    window.addEventListener('load', clearSessionStorage);
+    return () => {
+      window.removeEventListener('load', clearSessionStorage);
+    };
+  }, []); 
   return (
     <BrowserRouter>
       <UserProvider>
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signupmail" element={<SignupMail />} />
+
+          {/* only to new users*/}
+          <Route element={<RegisterRoutes />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signupmail" element={<SignupMail />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+          </Route>
+
+          {/* handled inline */}
           <Route path="/signupacnt" element={<SignupAcnt />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/verifyotp" element={<OtpPage />} />
           <Route path="/resetpassword" element={<Resetpassword />} />
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/updatePassword" element={<UpdatePassword />} />
-          <Route path="/contribute" element={<Contribute />} />
+
+          {/* only to logged in users */}
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/updatePassword" element={<UpdatePassword />} />
+            <Route path="/contribute" element={<Contribute />} />
+            <Route path="/myContributions" element={<MyContributions />} />
+          </Route>
+
+          {/*Access to all*/}
           <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/myContributions" element={<MyContributions />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/curriculum" element={<Curriculum />} />
+
         </Routes>
         <Footer />
       </UserProvider>
