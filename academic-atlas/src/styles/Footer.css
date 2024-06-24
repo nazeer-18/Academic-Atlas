@@ -30,7 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    min-width:400px;
+    min-width:320px;
 }
 
 .footer-link a {
