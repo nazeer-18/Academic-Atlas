@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
@@ -21,16 +21,20 @@ import ProtectedRoutes from './components/ProtectedRoutes'
 import RegisterRoutes from './components/RegisterRoutes'
 import { UserProvider } from './contexts/userContext';
 
-function App() {
+function App() { 
   useEffect(() => {
     const clearSessionStorage = () => {
       sessionStorage.clear();
+      const userInLocalStorage = localStorage.getItem('loggedInUser');
+      if (!userInLocalStorage) {
+        window.location.href="/login";
+      }
     };
     window.addEventListener('load', clearSessionStorage);
     return () => {
       window.removeEventListener('load', clearSessionStorage);
     };
-  }, []); 
+  }, []);
   return (
     <BrowserRouter>
       <UserProvider>
