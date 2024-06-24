@@ -163,10 +163,11 @@
 
 .show-profile {
     right: 2px;
+    max-width: 250px;
 }
 
 .profile-content {
-    padding: 15px;
+    padding: 8px;
     overflow-y: auto;
     max-height: calc(100vh - 105px);
 }
@@ -178,7 +179,7 @@
 .profile-item {
     display: flex;
     align-items: center;
-    padding: 12px 15px;
+    padding: 9px 9px;
     margin-bottom: 8px;
     font-size: 22px;
     color: #000;
