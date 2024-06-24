@@ -3,21 +3,30 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/OtpPage.css';
 import { Link } from 'react-router-dom';
 import verifyOtpImg from '../assets/OTP.svg';
+import {useUser} from '../contexts/userContext'
 
-export default function OtpPage() {
+export default function OtpPage() { 
+    const { user } = useUser();
+    const userInLocalStorage = localStorage.getItem('loggedInUser');
+    useEffect(() => {
+        if (user.email === '' || userInLocalStorage) {
+            navigate('/login');
+        }
+    },[])
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState('');
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const [otp, setOtp] = useState(null);
-    const email = location.state.email;
-    const next = (location.state.choice==="signup")?"/signupacnt":"/resetpassword";
+    const email = user.email;
+    const next = (location.state && location.state.choice === "signup") ? "/signupacnt" : "/resetpassword";
     useEffect(() => {
-        setOtp(location.state.otp);
-        if (location.state.otp === null) {
-            navigate(-1);
+        if (!location.state || location.state.otp === null) {
+            navigate('/login');
         }
+        if(location.state && location.state.otp)
+        setOtp(location.state.otp);
     }, [])
     const verifyOtp = (e) => {
         e.preventDefault();

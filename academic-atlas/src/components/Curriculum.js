@@ -9,7 +9,7 @@ export default function Curriculum() {
             <div className="curriculum-card">
                 <p>Want to explore regulations and syllabus of respective branches and courses? Click below</p>
                 <a href="https://www.amrita.edu/academics/curriculum/" target='_new' className="curriculum-button">Visit
-                    <VscGoToSearch /> 
+                    <VscGoToSearch />
                 </a>
             </div>
         </div>

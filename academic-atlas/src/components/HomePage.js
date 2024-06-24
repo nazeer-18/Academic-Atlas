@@ -1,5 +1,4 @@
-import React ,{useEffect}from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/HomePage.css'
 import landingIcon from '../assets/landingPageIcon.svg'
@@ -7,14 +6,6 @@ import { useUser } from '../contexts/userContext'
 
 export default function HomePage() {
     const { user } = useUser();
-    const navigate = useNavigate();
-    useEffect(()=>{
-        if(user.email===''){
-            setTimeout(()=>{
-                navigate('/login')
-            })
-        }
-    },[])
     return (
         <div className="home-page">
             <div className="home-greeting">

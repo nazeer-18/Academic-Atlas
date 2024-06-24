@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import resourceService from '../services/resourceService';
 import '../styles/ContributePage.css';
 import trackService from '../services/trackService';
@@ -23,7 +23,7 @@ export default function Contribute() {
         years.push(i + "-" + (i + 1));
     }
     const [courses, setCourses] = useState([]);
-    useEffect(() => { 
+    useEffect(() => {
         const getTracks = async () => {
             try {
                 const response = await trackService.getBranches();
@@ -83,12 +83,12 @@ export default function Contribute() {
                 </div>
                 <div className="contribute-content">
                     <label className='contributequestion' for="typefields">What would you like to contribute today ?</label>
-                    <select 
-                        id="contribution" 
-                        name="contribution-choice" 
-                        onChange={(e) => setChoice((e.target.value==='projects'||e.target.value==='research')?"capstone":e.target.value)}>
-                        <option value="">Select Type</option>  
-                        <option value="projects">Projects</option> 
+                    <select
+                        id="contribution"
+                        name="contribution-choice"
+                        onChange={(e) => setChoice((e.target.value === 'projects' || e.target.value === 'research') ? "capstone" : e.target.value)}>
+                        <option value="">Select Type</option>
+                        <option value="projects">Projects</option>
                         <option value="research">Research Papers</option>
                         <option value="exam">Mid/End sem papers</option>
                     </select>
@@ -97,7 +97,7 @@ export default function Contribute() {
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
 
                     {
-  
+
                         choice === 'capstone' &&
 
                         <>
@@ -131,7 +131,7 @@ export default function Contribute() {
                     }
 
                     {
- 
+
                         choice !== '' &&
                         <>
                             <label className="contributefields" htmlFor="category">Category: </label>
@@ -140,7 +140,7 @@ export default function Contribute() {
                                 <option value="mid-sem">Mid Sem</option>
                                 <option value="end-sem">End Sem</option>
                             </select> <br />
- 
+
                             <label className="contributefields" htmlFor="title">Author: </label>
                             <input
                                 type="text"
@@ -195,27 +195,27 @@ export default function Contribute() {
                                         return <option value={year} key={year}>{year}</option>
                                     })
                                 }
-                            </select> <br />                            
+                            </select> <br />
 
-                            <label className="contributefields" htmlFor="title">Branch: </label>    
+                            <label className="contributefields" htmlFor="title">Branch: </label>
                             <select name="mainpage-branch-filter" id="filterByBranch">
-                                        <option value="">Choose Branch</option>
-                                        {
-                                            branches.map((branch) => {
-                                                return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
-                                            })
-                                        }
-                            </select> <br />                                    
+                                <option value="">Choose Branch</option>
+                                {
+                                    branches.map((branch) => {
+                                        return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
+                                    })
+                                }
+                            </select> <br />
 
                             <label className="contributefields" htmlFor="title">Courses: </label>
-                           <select name="mainpage-course-filter" id="filterByCourse">
-                                        <option value="">Choose Course</option>
-                                        {
-                                            courses.map((course) => {
-                                                return <option value={course.course} key={course._id}>{course.course}</option>
-                                            })
-                                        }
-                                    </select> <br />
+                            <select name="mainpage-course-filter" id="filterByCourse">
+                                <option value="">Choose Course</option>
+                                {
+                                    courses.map((course) => {
+                                        return <option value={course.course} key={course._id}>{course.course}</option>
+                                    })
+                                }
+                            </select> <br />
 
                             <input
                                 type="file"

@@ -6,21 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
-import { useUser } from '../contexts/userContext';
 
 export default function MainPage() {
     const location = useLocation();
-    const { user } = useUser();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user.email === '') {
-            setTimeout(() => {
-                navigate('/login');
-            });
-        }
-    }, []);
-
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
     const [examPapers, setExamPapers] = useState([{}]);
     const [branches, setBranches] = useState([]);
@@ -49,7 +37,7 @@ export default function MainPage() {
             }
         };
         getTracks();
-        
+
     }, [location]);
 
     const handleSearch = async () => {

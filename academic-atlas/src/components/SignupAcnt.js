@@ -9,8 +9,8 @@ import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function SignupAcnt() {
     const { user } = useUser();
-    useEffect(()=>{
-        if(user.email === ''){
+    useEffect(() => {
+        if (user.email === '') {
             navigate('/login');
         }
     })
@@ -114,10 +114,10 @@ export default function SignupAcnt() {
             setSuccess(response.data.success);
             setResponse(response.data.message);
             if (response.data.success) {
-                setTimeout(()=>{
+                setTimeout(() => {
                     navigate('/login');
-                },2000)
-            }else{
+                }, 2000)
+            } else {
                 setTimeout(() => {
                     setResponse(null);
                 }, 2000)
