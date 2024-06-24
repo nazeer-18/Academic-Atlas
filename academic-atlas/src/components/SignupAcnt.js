@@ -152,7 +152,7 @@ export default function SignupAcnt() {
                             </div>
                             {
                                 mailAlert &&
-                                <div className={`login-reponse-msg ${success}`}>
+                                <div className={`login-response-msg ${success}`}>
                                     {mailAlert}
                                 </div>
                             }
@@ -170,7 +170,7 @@ export default function SignupAcnt() {
                             </div>
                             {
                                 !nameValid &&
-                                <div className={`login-reponse-msg ${success}`}>
+                                <div className={`login-response-msg ${success}`}>
                                     {nameAlert}
                                 </div>
                             }
@@ -199,7 +199,7 @@ export default function SignupAcnt() {
                             </div>
                             {
                                 pwdAlert &&
-                                <div className={`login-reponse-msg ${success}`}>
+                                <div className={`login-response-msg ${success}`}>
                                     {pwdAlert}
                                 </div>
                             }
@@ -228,7 +228,7 @@ export default function SignupAcnt() {
                             </div>
                             {
                                 confirmPwdAlert &&
-                                <div className={`login-reponse-msg ${success}`}>
+                                <div className={`login-response-msg ${success}`}>
                                     {confirmPwdAlert}
                                 </div>
                             }
@@ -242,7 +242,7 @@ export default function SignupAcnt() {
                             </div>
                             {
                                 response &&
-                                <div className={`login-reponse-msg ${success}`}>
+                                <div className={`login-response-msg ${success}`}>
                                     {response}
                                 </div>
                             }

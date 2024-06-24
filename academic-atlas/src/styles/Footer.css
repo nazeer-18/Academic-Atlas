@@ -30,7 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    min-width:320px;
+    min-width:400px;
 }
 
 .footer-link a {
@@ -48,7 +48,6 @@
     .footer-copyright{
         display: none;
     }
-
 }
 
 @media(max-width:570px){
@@ -57,5 +56,8 @@
     }
     .footer-logo{
         display: none;
+    }
+    .footer-links{
+        min-width: 320px;
     }
 }

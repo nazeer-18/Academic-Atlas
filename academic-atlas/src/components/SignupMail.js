@@ -86,7 +86,7 @@ export default function SignupMail() {
                         </div>
                         {
                             message !== '' &&
-                            <div className={`login-reponse-msg ${success}`}>
+                            <div className={`login-response-msg ${success}`}>
                                 {message}
                             </div>
                         }

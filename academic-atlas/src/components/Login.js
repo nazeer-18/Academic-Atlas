@@ -118,7 +118,7 @@ export default function Login() {
                         </div>
                         {
                             message !== '' &&
-                            <div className={`login-response-msg ${success ? 'success' : 'error'}`}>
+                            <div className={`login-response-msg ${success}`}>
                                 {message}
                             </div>
                         }

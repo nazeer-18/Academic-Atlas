@@ -4,10 +4,10 @@ import '../styles/ForgotPassword.css';
 import { Link } from 'react-router-dom';
 import ForgotpwdImg from '../assets/ForgotPasswordIcon.svg';
 import userService from '../services/userService';
-import {useUser} from '../contexts/userContext'
+import { useUser } from '../contexts/userContext'
 
 export default function ForgotPassword() {
-    const {user,setUser} = useUser();
+    const { user, setUser } = useUser();
     const navigate = useNavigate();
     const [mail, setMail] = useState(null);
     const [message, setMessage] = useState('');
@@ -88,7 +88,7 @@ export default function ForgotPassword() {
                         </div>
                         {
                             message !== '' &&
-                            <div className={`login-reponse-msg ${success}`}>
+                            <div className={`login-response-msg ${success}`}>
                                 {message}
                             </div>
                         }
