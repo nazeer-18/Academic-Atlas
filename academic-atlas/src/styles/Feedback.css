@@ -19,8 +19,8 @@
 }
 
 .feedback-page-content:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(108, 92, 231, 0.15);
 }
 
 .feedback-page-title {
@@ -80,7 +80,7 @@
 
 .feedback-page-submit-btn {
   padding: 15px 30px;
-  background-color: #5066B2;
+  background-color: #6c5ce7;
   color: white;
   border: none;
   border-radius: 50px;
@@ -88,14 +88,13 @@
   transition: all 0.3s ease;
   font-size: 18px;
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .feedback-page-submit-btn:hover {
-  background-color: #1b079d;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #5649c9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
 }
 
 @keyframes fadeIn {
