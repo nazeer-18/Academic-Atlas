@@ -1,7 +1,29 @@
 const express = require('express');
+const bcrypt = require('bcrypt')
 const User = require('../models/user');
 const authRoute = express.Router();
 const sendOTPEmail = require('../authenticators/otpsender');
+
+async function hashPassword(password) {
+    const saltRounds = 10; // The cost factor for hashing
+    try {
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        return hashedPassword;
+    } catch (error) {
+        console.error('Error hashing password:', error);
+        throw error;
+    }
+}
+
+async function comparePassword(password, hashedPassword) {
+    try {
+        const isMatch = await bcrypt.compare(password, hashedPassword);
+        return isMatch;
+    } catch (error) {
+        console.error('Error comparing password:', error);
+        throw error;
+    }
+}
 
 //login route
 authRoute.post('/login', async (req, res) => {
@@ -13,7 +35,8 @@ authRoute.post('/login', async (req, res) => {
             message: 'User not found'
         })
     }
-    if (user.password !== password) {
+    const isMatch = (user.password === password)
+    if (!isMatch) {
         return res.json({
             success: false,
             message: 'Invalid password'
@@ -41,7 +64,7 @@ authRoute.post('/register', async (req, res) => {
         const newUser = new User({
             userName: userName,
             email: email,
-            password: password
+            password: await hashPassword(password)
         })
         await newUser.save()
         return res.json({
@@ -132,7 +155,7 @@ authRoute.post('/reset-password', async (req, res) => {
             })
         }
         else {
-            user.password = password;
+            user.password = await hashPassword(password);
             await user.save();
             return res.json({
                 success: true,
@@ -151,7 +174,7 @@ authRoute.post('/reset-password', async (req, res) => {
 //change name
 authRoute.post('/change-name', async (req, res) => {
     try {
-        const { email, userName } = req.body; 
+        const { email, userName } = req.body;
         const user = await User.findOne({ email: email });
         if (!user) {
             return res.json({
@@ -161,11 +184,11 @@ authRoute.post('/change-name', async (req, res) => {
         }
         else {
             user.userName = userName;
-            await user.save(); 
+            await user.save();
             return res.json({
                 success: true,
                 message: 'Name changed successfully',
-                user:user
+                user: user
             })
         }
     }

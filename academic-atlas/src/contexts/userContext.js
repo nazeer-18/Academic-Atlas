@@ -5,7 +5,7 @@ export function UserProvider({ children }) {
         email: '',
         userName: '',
         mobile: '',
-        password: '',
+        password: '', //used for login on reload
         role: '',
     });
     const [logged, setLogged] = useState(false);
