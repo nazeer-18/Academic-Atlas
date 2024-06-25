@@ -8,8 +8,8 @@ class userService {
     register(data) {
         return axios.post(server_url + '/api/auth/register', data);
     }
-    resetpwd(email, password) {
-        return axios.post(server_url + '/api/auth/resetpwd', { email, password });
+    resetPassword(email, password) {
+        return axios.post(server_url + '/api/auth/reset-password', { email, password });
     }
     verify(email) {
         return axios.post(server_url + '/api/auth/verify-mail', { email, });

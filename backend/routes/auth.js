@@ -120,7 +120,7 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
 })
 
 //reset password route
-authRoute.post('/resetpassword', async (req, res) => {
+authRoute.post('/reset-password', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User
