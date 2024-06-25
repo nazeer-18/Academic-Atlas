@@ -249,6 +249,7 @@ export default function SignupAcnt() {
                             <div className="signup-acnt-btn">
                                 <button
                                     className="atlas-btn"
+                                    disabled={pwdValid && confirmPwdValid}
                                     onClick={handleRegister}
                                     type="submit">
                                     Create account
