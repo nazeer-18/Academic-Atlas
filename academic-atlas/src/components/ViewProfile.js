@@ -15,9 +15,10 @@ const ViewProfile = () => {
       setInitials('undef');
       return;
     }
-    const temp = name.split(' ').map(n => n[0].toUpperCase())
+    const nameWithNoExtraSpaces = name.trim().split(/\s+/).join(' ');
+    const temp = nameWithNoExtraSpaces.split(' ').map(n => n[0].toUpperCase())
     setInitials(temp);
-  } 
+  }
   useEffect(() => {
     const setViewUser = () => {
       const loggedInUser = localStorage.getItem('loggedInUser') || sessionStorage.getItem('loggedInUser');
@@ -46,8 +47,8 @@ const ViewProfile = () => {
         setUser({ ...user, userName: newName });
         if (localStorage.getItem('loggedInUser')) {
           localStorage.setItem('loggedInUser', JSON.stringify(userData));
-        }else if(sessionStorage.getItem('loggedInUser')){
-          sessionStorage.setItem('loggedInUser',JSON.stringify(userData));
+        } else if (sessionStorage.getItem('loggedInUser')) {
+          sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
         }
         changeInitials(newName)
       } else {
