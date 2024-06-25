@@ -1,0 +1,149 @@
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #4b4382cc;
+    --background-color: #f9f9f9;
+    --text-color: #333;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+}
+
+.aboutus-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-section {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    margin: 10px 0 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+section {
+    background: white;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.problems p,
+.solutions p {
+    font-size: 1.0rem;
+    line-height: 1.35;
+}
+
+section h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.features-grid,
+.developers-grid,
+.reviews-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.feature-item {
+    background: var(--secondary-color);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.developers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 20px;
+}
+
+.developer-card {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.developer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.developer-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.reviews-grid {
+    overflow: hidden; /* Hide overflow to prevent scrollbar */
+    white-space: nowrap; /* Prevent wrapping of review cards */
+}
+
+.review-card {
+    display: inline-block; /* Display cards in a line */
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: marquee 20s linear infinite; /* Animation for marquee effect */
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.rating {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); } /* Start offscreen */
+    100% { transform: translateX(-100%); } /* Move across the screen */
+}
