@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 import Faq from './components/Faq';
 import ContactUs from './components/ContactUs';
 import Curriculum from './components/Curriculum';
+import AboutUs from './components/AboutUs';
 import MyContributions from './components/MyContributions';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import RegisterRoutes from './components/RegisterRoutes';
@@ -92,6 +93,9 @@ function App() {
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/curriculum" element={<Curriculum />} />
+          <Route path="/aboutus" element={<AboutUs />}/>
+          
+
 
         </Routes>
         <Footer />
