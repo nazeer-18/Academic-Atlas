@@ -6,10 +6,7 @@ import { useUser } from '../contexts/userContext'
 import userService from '../services/userService'
 
 const UpdatePassword = () => {
-  const { user, setUser } = useUser();
-  useEffect(() => {
-    setUser(user)
-  }, [user])
+  const { user } = useUser();
   const [data, setData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -27,22 +24,33 @@ const UpdatePassword = () => {
   const [success, setSuccess] = useState(false);
   const [response, setResponse] = useState('');
 
-  const handleCurrentPasswordChange = (e) => {
+  const handleCurrentPasswordChange =async (e) => {
+    setData({ ...data, currentPassword: e.target.value });
     const enteredPassword = e.target.value;
-    setData({ ...data, currentPassword: enteredPassword });
-    if (enteredPassword === user.password) {
-      setIsCurrentPasswordValid(true);
-      setCurrentPasswordAlert('');
-    } else {
+    try{ 
+      const data = {
+        email: user.email,
+        password: enteredPassword
+      }
+      const response = await userService.login(data);
+      if(response.data.success){
+        setIsCurrentPasswordValid(true);
+        setCurrentPasswordAlert('');
+      }else{
+        setIsCurrentPasswordValid(false);
+        setCurrentPasswordAlert('Current password is incorrect');
+      }
+    }catch(err){
+      console.log(err);
       setIsCurrentPasswordValid(false);
-      setCurrentPasswordAlert('Current password is incorrect');
+      setCurrentPasswordAlert('Internal server error');
     }
   };
 
   const handleNewPasswordChange = (e) => {
     const newPassword = e.target.value;
     setData({ ...data, newPassword: newPassword });
-    if (newPassword === user.password) {
+    if (newPassword === data.currentPassword) {
       setIsNewPasswordValid(false);
       setNewPasswordAlert("New password can't be same as old password");
       return;
