@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server_url = 'http://localhost:8080' || 'https://academic-atlas-server.onrender.com';
+const server_url = 'https://academic-atlas-server-yr73.onrender.com' || 'http://localhost:8080' || 'https://academic-atlas-server.onrender.com';
 
 class userService {
     fetchUser(email){ 
