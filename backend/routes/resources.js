@@ -2,6 +2,7 @@ const express = require('express');
 const resourceRouter = express.Router();
 const exam = require('../models/exam');
 const capstone = require('../models/capstone');
+const contribution = require('../models/contribution');
 const multer = require('multer');
 const { google } = require('googleapis');
 const path = require('path');
@@ -13,7 +14,6 @@ const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_SECRET,
     process.env.GOOGLE_REDIRECT_URI
 );
-
 // Set refresh token if you already have one
 oauth2Client.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
 
@@ -27,6 +27,31 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 const upload = multer({ dest: uploadDir });
+
+const updateContribution=async(email,category,id) =>{
+        let updateField;
+        switch(category.toLowerCase()) {
+            case 'midSem':
+                updateField = { midSem: id };
+                break;
+            case 'endSem':
+                updateField = { endSem: id };
+                break;
+            case 'project':
+                updateField = { project: id };
+                break;
+            case 'research':
+                updateField = { research: id };
+                break;
+            default:
+                return res.status(400).json({ message: "Invalid category.", success: false });
+        }
+
+        await contribution.findOneAndUpdate(
+            { userEmail: userEmail },
+            { $push: updateField }
+        );
+}
 
 resourceRouter.post('/getexam', async (req, res) => {
     try {
@@ -81,6 +106,7 @@ resourceRouter.post('/addexam', upload.single('pdfFile'), async (req, res) => {
             fileId: response.data.id
         });
         await newResource.save();
+        await updateContribution(author,category,newResource._id);
         // Delete the file after processing it from the server
         fs.unlink(filePath, (err) => {
             if (err) {
@@ -167,7 +193,7 @@ resourceRouter.post('/addcapstone', async (req, res) => {
                 students: students,
                 url: url
             });
-
+            
             await newResource.save();
             res.json({ message: "Resource added successfully", success: true });
         }
