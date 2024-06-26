@@ -90,7 +90,7 @@ section h2 {
 
 .developers-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
@@ -109,27 +109,73 @@ section h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.developer-card img {
+.developer-card .image-placeholder {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.developer-card h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.social-icons .icon {
+    background: var(--secondary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.reviews-wrapper {
+    overflow: hidden;
+    position: relative;
 }
 
 .reviews-grid {
-    overflow: hidden; /* Hide overflow to prevent scrollbar */
-    white-space: nowrap; /* Prevent wrapping of review cards */
+    display: flex;
+    gap: 20px;
+    padding: 10px 0;
+    white-space: nowrap;
+    animation: scroll-reviews 20s linear infinite;
+}
+
+@keyframes scroll-reviews {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .review-card {
-    display: inline-block; /* Display cards in a line */
+    flex: 0 0 auto;
+    width: 300px;
+    height: 200px;
     padding: 20px;
     border-radius: 10px;
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: marquee 20s linear infinite; /* Animation for marquee effect */
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent content from overflowing the card */
+    text-overflow: ellipsis; /* Display ellipsis (...) for overflowing text */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
 }
 
 .review-card:hover {
@@ -137,13 +183,23 @@ section h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+.review-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
 .rating {
     color: var(--secondary-color);
     font-size: 1.2rem;
-    margin-top: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
 }
 
-@keyframes marquee {
-    0% { transform: translateX(100%); } /* Start offscreen */
-    100% { transform: translateX(-100%); } /* Move across the screen */
+.review-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow: hidden; /* Prevent content from overflowing the card */
+    text-overflow: ellipsis; /* Display ellipsis (...) for overflowing text */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
 }
