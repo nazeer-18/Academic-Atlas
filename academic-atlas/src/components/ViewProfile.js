@@ -20,36 +20,24 @@ const ViewProfile = () => {
     setInitials(temp);
   }
   useEffect(() => {
+    setNewName(user.userName) 
     const setViewUser = () => {
-      const loggedInUser = localStorage.getItem('loggedInUser') || sessionStorage.getItem('loggedInUser');
-      if (loggedInUser) {
-        const name = JSON.parse(loggedInUser).userName;
-        setNewName(name);
-        changeInitials(name);
-      } else {
-        changeInitials(user.userName);
-        setNewName(user.userName);
-      }
+        changeInitials(user.userName); 
     }
     setViewUser();
     window.addEventListener('load', setViewUser);
     return () => {
       window.removeEventListener('load', setViewUser);
     }
-  }, [])
+  }, [user])
   const handleNameSubmit = async () => {
     try {
       const response = await userService.changeName(user.email, newName);
       setSuccess(response.data.success);
       setMessage(response.data.message);
-      const userData = response.data.user;
       if (response.data.success) {
         setUser({ ...user, userName: newName });
-        if (localStorage.getItem('loggedInUser')) {
-          localStorage.setItem('loggedInUser', JSON.stringify(userData));
-        } else if (sessionStorage.getItem('loggedInUser')) {
-          sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
-        }
+        console.log(user)
         changeInitials(newName)
       } else {
         setNewName(user.userName);

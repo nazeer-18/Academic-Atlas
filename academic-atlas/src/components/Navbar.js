@@ -9,7 +9,7 @@ import { useUser } from '../contexts/userContext';
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const { user, setUser,setLogged,logged } = useUser();
+    const { user, setUser, setLogged, logged } = useUser();
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [hideButtons, setHideButtons] = useState(false);
@@ -35,11 +35,11 @@ export default function Navbar() {
         }
     }
 
-    const handleLogout = () => { 
+    const handleLogout = () => {
         setLogged(false);
         setUser({ email: '', name: '', role: '' });
-        localStorage.removeItem('loggedInUser');
-        sessionStorage.removeItem('loggedInUser'); 
+        localStorage.removeItem('atlasToken');
+        sessionStorage.removeItem('atlasToken');
         navigate('/login')
     }
 
@@ -54,7 +54,6 @@ export default function Navbar() {
                 setIsProfileOpen(false);
             }
         }
-
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);

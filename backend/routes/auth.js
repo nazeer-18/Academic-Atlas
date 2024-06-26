@@ -1,4 +1,6 @@
+require('dotenv').config();
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const User = require('../models/user');
 const authRoute = express.Router();
@@ -25,6 +27,54 @@ async function comparePassword(password, hashedPassword) {
     }
 }
 
+//create token for user
+const generateToken = (user) => {
+    const payload = { email: user.email};
+    const secret = process.env.VERIFICATION_SECRET;
+    const options = { expiresIn: '1h' };
+    return jwt.sign(payload, secret, options);
+};
+
+
+// Middleware to validate token
+const authenticateToken = (req, res, next) => { 
+    const token = req.body.headers.Authorization; 
+    if (!token) return res.status(401).send('Access denied');
+    try {
+        const verified = jwt.verify(token, process.env.VERIFICATION_SECRET);
+        req.user = verified;  
+        next();
+    } catch (error) {
+        res.status(400).send('Invalid token');
+    }
+};
+
+//validate token
+authRoute.post('/validate', authenticateToken, (req, res) => {
+    return res.json({
+        success: true,
+        user: req.user
+    })
+})
+
+//fetch user
+authRoute.post('/fetch-user',async(req,res)=>{
+    const {email} = req.body; 
+    const user = await User.findOne({ email: email });
+    if(user){
+        return res.json({
+            user:user,
+            success:true
+        })
+    }else{
+        return res.json({
+            message:'user not found',
+            success:false
+        })
+    }
+})
+
+
 //login route
 authRoute.post('/login', async (req, res) => {
     const { email, password } = req.body;
@@ -35,17 +85,20 @@ authRoute.post('/login', async (req, res) => {
             message: 'User not found'
         })
     }
-    const isMatch = (user.password === password)
+    const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
         return res.json({
             success: false,
             message: 'Invalid password'
         })
     }
+    const token = generateToken(user);
+    console.log("login", token)
     return res.status(200).json({
         success: true,
         message: 'Login successful',
-        user: user
+        user: user,
+        token: token
     })
 });
 
