@@ -7,22 +7,23 @@ import '../styles/Feedback.css';
 const API_BASE_URL = 'http://localhost:8080/api';
 
 const Feedback = () => {
-  const { user, logged } = useUser();
+  const { user } = useUser();
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const [feedback, setFeedback] = useState('');
   const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (logged && user._id) {
+    if (user._id) {
       checkExistingFeedback();
     } else {
       setIsLoading(false);
     }
-  }, [logged, user._id]);
+  }, [user._id]);
 
   const checkExistingFeedback = async () => {
     try {
@@ -46,13 +47,9 @@ const Feedback = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!logged) {
-      setMessage('Please log in to submit feedback.');
-      return;
-    }
-
     if (!rating || !feedback) {
       setMessage('Please provide both a rating and feedback.');
+      setIsSuccess(false);
       return;
     }
 
@@ -69,14 +66,21 @@ const Feedback = () => {
 
       if (response.data.success) {
         setMessage(isSubmitted ? 'Your feedback has been updated!' : 'Thank you for your feedback!');
-        setIsSubmitted(true);
-        setIsEditing(false);
+        setIsSuccess(true);
+        
+        setTimeout(() => {
+          setIsSubmitted(true);
+          setIsEditing(false);
+          setMessage('');
+        }, 2000);
       } else {
         setMessage(response.data.message);
+        setIsSuccess(false);
       }
     } catch (error) {
       console.error('Error submitting feedback:', error.response || error);
       setMessage(error.response?.data?.message || 'An error occurred while submitting feedback. Please try again.');
+      setIsSuccess(false);
     } finally {
       setIsLoading(false);
     }
@@ -85,10 +89,6 @@ const Feedback = () => {
   const handleEdit = () => {
     setIsEditing(true);
   };
-
-  if (!logged) {
-    return <div className="feedback-page">Please log in to submit feedback.</div>;
-  }
 
   if (isLoading) {
     return <div className="feedback-page">Loading...</div>;
@@ -132,9 +132,16 @@ const Feedback = () => {
             onChange={(e) => setFeedback(e.target.value)}
             disabled={isSubmitted && !isEditing}
           />
-          {!isSubmitted && (
+          
+          {message && (
+            <p className={`feedback-message ${isSuccess ? 'true' : 'false'}`}>
+              {message}
+            </p>
+          )}
+
+          {(!isSubmitted || isEditing) && (
             <button className="feedback-page-submit-btn" type="submit">
-              Submit Feedback
+              {isEditing ? 'Update Feedback' : 'Submit Feedback'}
             </button>
           )}
           {isSubmitted && !isEditing && (
@@ -142,13 +149,7 @@ const Feedback = () => {
               Edit Feedback
             </button>
           )}
-          {isSubmitted && isEditing && (
-            <button className="feedback-page-update-btn" type="submit">
-              Update Feedback
-            </button>
-          )}
         </form>
-        {message && <p className="feedback-message">{message}</p>}
       </div>
     </div>
   );

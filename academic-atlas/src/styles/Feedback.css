@@ -112,10 +112,23 @@
 }
 
 .feedback-message {
-  margin-top: 20px;
   text-align: center;
-  color: #333;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'Merriweather', serif;
+  color: #F00731;
+  background-color: rgb(214, 222, 214);
+  border-radius: 18px;
+  margin: 10px auto;
+  padding: 5px;
+}
+
+.true {
+  color: #0A7A0A;
+}
+
+.false {
+  color: #F00731;
 }
 
 @keyframes fadeIn {
