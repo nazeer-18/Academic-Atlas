@@ -1,16 +1,16 @@
 .contribute-container {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: wrap; 
     padding: 7px 2px;
-    margin: 30px auto;
+    margin: 20px auto;
+    margin-bottom: 10px;
     background-color: white;
     border-radius: 18px;
     width: 90vw;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     border: 10px solid white;
     justify-content: space-around;
+    box-sizing: border-box;
 }
 .contribute-header {
     background-color: #290BEA;
@@ -22,8 +22,7 @@
     font-family: 'monserrat', sans-serif;
     border-radius: 12px;
     width:100%;
-
-    
+    box-sizing: border-box;    
 }
 .contribute-content {
     width: 90vw;
@@ -32,6 +31,7 @@
     border-radius: 12px;
     padding: 15px 10px;
     font-weight:700;
+    text-align: center;
 }
 
 .contributequestion{
@@ -42,47 +42,53 @@
     padding: 0 10px;
 }
 
-/* label{
+#contribution-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+#contribution-form label{
     font-size: 17px;
     margin-bottom: 5px;
     font-weight: 500;
     
 }
 
+#contribution-form input[type="file"]{
+    text-align: center;
+    margin:0px auto;
+}
 
-input{
-    width: 300px;
-    background-color: #f5dede; 
+#contribution-form input{
+    width: 308px; 
     border-radius: 10px;
     padding: 7px 13px;
     margin: 3px 3px;
-    font-size: 1.1em; 
-
+    margin-bottom: 7px;
+    font-size: 1.1em;  
+    box-sizing: border-box;
 }
 
-
-select {
-    width: 300px;
-    background-color:rgb(169, 165, 235); 
+#contribution-form select {
+    width: 300px; 
     border-radius: 10px;
     padding: 7px 13px;
     margin: 3px 3px;
     margin-left: 10px;
     margin-right: 10px;
     font-size: 1.1em; 
+    margin-bottom: 10px;
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #296FE0;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+.contribution-btn-container { 
+    width:50%;
+    text-align: center;
+    margin: 0px auto;
+    margin-top: 9px;
 }
 
-button:hover {
+#contribution-form button:hover {
     background-color: #290BEA;
-} */
+}
