@@ -106,7 +106,7 @@ export default function SignupAcnt() {
             form.reportValidity();
         } else {
             const newUser = {
-                userName: data.name,
+                userName: data.name.trim().split(/\s+/).join(' '),
                 email: user.email,
                 password: data.password,
             }
@@ -248,7 +248,7 @@ export default function SignupAcnt() {
                             }
                             <div className="signup-acnt-btn">
                                 <button
-                                    className="atlas-btn"
+                                    className="atlas-btn" 
                                     onClick={handleRegister}
                                     type="submit">
                                     Create account

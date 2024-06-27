@@ -28,15 +28,16 @@ export default function Login() {
                 const response = await userService.login(data);
                 setSuccess(response.data.success);
                 const status = response.data.success;
+                const token = response.data.token;
                 setMessage(response.data.message);
                 if (status) {
                     setLogged(true);
                     const userData = response.data.user;
                     setUser(userData); 
                     if (checked) {
-                        localStorage.setItem('loggedInUser', JSON.stringify(userData));
+                        localStorage.setItem('atlasToken', token);
                     }else{ 
-                        sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
+                        sessionStorage.setItem('atlasToken', token);
                     }
                     setTimeout(() => {
                         setMessage('');

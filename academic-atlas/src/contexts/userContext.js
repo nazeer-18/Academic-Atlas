@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import userService from '../services/userService'
 const UserContext = createContext();
 export function UserProvider({ children }) {
     const [user, setUser] = useState({
@@ -10,22 +11,32 @@ export function UserProvider({ children }) {
     });
     const [logged, setLogged] = useState(false);
     useEffect(() => {
-        const resetUser =()=>{
-            const userInLocalStorage = localStorage.getItem('loggedInUser');
-            const userInSessionStorage = sessionStorage.getItem('loggedInUser');
-            if (userInLocalStorage) {
-                setLogged(true);
-                setUser(JSON.parse(userInLocalStorage));
-            }
-            else if (userInSessionStorage) {
-                setLogged(true);
-                setUser(JSON.parse(userInSessionStorage));
+        const resetUser = async () => {
+            const token = localStorage.getItem('atlasToken') || sessionStorage.getItem('atlasToken');
+            try {
+                if (!token) {
+                    setUser({
+                        email: '',
+                        userName: '',
+                    });
+                    setLogged(false);
+                } else {
+                    const response = await userService.validateToken(token);
+                    const updatedUser = await userService.fetchUser(response.data.user.email);
+                    console.log(updatedUser.data)
+                    setUser(updatedUser.data.user);
+                    setLogged(true);
+                }
+            } catch (err) {
+                console.error('Token validation failed:', err);
+                localStorage.removeItem('token');
+                sessionStorage.removeItem('token');
             }
         }
         resetUser();
-        window.addEventListener('load',resetUser);
-        return()=>{
-            window.removeEventListener('load',resetUser);
+        window.addEventListener('load', resetUser);
+        return () => {
+            window.removeEventListener('load', resetUser);
         }
     }, []);
     return (

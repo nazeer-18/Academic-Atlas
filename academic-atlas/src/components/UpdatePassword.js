@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../styles/UpdatePassword.css';
 import UpdatePasswordImg from '../assets/UpdatePassword.svg';
 import { FaEye, FaRegEyeSlash } from 'react-icons/fa';
+import { useUser } from '../contexts/userContext'
+import userService from '../services/userService'
 
 const UpdatePassword = () => {
+  const { user } = useUser();
   const [data, setData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -15,32 +18,43 @@ const UpdatePassword = () => {
   const [isCurrentPasswordValid, setIsCurrentPasswordValid] = useState(false);
   const [isNewPasswordValid, setIsNewPasswordValid] = useState(false);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
-  const [originalPassword, setOriginalPassword] = useState('Praneeth');
   const [showCurrentPwd, setShowCurrentPwd] = useState(false);
   const [showNewPwd, setShowNewPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [response, setResponse] = useState('');
 
-  useEffect(() => {
-    setOriginalPassword('Praneeth');
-  }, []);
-
-  const handleCurrentPasswordChange = (e) => {
+  const handleCurrentPasswordChange =async (e) => {
+    setData({ ...data, currentPassword: e.target.value });
     const enteredPassword = e.target.value;
-    setData({ ...data, currentPassword: enteredPassword });
-
-    if (enteredPassword === originalPassword) {
-      setIsCurrentPasswordValid(true);
-      setCurrentPasswordAlert('');
-    } else {
+    try{ 
+      const data = {
+        email: user.email,
+        password: enteredPassword
+      }
+      const response = await userService.login(data);
+      if(response.data.success){
+        setIsCurrentPasswordValid(true);
+        setCurrentPasswordAlert('');
+      }else{
+        setIsCurrentPasswordValid(false);
+        setCurrentPasswordAlert('Current password is incorrect');
+      }
+    }catch(err){
+      console.log(err);
       setIsCurrentPasswordValid(false);
-      setCurrentPasswordAlert('Current password is incorrect');
+      setCurrentPasswordAlert('Internal server error');
     }
   };
 
   const handleNewPasswordChange = (e) => {
     const newPassword = e.target.value;
     setData({ ...data, newPassword: newPassword });
+    if (newPassword === data.currentPassword) {
+      setIsNewPasswordValid(false);
+      setNewPasswordAlert("New password can't be same as old password");
+      return;
+    }
     checkPasswordValidity(newPassword);
   };
 
@@ -80,12 +94,25 @@ const UpdatePassword = () => {
     }
   };
 
-  const handleUpdatePassword = (e) => {
+  const handleUpdatePassword = async (e) => {
     e.preventDefault();
     if (isCurrentPasswordValid && isNewPasswordValid && isConfirmPasswordValid) {
-      // Add your logic here to update the password
-      console.log('Password update submitted');
-      setResponse('Password updated successfully!');
+      try {
+        const response = await userService.resetPassword(user.email, data.newPassword);
+        setSuccess(response.data.success);
+        setResponse(response.data.message);
+        localStorage.clear();
+        sessionStorage.clear();
+        setTimeout(() => {
+          window.location.href = "/"
+        },1500)
+      } catch (err) {
+        console.log(err);
+        setResponse('Internal server error')
+      }
+      setTimeout(() => {
+        setResponse('');
+      }, 2000)
     }
   };
 
@@ -125,7 +152,7 @@ const UpdatePassword = () => {
               </div>
               {
                 currentPasswordAlert &&
-                <div className="update-password-response-msg">
+                <div className={`update-password-response-msg ${success}`}>
                   {currentPasswordAlert}
                 </div>
               }
@@ -154,7 +181,7 @@ const UpdatePassword = () => {
               </div>
               {
                 newPasswordAlert &&
-                <div className="update-password-response-msg">
+                <div className={`update-password-response-msg ${success}`}>
                   {newPasswordAlert}
                 </div>
               }
@@ -185,13 +212,13 @@ const UpdatePassword = () => {
               </div>
               {
                 confirmPasswordAlert &&
-                <div className="update-password-response-msg">
+                <div className={`update-password-response-msg ${success}`}>
                   {confirmPasswordAlert}
                 </div>
               }
               {
                 response &&
-                <div className="update-password-response-msg">
+                <div className={`update-password-response-msg ${success}`}>
                   {response}
                 </div>
               }

@@ -29,29 +29,26 @@ function App() {
   useEffect(() => {
     const reDirectLogin = async () => {
       if (window.location.pathname === '/login') return;
-      const userInLocalStorage = localStorage.getItem('loggedInUser');
-      const userInSessionStorage = sessionStorage.getItem('loggedInUser');
-      if (!userInLocalStorage && !userInSessionStorage && window.location.pathname !== '/login') {
+      const tokenInLocalStorage = localStorage.getItem('atlasToken');
+      const tokenInSessionStorage = sessionStorage.getItem('atlasToken');
+
+      if (!tokenInLocalStorage && !tokenInSessionStorage) {
         window.location.href = "/login";
       } else {
         try {
-          const user = (userInLocalStorage) ? JSON.parse(userInLocalStorage) : JSON.parse(userInSessionStorage);
-          const response = await userService.login(user);
-          const success = response.data.success;
-          const userData = response.data.user;
+          const token = tokenInLocalStorage || tokenInSessionStorage;
+          const response = await userService.validateToken(token);
+          const success = response.data.success; 
           if (!success) {
             localStorage.clear();
             sessionStorage.clear();
             window.location.href = "/login";
-          } else {
-            if (userInLocalStorage) {
-              localStorage.setItem('loggedInUser', JSON.stringify(userData));
-            } else {
-              sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
-            }
           }
         } catch (err) {
           console.log(err);
+          localStorage.clear();
+          sessionStorage.clear();
+          window.location.href = "/login";
         }
       }
     }
@@ -93,8 +90,8 @@ function App() {
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/curriculum" element={<Curriculum />} />
-          <Route path="/aboutus" element={<AboutUs />}/>
-          
+          <Route path="/aboutus" element={<AboutUs />} />
+
 
 
         </Routes>
