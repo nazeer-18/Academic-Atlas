@@ -1,0 +1,157 @@
+.main-query{
+    width: 90vw;
+    background-color: white;
+    margin: 15px auto;
+    border-radius: 12px;
+    padding: 15px 10px;
+}
+
+.mainpage-heading{
+    background-color: #290BEA;
+    color:white;
+    text-align: center;
+    font-weight: 600;
+    padding: 12px;
+    font-size: 1.39em;
+    font-family: 'monserrat', sans-serif;
+    border-radius: 12px;
+}
+
+.mainpage-heading svg{
+    margin-right: 3px;
+}
+
+.mainpage-filter-txt{
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 7px;
+    padding: 0 10px;
+}
+
+.filter-choice select{
+    width: 300px;
+    background-color: #E0E0E0; 
+    border-radius: 8px;
+    padding: 7px 13px;
+    margin: 3px 3px;
+    margin-left: 0;
+    font-size: 1.1em;  
+}
+
+.mainpage-apply-btn{
+    display: flex;
+    justify-content: center;
+    height:47px;
+    margin: 7px auto;
+}
+
+.mainpage-apply-btn button{
+    width: 250px;
+    height: 90%;
+    background-color: #296FE0;
+    color: white;
+    margin: 0px 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px; 
+}
+
+.mainpage-apply-btn button:hover{
+    background-color: #0B0B61;
+}
+
+.mainpage-filters-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin: 10px;
+    padding: 10px; 
+}
+
+.filter-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.mainpage-filter-item{
+    margin: 10px;
+    padding: 7px; 
+}
+
+.filter-group{ 
+    border:3px solid #296FE0;
+    margin: 10px;
+}
+
+.filter-label{
+    font-size: 1.25em;
+    font-weight: 500; 
+    font-family: 'merriweather', sans-serif;
+}
+
+.mainpage-results{
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #fff;
+    width: 90vw;
+    border-radius: 18px;
+}
+
+.mainpage-result-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mainpage-results-txt{
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+    background-color: #290BEA;
+    color: white;
+    border-radius: 12px;
+    font-family: 'merriweather', sans-serif;
+}
+
+.result-img{
+    width: 30vw;
+}
+
+.result-img img{
+    max-width: 320px;
+} 
+
+.result-container{
+    width:80vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+option{
+    width:320px;
+}
+
+@media(max-width:570px){
+    .mainpage-filters-container{
+        display: block;
+        text-align: center;
+        margin: 10px 2px;
+        padding:10px 3px;
+    }
+    .filter-group{
+        margin: 10px 1px;
+    }
+    .main-query{
+        width: 95vw;
+    }
+
+}

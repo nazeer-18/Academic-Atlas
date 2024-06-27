@@ -4,24 +4,52 @@
     font-weight: 700;
 }
 
-.signup-acnt-page{
-    height:92.8vh;
+.signup-acnt-title{
+    text-align: center;
+}
+
+.signup-acnt-page{ 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-wrap: wrap; 
+    justify-content: space-around;
     align-items: center;
 }
 
+.signup-acnt-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    width: 40vw;
+    margin: 10px;
+    padding: 2px;
+}
+
+.signup-acnt-img img{
+    min-width: 340px;
+}
+
+.signup-acnt-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    min-width: 350px;
+    box-sizing: border-box;
+    width:40vw;
+    margin: 10px;
+}
+
 .signup-acnt-form{
-    background-color: white;
+    background-color: whitesmoke;
     margin-top: 11px;
     padding: 10px 20px;
     padding-top: 13px;
     border-radius: 25px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
-    width: 60%;
+    width: 100%;
     min-width: 330px;
     max-width: 560px;
+    box-sizing: border-box;
 }
 
 .signup-acnt-form-component{
@@ -29,10 +57,29 @@
 }
 
 .signup-acnt-btn{
-    width: 80%;
+    width: 95%;
     margin: 10px auto;
 }
 
 .signup-acnt-terms input{
     margin: 0px 7px;
+}
+
+@media(max-width:691px){
+    .signup-acnt-page{
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .signup-acnt-content{
+        width:100vw;
+        margin-bottom: 20px;
+    }
+    .signup-acntlogin-content{
+        margin: 10px 0px;
+        width: 100vw;
+    }
+    .signup-acnt-img{
+        width:100vw;
+    }
 }

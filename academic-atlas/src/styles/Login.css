@@ -1,8 +1,31 @@
-.login-page{
-    height:92.8vh;
+.login-page{ 
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    width: 35vw;
+    margin: 10px;
+    padding: 2px;
+}
+
+.login-img img{
+    min-width: 340px;
+}
+
+.login-content{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; 
+    min-width: 320px;
+    margin: 10px;
+    width:35vw;
 }
 
 .login-title{
@@ -22,20 +45,24 @@
 }
 
 .login-form{
-    background-color: white;
+    background-color: whitesmoke;
     border-radius: 25px;
     margin: 10px auto;
     padding: 7px 10px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
-    width:60%;
+    width:100%;
     min-width: 330px;
     max-width:560px;
+    box-sizing: border-box;
 }
 
 .login-form-component{
-    padding: 5px;
+    padding: 5px 10px;
     font-size:22px;
     font-weight: 400;
+    width:100%;
+    margin: 5px auto;
+    box-sizing: border-box; 
 }
 
 .atlas-label{
@@ -45,7 +72,7 @@
 }
 
 .atlas-input{
-    width: 95%;
+    width: 100%;
     margin-top: 5px;
     padding: 10px 5px;
     border: 1px solid #007B7F;
@@ -54,14 +81,28 @@
     font-weight: 400;
     font-family: 'Montserrat', sans-serif;
     background: #E0E0E0;
+}
 
+.password-input-group{
+    position: relative;
+}
+
+.eye-display{
+    margin: 0px;
+    padding: 10px;
+    position: absolute;
+    right: 0px;
+    top: 2px;
 }
 
 .login-adds{
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    margin: 0px 18px 0px 5px;
+    margin: 0px 18px 7px 5px; 
+    width: 100%;
+    min-width: 340px;
+    box-sizing: border-box;
 }
 
 .remember-me input{
@@ -69,21 +110,23 @@
 }
 
 .login-btn{
-    width: 75%;
+    width: 90%;
     text-align: center;
     margin: 7px auto;
 }
 
 .atlas-btn{
-    background-color: #007B7F;
+    background-color: #296FE0;
     color: white;
-    width: 100%;
+    width: 90%;
     border: none;
     padding: 10px;
     border-radius: 35px;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .noacnt-signup{
@@ -95,4 +138,41 @@
     font-family: 'Merryweather', serif;
     font-weight: 400;
     font-size: 20px;
+}
+
+.login-response-msg{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Merryweather', serif;
+    color: #F00731;
+    background-color: rgb(214, 222, 214);
+    border-radius: 18px;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+.true{
+    color: #0A7A0A; 
+}
+
+.false{
+    color: #F00731;
+}
+
+@media(max-width:666px){
+    .login-page{
+        justify-content: center;
+        flex-direction: column;
+    }
+    .login-adds{
+        width:auto;
+    }
+    .login-content{
+        margin: 10px 0px;
+        width: 100vw;
+    }
+    .login-img{
+        width:80vw;
+    }
 }

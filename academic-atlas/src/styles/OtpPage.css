@@ -1,0 +1,95 @@
+.OtpPage{ 
+  display: flex; 
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.OtpPage-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  width: 35vw;
+  margin: 10px;
+  padding: 2px;
+}
+
+.OtpPage-img img{
+  min-width: 320px; 
+}
+
+.OtpPage-title{
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    text-align: center;
+}
+
+.OtpPage-content{
+  margin: 10px 18px;
+}
+
+.OtpPage-form{
+  background-color: white;
+  border-radius: 25px;
+  margin: 10px;
+  padding: 7px 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  width: 35vw;
+  min-width: 330px;
+  max-width: 560px;
+  box-sizing: border-box;
+}
+
+.OtpPage-form-component{
+  box-sizing: border-box; 
+}
+
+.OtpPage-btn{
+    width: 95%;
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 7px auto;
+}
+
+.OtpPage-form{
+    padding: 15px;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.OtpPage-adds{
+  margin: 10px 2px;
+  font-size: 18px;
+}
+
+.OtpPage-adds a{
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+@media(max-width:620px){
+  .OtpPage{
+    flex-direction: column;
+  }
+  .OtpPage-form{
+    padding: 10px 9px;
+  }
+  .OtpPage-content{
+    margin: 0px auto;
+    padding: 5px; 
+    box-sizing: border-box;
+  }
+  .OtpPage-form-component{
+    margin: 0px auto; 
+  }
+  .OtpPage-form-component input{
+    width:280px;
+    margin: 0px auto;
+  }
+  .OtpPage-form-component label{
+    margin: 10px 0px;
+  }
+}

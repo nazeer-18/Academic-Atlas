@@ -1,15 +1,235 @@
-*{
-    padding: 0;
-    margin: 0;
+.nav-page{
+    background-color: #1B079D;
+    display: flex;
+    color: white; 
+    align-items: center; 
 }
 
 .navbar-header{
-    background-color: #7389DD;
-    color: white;
-    text-align: center;
     font-weight: 700;
     padding-top:6px;
     padding-bottom:3px;
+    margin:0px auto;
+    display: flex;
+    align-items: center;
     font-family: 'monserrat', sans-serif;
     font-size:36px;
+}
+
+.navbar-header a{
+    text-decoration: none;
+    color: white;  
+    display: flex;
+    align-items: center;
+}
+
+.navbar-header img{
+    width: 80px;
+    height:50px;
+    margin-right: 9px;
+    border-radius: 10px;
+}
+
+.user-icon {
+    margin-left: 5px;
+    padding: 5px 15px;
+    font-size: 30px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.user-icon:active {
+    opacity: 0.5;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.user-icon:focus {
+    animation: fadeInOut 0.6s ease;
+    outline: none;
+}
+
+.side-nav{
+    float: left;
+}
+
+.sidenav-head{
+    margin-left: 9px;
+    padding-top: 4px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.sidenav-item{
+    background-color: white;
+    margin:  6px 0px;
+    padding: 10px 12px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    width:250px;
+    border-radius:0px 9px 9px 0px;
+}
+
+.sidenav-item:hover{
+    background-color: #4056aae6;
+    color: white;
+}
+
+.sidenav-content{
+    padding-top: 5px;
+    margin-top: 5px;
+}
+
+.sidenav-content a{
+    text-decoration: none;
+    color:black; 
+    font-weight: 600;  
+    font-family: 'merriweather';
+    box-sizing: border-box;
+}
+
+.sidenav-content svg{
+    margin-right: 13px;
+
+}
+
+.hamburger{
+    margin: 8px;
+    padding: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size:28px; 
+}
+
+.hidden-side-nav{ 
+    position: absolute;
+    top:0;
+    left:-400px;
+    transition: all 0.8s ease-in-out;
+    height: 0%;
+    width:290px;
+}
+    
+.show-side-nav{
+    border-radius: 0px 25px 25px 0px ;
+    display: block;
+    height: 100%; 
+    background-color: #bedef4; 
+    width:295px;
+    z-index: 1;
+    top: 0;
+    left: 0; 
+    transition: all 0.8s ease-in-out; 
+    color:black; 
+}
+
+@media(max-width: 500px){
+    .navbar-header{
+        font-size: 28px;
+    }
+}
+
+@media(max-width:425px){
+    .navbar-header img{
+        display: none;
+    } 
+}
+
+.hidden-profile {
+    position: fixed;
+    top: 65px; 
+    right: -320px;
+    width: 300px;
+    background-color: #ffffff;
+    transition: right 0.4s ease-out;
+    z-index: 1000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 3px solid #4056aa;
+    max-height: calc(100vh - 75px);
+}
+
+.show-profile {
+    right: 2px;
+    max-width: 250px;
+}
+
+.profile-content {
+    padding: 8px;
+    overflow-y: auto;
+    max-height: calc(100vh - 105px);
+}
+
+.profile-content a {
+    text-decoration: none;
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    padding: 9px 9px;
+    margin-bottom: 8px;
+    font-size: 22px;
+    color: #000;
+    background-color: #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-item:hover {
+    background-color: #4056aae6;
+    color: white;
+}
+
+.profile-item svg {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.profile-item a {
+    color: inherit;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .hidden-profile {
+        top: 59px; 
+        right: -100%;
+        width: 100%;
+        max-width: 300px;
+        border-radius: 0 0 0 8px;
+        max-height: calc(100vh - 69px);
+    }
+    
+    .show-profile {
+        right: 0;
+        max-width: 250px;
+    }
+    
+    .profile-content {
+        max-height: calc(100vh - 99px);
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-item {
+        font-size: 22px;
+    }
 }

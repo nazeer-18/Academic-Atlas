@@ -1,0 +1,79 @@
+.contact-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: #e6f0fa;
+}
+
+.contact-page h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.contact-card {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    padding-top: 10px;
+    max-width: 400px;
+    text-align: center;
+}
+.contact-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.contact-card h2 {
+    color: #007bff;
+    margin-bottom: 10px;
+    font-size:25px;
+}
+
+.contact-card p {
+    color: #555;
+    margin-bottom: 20px;
+}
+.contact-email {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #7a99bb;
+    text-decoration: none;
+}
+.contact-email:hover {
+    text-decoration: underline;
+    color:#007bff
+}
+.contact-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 80%;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    animation: dance 1s infinite;
+    font-size: 24px;
+}
+
+.contact-button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes dance {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    50% {
+        transform: translateX(3px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+}
