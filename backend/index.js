@@ -47,3 +47,6 @@ app.use('/api/track', trackRoute);
 
 const developerRoute = require('./routes/developer');
 app.use('/api/developer', developerRoute);
+
+const contributionRoute = require('./routes/contribution');
+app.use('/api/contribution', contributionRoute);
