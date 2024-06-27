@@ -28,8 +28,9 @@ if (!fs.existsSync(uploadDir)) {
 }
 const upload = multer({ dest: uploadDir });
 
-const updateContribution=async(email,category,id) =>{
+const updateContribution=async(mail,category,id) =>{
         let updateField;
+        console.log(mail,category,id)
         switch(category.toLowerCase()) {
             case 'midSem':
                 updateField = { midSem: id };
@@ -43,13 +44,13 @@ const updateContribution=async(email,category,id) =>{
             case 'research':
                 updateField = { research: id };
                 break;
-            default:
-                return res.status(400).json({ message: "Invalid category.", success: false });
+            default: 
+                return res.json({ message: "Invalid category.", success: false });
         }
-
+        console.log(updateField)
         await contribution.findOneAndUpdate(
-            { userEmail: userEmail },
-            { $push: updateField }
+            { userEmail: mail },
+            { $push: { [category]: id }  }
         );
 }
 
@@ -177,24 +178,23 @@ resourceRouter.post('/getcapstone', async (req, res) => {
 
 resourceRouter.post('/addcapstone', async (req, res) => {
     try {
-        const { title, description, academicYear, branch, courseTags, faculties, students, url } = req.body;
+        const { title, academicYear, branch, courseTags, author, url } = req.body;
         const isExisting = await capstone.findOne({ title: title, academicYear: academicYear, branch: branch });
-
+        console.log(req.body)
         if (isExisting) {
             res.json({ message: "Resource already exists", success: false });
         } else {
             const newResource = new capstone({
-                title: title,
-                description: description,
+                title: title, 
                 academicYear: academicYear,
                 branch: branch,
-                courseTags: courseTags,
-                faculties: faculties,
-                students: students,
+                courseTags: courseTags, 
+                author:author,
                 url: url
             });
             
             await newResource.save();
+            const res = await updateContribution("shaiknazeer297@gmail.com","project",newResource._id);
             res.json({ message: "Resource added successfully", success: true });
         }
     } catch (err) {

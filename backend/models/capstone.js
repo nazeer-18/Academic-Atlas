@@ -6,10 +6,6 @@ const capstoneSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
-        type: String,
-        required: true,
-    },
     academicYear: {
         type: String,
         required: true,
@@ -29,17 +25,10 @@ const capstoneSchema = new Schema({
         }
     }
     ],
-    faculties: [{
-        faculty: {
-            type: String, 
-        }      
-    }],
-    students: [{
-        student: {
-            type: String,
-            required: true,
-        }
-    }], 
+    author:{
+        type: String,
+        required: true,
+    },
     url:{
         type: String, //github for projects and papaer link for research papers
         required: true,

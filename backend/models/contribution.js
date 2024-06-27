@@ -15,13 +15,14 @@ const contributionSchema = new Schema({
         type: [Schema.Types.ObjectId],
         ref: 'Exam'
     },
-    project: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Exam'
-    },
+    project: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Capstone'
+        }    ],
     research: {
         type: [Schema.Types.ObjectId],
-        ref: 'Exam'
+        ref: 'Capstone'
     }
 })
 module.exports = mongoose.model('Contribution', contributionSchema);
