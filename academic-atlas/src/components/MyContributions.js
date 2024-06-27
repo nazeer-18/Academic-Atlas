@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'; 
-import { faBook, faProjectDiagram, faFlask, faGraduationCap, faArrowRight, faFileLines, faFile } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react';
+import { faProjectDiagram, faFileLines } from '@fortawesome/free-solid-svg-icons';
 import ContributionCard from './ContributionCard';
 import '../styles/MyContributions.css';
 import contributionService from '../services/contributionService';
-import {useUser} from '../contexts/userContext'; 
+import { useUser } from '../contexts/userContext';
 
 function MyContributions() {
-  const {user} = useUser();
+  const { user } = useUser();
   const [contributionCounts, setContributionCounts] = useState({
     endsem: 0,
     midsem: 0,
     project: 0,
     research: 0
-  }); 
+  });
   useEffect(() => {
     const getContributions = async () => {
-      try{
+      try {
         const response = await contributionService.getContributions(user.email);
         setContributionCounts(response.data.contributions);
       }
-      catch(err){
+      catch (err) {
         console.log(err);
       }
     }

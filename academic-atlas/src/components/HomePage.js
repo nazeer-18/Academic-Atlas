@@ -23,16 +23,16 @@ export default function HomePage() {
                 </div>
             </div>
             <div className="home-content">
-                <Link to="/main?value=Mid Sem Papers?type=results">
+                <Link to="/main?value=Mid Sem Papers&?type=results">
                     <div className="home-item">Mid Sem Papers</div>
                 </Link>
-                <Link to="/main?value=End Sem Papers?type=results">
+                <Link to="/main?value=End Sem Papers&?type=results">
                     <div className="home-item">End Sem Papers</div>
                 </Link>
-                <Link to="/main?value=Projects?type=results">
+                <Link to="/main?value=Projects&?type=results">
                     <div className="home-item">Projects</div>
                 </Link>
-                <Link to="/main?value=Research Papers?type=results">
+                <Link to="/main?value=Research Papers&?type=results">
                     <div className="home-item">Research Papers</div>
                 </Link>
                 {/* <Link to="courses">

@@ -29,7 +29,7 @@ if (!fs.existsSync(uploadDir)) {
 const upload = multer({ dest: uploadDir });
 
 const updateContribution = async (mail, category, id) => {
-    let updateField; 
+    let updateField;
     switch (category) {
         case 'midSem':
             updateField = { midSem: id };
@@ -45,24 +45,25 @@ const updateContribution = async (mail, category, id) => {
             break;
         default:
             return ({ message: "Invalid category.", success: false });
-    } 
+    }
     await contribution.findOneAndUpdate(
         { userEmail: mail },
         { $push: { [category]: id } },
         { upsert: true, new: true }
-    ); 
+    );
 }
 
 resourceRouter.post('/get-exam', async (req, res) => {
     try {
-        const { academicYear, branch, course } = req.body;
+        const { academicYear, branch, course, category } = req.body;
         let query = {};
         if (academicYear) query.academicYear = academicYear;
         if (branch) query.branch = branch;
         if (course) query.course = course;
+        if (category) query.category = category;
 
-        const examPapers = await exam.find(query);
-        res.json({ examPapers: examPapers, success: true });
+        const results = await exam.find(query);
+        res.json({ results: results, success: true });
     } catch (err) {
         res.json({ message: err.message, success: false });
     }
@@ -162,23 +163,23 @@ resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
 
 resourceRouter.post('/get-capstone', async (req, res) => {
     try {
-        const { academicYear, branch, course } = req.body;
+        const { academicYear, branch, course, category } = req.body;
         const query = {};
         if (academicYear) query.academicYear = academicYear;
         if (branch) query.branch = branch;
         if (course) query.course = course;
-
-        const capstones = await capstone.find(query);
-        res.json({ capstones: capstones, success: true });
+        if (category) query.category = category;
+        const results = await capstone.find(query);
+        res.json({ results: results, success: true });
     } catch (err) {
         res.json({ message: err.message, success: false });
     }
 });
 
-resourceRouter.post('/add-capstone',upload.none(), async (req, res) => {
-    try { 
+resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
+    try {
         const { title, academicYear, branch, course, author, url, category } = req.body;
-        const isExisting = await capstone.findOne({ title: title, academicYear: academicYear, branch: branch });
+        const isExisting = await capstone.findOne({ title: title, academicYear: academicYear, branch: branch, category: category });
         if (isExisting) {
             res.json({ message: "Resource already exists", success: false });
         } else {
@@ -188,8 +189,10 @@ resourceRouter.post('/add-capstone',upload.none(), async (req, res) => {
                 branch: branch,
                 course: course,
                 author: author,
-                url: url
-            });
+                url: url,
+                category: category
+            }); 
+
 
             await newResource.save();
             await updateContribution(author, category, newResource._id);
