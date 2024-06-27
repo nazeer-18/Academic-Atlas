@@ -18,18 +18,15 @@ const capstoneSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    courseTags: [{
-        course: {
-            type: String,
-            required: true,
-        }
-    }
-    ],
-    author:{
+    course: {
         type: String,
         required: true,
     },
-    url:{
+    author: {
+        type: String,
+        required: true,
+    },
+    url: {
         type: String, //github for projects and papaer link for research papers
         required: true,
     }

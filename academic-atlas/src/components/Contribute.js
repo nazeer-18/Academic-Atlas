@@ -11,7 +11,7 @@ export default function Contribute() {
     }, [user])
     const [data, setData] = useState({
         title: '',
-        link: '',
+        url: '',
         category: '',
         academicYear: '',
         branch: '',
@@ -68,20 +68,18 @@ export default function Contribute() {
             formData.append('academicYear', data.academicYear);
             formData.append('branch', data.branch);
             formData.append('course', data.course);
-            formData.append('link', data.link);
+            formData.append('url', data.url);
             formData.append('pdfFile', data.pdfFile);
             formData.append('author', data.author);
-            for (let key of formData.keys()) {
-                console.log(key, formData.get(key));
-            }
             try {
-                const res = await resourceService.addExam(formData);
+                const method = choice === "capstone" ? resourceService.addCapstone : resourceService.addExam;
+                const res = await method(formData);
                 setMessage(res.data.message);
                 setSuccess(res.data.success)
-                if (res.data.success) { 
+                if (res.data.success) {
                     setData({
                         title: '',
-                        link: '',
+                        url: '',
                         category: '',
                         academicYear: '',
                         branch: '',
@@ -113,10 +111,9 @@ export default function Contribute() {
                     <select
                         id="contribution"
                         className="contribution-choice"
-                        onChange={(e) => setChoice((e.target.value === 'projects' || e.target.value === 'research') ? "capstone" : e.target.value)}>
+                        onChange={(e) => setChoice(e.target.value)}>
                         <option value="">Select Type</option>
-                        <option value="projects">Projects</option>
-                        <option value="research">Research Papers</option>
+                        <option value="capstone">Capstone</option>
                         <option value="exam">Mid/End sem papers</option>
                     </select>
                 </div>
@@ -182,10 +179,10 @@ export default function Contribute() {
                             <label className="contributefields" htmlFor="title">Link: </label>
                             <input
                                 type="text"
-                                name="link"
+                                name="url"
                                 required
-                                placeholder="Paste the github link of your project"
-                                value={data.link}
+                                placeholder="Paste the github url of your project"
+                                value={data.url}
                                 onChange={handleChange}
                             />
                         </>

@@ -46,4 +46,4 @@ const trackRoute = require('./routes/track');
 app.use('/api/track', trackRoute);
 
 const developerRoute = require('./routes/developer');
-app.use('/api/developer',developerRoute);
+app.use('/api/developer', developerRoute);
