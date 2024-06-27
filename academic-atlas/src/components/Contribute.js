@@ -2,20 +2,25 @@ import React, { useState, useEffect } from 'react';
 import resourceService from '../services/resourceService';
 import '../styles/ContributePage.css';
 import trackService from '../services/trackService';
+import { useUser } from '../contexts/userContext';
 
 export default function Contribute() {
+    const { user } = useUser();
+    useEffect(() => {
+        setData({ ...data, author: user.email })
+    }, [user])
     const [data, setData] = useState({
         title: '',
-        Description: '',
-        Link: '',
-        author: '',
+        link: '',
         category: '',
         academicYear: '',
         branch: '',
         course: '',
         pdfFile: null,
+        author: user.email
     });
-
+    const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false);
     const [branches, setBranches] = useState([]);
     const year = new Date().getFullYear();
     const years = [];
@@ -53,25 +58,47 @@ export default function Contribute() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('category', data.category);
-        formData.append('author', data.author);
-        formData.append('academicYear', data.academicYear);
-        formData.append('branch', data.branch);
-        formData.append('course', data.course);
-        formData.append('Link', data.Link);
-        formData.append('Description', data.Description);
-        formData.append('pdfFile', data.pdfFile);
-        try {
-            const res = await resourceService.addExam(formData);
-            if (res.data.success) {
-                alert(res.data.message);
-            } else {
-                alert(res.data.message);
+        const form = document.getElementById('contribution-form');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+        } else {
+            const formData = new FormData();
+            formData.append('title', data.title);
+            formData.append('category', data.category);
+            formData.append('academicYear', data.academicYear);
+            formData.append('branch', data.branch);
+            formData.append('course', data.course);
+            formData.append('link', data.link);
+            formData.append('pdfFile', data.pdfFile);
+            formData.append('author', data.author);
+            for (let key of formData.keys()) {
+                console.log(key, formData.get(key));
             }
-        } catch (err) {
-            alert(err.message);
+            try {
+                const res = await resourceService.addExam(formData);
+                setMessage(res.data.message);
+                setSuccess(res.data.success)
+                if (res.data.success) { 
+                    setData({
+                        title: '',
+                        link: '',
+                        category: '',
+                        academicYear: '',
+                        branch: '',
+                        course: '',
+                        pdfFile: null,
+                    });
+                }
+            } catch (err) {
+                console.log(err);
+                setMessage('An error occurred while adding the resource');
+                setSuccess(false);
+            }
+            finally {
+                setTimeout(() => {
+                    setMessage('');
+                }, 5000);
+            }
         }
     };
 
@@ -81,11 +108,11 @@ export default function Contribute() {
                 <div className="contribute-header">
                     Contribute Resource
                 </div>
-                <div className="contribute-content">
+                <div className="contribute-content filter-choice">
                     <label className='contributequestion' for="typefields">What would you like to contribute today ?</label>
                     <select
                         id="contribution"
-                        name="contribution-choice"
+                        className="contribution-choice"
                         onChange={(e) => setChoice((e.target.value === 'projects' || e.target.value === 'research') ? "capstone" : e.target.value)}>
                         <option value="">Select Type</option>
                         <option value="projects">Projects</option>
@@ -94,98 +121,11 @@ export default function Contribute() {
                     </select>
                 </div>
 
-                <form onSubmit={handleSubmit} encType="multipart/form-data">
-
+                <form id="contribution-form" onSubmit={handleSubmit} encType="multipart/form-data">
                     {
-
-                        choice === 'capstone' &&
-
                         <>
-                            <label className="resultfields" htmlFor="title">Title: </label>
-                            <input
-                                type="text"
-                                name="title"
-                                placeholder="Enter title of your project"
-                                value={data.title}
-                                onChange={handleChange}
-                            /> <br />
-
-                            <label className="contributefields" htmlFor="title">Description: </label>
-                            <input
-                                type="text"
-                                name="Description"
-                                placeholder="Enter Description of your project"
-                                value={data.Description}
-                                onChange={handleChange}
-                            /> <br />
-
-                            <label className="contributefields" htmlFor="title">Link: </label>
-                            <input
-                                type="text"
-                                name="Link"
-                                placeholder="Paste the github link of your project"
-                                value={data.Link}
-                                onChange={handleChange}
-                            /> <br />
-                        </>
-                    }
-
-                    {
-
-                        choice !== '' &&
-                        <>
-                            <label className="contributefields" htmlFor="category">Category: </label>
-                            <select name="category" onChange={handleChange}>
-                                <option value="">Select Category</option>
-                                <option value="mid-sem">Mid Sem</option>
-                                <option value="end-sem">End Sem</option>
-                            </select> <br />
-
-                            <label className="contributefields" htmlFor="title">Author: </label>
-                            <input
-                                type="text"
-                                name="author"
-                                placeholder="Enter author of your research paper"
-                                value={data.author}
-                                onChange={handleChange}
-                            /> <br />
-                            <label className="resultfields" htmlFor="title">Title: </label>
-                            <input
-                                type="text"
-                                name="title"
-                                placeholder="Enter title of your research paper"
-                                value={data.title}
-                                onChange={handleChange}
-                            /> <br />
-
-                            <label className="contributefields" htmlFor="title">Description: </label>
-                            <input
-                                type="text"
-                                name="Description"
-                                placeholder="Enter Description of your research paper"
-                                value={data.Description}
-                                onChange={handleChange}
-                            /> <br />
-
-                            <label className="contributefields" htmlFor="title">Link: </label>
-                            <input
-                                type="text"
-                                name="Link"
-                                placeholder="Paste the github link of your research paper"
-                                value={data.Link}
-                                onChange={handleChange}
-                            /> <br />
-                        </>
-                    }
-
-
-                    {
-                        data && data.category !== '' &&
-                        <>
-
-
                             <label className="contributefields" htmlFor="title">Year: </label>
-                            <select name="academicYear" id="filterByYear"
+                            <select name="academicYear" id="filterByYear" required
                                 value={data.academicYear}
                                 onChange={handleChange}
                             >
@@ -195,34 +135,92 @@ export default function Contribute() {
                                         return <option value={year} key={year}>{year}</option>
                                     })
                                 }
-                            </select> <br />
+                            </select>
 
                             <label className="contributefields" htmlFor="title">Branch: </label>
-                            <select name="mainpage-branch-filter" id="filterByBranch">
+                            <select name="branch" className="mainpage-branch-filter" required id="filterByBranch" onChange={handleChange}>
                                 <option value="">Choose Branch</option>
                                 {
                                     branches.map((branch) => {
                                         return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
                                     })
                                 }
-                            </select> <br />
+                            </select>
 
                             <label className="contributefields" htmlFor="title">Courses: </label>
-                            <select name="mainpage-course-filter" id="filterByCourse">
+                            <select name="course" required className="mainpage-course-filter" id="filterByCourse" onChange={handleChange} >
                                 <option value="">Choose Course</option>
                                 {
                                     courses.map((course) => {
                                         return <option value={course.course} key={course._id}>{course.course}</option>
                                     })
                                 }
-                            </select> <br />
+                            </select>
+                        </>
+                    }
+                    {
 
+                        choice === 'capstone' &&
+
+                        <>
+                            <label className="contributefields" htmlFor="category">Category: </label>
+                            <select required name="category" onChange={handleChange}>
+                                <option value="">Select Category</option>
+                                <option value="project">Project</option>
+                                <option value="research">Research</option>
+                            </select>
+                            <label className="resultfields" htmlFor="title">Title: </label>
+                            <input
+                                type="text"
+                                name="title"
+                                required
+                                placeholder="Enter title of your project"
+                                value={data.title}
+                                onChange={handleChange}
+                            />
+
+                            <label className="contributefields" htmlFor="title">Link: </label>
+                            <input
+                                type="text"
+                                name="link"
+                                required
+                                placeholder="Paste the github link of your project"
+                                value={data.link}
+                                onChange={handleChange}
+                            />
+                        </>
+                    }
+
+                    {
+
+                        choice !== '' && choice !== "capstone" &&
+                        <>
+                            <label className="contributefields" htmlFor="category">Category: </label>
+                            <select required name="category" onChange={handleChange}>
+                                <option value="">Select Category</option>
+                                <option value="midSem">Mid Sem</option>
+                                <option value="endSem">End Sem</option>
+                            </select>
                             <input
                                 type="file"
+                                required
                                 accept="application/pdf"
                                 onChange={handleFileChange}
-                            /> <br />
-                            <button type="submit">Submit</button>
+                            />
+                        </>
+                    }
+                    {
+                        choice !== "" &&
+                        <>
+                            {
+                                message !== '' &&
+                                <div className={`login-response-msg ${success}`}>
+                                    {message}
+                                </div>
+                            }
+                            <div className='contribution-btn-container'>
+                                <button className="atlas-btn" type="submit">Submit</button>
+                            </div>
                         </>
                     }
                 </form>

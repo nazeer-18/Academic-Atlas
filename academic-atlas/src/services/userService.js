@@ -2,14 +2,14 @@ import axios from 'axios';
 const server_url = 'https://academic-atlas-server-yr73.onrender.com' || 'http://localhost:8080' || 'https://academic-atlas-server.onrender.com';
 
 class userService {
-    fetchUser(email){ 
-        return axios.post(server_url+'/api/auth/fetch-user',{email})
+    fetchUser(email) {
+        return axios.post(server_url + '/api/auth/fetch-user', { email })
     }
     login(data) {
         return axios.post(server_url + '/api/auth/login', data);
     }
-    validateToken(token){
-        return axios.post(server_url+'/api/auth/validate',{
+    validateToken(token) {
+        return axios.post(server_url + '/api/auth/validate', {
             headers: { Authorization: `${token}` }
         })
     }
