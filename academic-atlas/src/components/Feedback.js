@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { useUser } from '../contexts/userContext';
+import feedbackService from '../services/feedbackService';
 import '../styles/Feedback.css';
-
-const API_BASE_URL = 'http://localhost:8080/api';
 
 const Feedback = () => {
   const { user } = useUser();
@@ -27,14 +25,11 @@ const Feedback = () => {
 
   const checkExistingFeedback = async () => {
     try {
-      const token = localStorage.getItem('atlasToken') || sessionStorage.getItem('atlasToken');
-      const response = await axios.get(`${API_BASE_URL}/feedback/${user._id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await feedbackService.checkExistingFeedback(user._id);
       
-      if (response.data.success && response.data.feedback) {
-        setRating(response.data.feedback.rating);
-        setFeedback(response.data.feedback.description);
+      if (response.success && response.feedback) {
+        setRating(response.feedback.rating);
+        setFeedback(response.feedback.description);
         setIsSubmitted(true);
       }
     } catch (error) {
@@ -48,23 +43,16 @@ const Feedback = () => {
     e.preventDefault();
     
     if (!rating || !feedback) {
-      setMessage('Please provide both a rating and feedback.');
+      setMessage('Please provide both rating and feedback.');
       setIsSuccess(false);
       return;
     }
 
     try {
       setIsLoading(true);
-      const token = localStorage.getItem('atlasToken') || sessionStorage.getItem('atlasToken');
-      const response = await axios.post(`${API_BASE_URL}/feedback/submit`, {
-        userId: user._id,
-        rating,
-        description: feedback
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await feedbackService.submitFeedback(user._id, rating, feedback);
 
-      if (response.data.success) {
+      if (response.success) {
         setMessage(isSubmitted ? 'Your feedback has been updated!' : 'Thank you for your feedback!');
         setIsSuccess(true);
         
@@ -74,11 +62,10 @@ const Feedback = () => {
           setMessage('');
         }, 2000);
       } else {
-        setMessage(response.data.message);
+        setMessage(response.message);
         setIsSuccess(false);
       }
     } catch (error) {
-      console.error('Error submitting feedback:', error.response || error);
       setMessage(error.response?.data?.message || 'An error occurred while submitting feedback. Please try again.');
       setIsSuccess(false);
     } finally {
@@ -126,11 +113,12 @@ const Feedback = () => {
             })}
           </div>
           <textarea
-            className="feedback-page-textarea"
-            placeholder="Tell us about your experience..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            disabled={isSubmitted && !isEditing}
+          className="feedback-page-textarea"
+          placeholder="Tell us about your experience... (max 50 characters)"
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value.slice(0, 50))}
+          disabled={isSubmitted && !isEditing}
+          maxLength={50}
           />
           
           {message && (

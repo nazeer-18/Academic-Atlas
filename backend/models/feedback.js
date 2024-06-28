@@ -15,7 +15,8 @@ const feedbackSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        maxlength: 50
     },
 });
 
