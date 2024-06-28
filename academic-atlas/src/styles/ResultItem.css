@@ -4,8 +4,23 @@
     padding: 0px;
     border-radius: 18px;
     position: relative;
-    width: 160px;
+    width: 200px;
+    height:240px;
 }
+
+.hide-result-info{
+    display: none;
+}
+
+.result-item-page:hover .show-result-info{
+    display: block;
+    position: absolute;
+    top:50px;
+    left:0px;
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
 
 .three-dots{
     position: absolute;
@@ -64,9 +79,7 @@
     padding: 7px 0px;   
     display: flex;
     justify-content: center;
-    align-items: center;
-    width:100%;
-    height:100px;
+    align-items: center; 
     background-color:rgb(233 233 233);
 }
 
