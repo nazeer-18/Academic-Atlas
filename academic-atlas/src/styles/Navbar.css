@@ -162,6 +162,7 @@
 }
 
 .show-profile {
+    position:absolute;
     right: 2px;
     max-width: 250px;
 }
