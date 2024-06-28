@@ -44,12 +44,18 @@ export default function ResultItem(props) {
                 <div className="three-dots" title="more-actions">
                     <FontAwesomeIcon icon={faEllipsisVertical} className="result-ellipsis" onClick={showOptions} />
                 </div>
+                {
+
+                }
                 <div id={`hidden-options-${index}`} className="hidden-options">
                     <a href={fileUrl} target="_blank" rel="noreferrer">
                         <div>View</div>
                     </a>
                     <div onClick={() => { handleDownload({ fileId }) }}>Download</div>
                 </div>
+                {
+                    
+                }
                 <span className="result-item-img">
                     <img src={thumbnail} alt="result" />
                 </span>

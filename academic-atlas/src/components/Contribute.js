@@ -114,7 +114,7 @@ export default function Contribute() {
                         onChange={(e) => setChoice(e.target.value)}>
                         <option value="">Select Type</option>
                         <option value="capstone">Capstone</option>
-                        <option value="exam">Mid/End sem papers</option>
+                        <option value="exam">Sem papers</option>
                     </select>
                 </div>
 

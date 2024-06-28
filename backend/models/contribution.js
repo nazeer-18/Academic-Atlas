@@ -7,14 +7,14 @@ const contributionSchema = new Schema({
         ref: 'User',
         required: true
     },
-    midSem: {
+    midSem: [{
         type: [Schema.Types.ObjectId],
         ref: 'Exam'
-    },
-    endSem: {
+    }],
+    endSem: [{
         type: [Schema.Types.ObjectId],
         ref: 'Exam'
-    },
+    }],
     project: [
         {
             type: Schema.Types.ObjectId,

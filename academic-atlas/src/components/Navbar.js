@@ -79,22 +79,22 @@ export default function Navbar() {
                                     <FontAwesomeIcon icon={faHouse} />Home
                                 </div>
                             </Link>
-                            <Link to="/main?value=Mid Sem Papers" onClick={handleSideNav}>
+                            <Link to="/main?value=Mid Sem Papers&?type=results" onClick={handleSideNav}>
                                 <div className="sidenav-item">
                                     <FontAwesomeIcon icon={faFileLines} />Midsem Papers
                                 </div>
                             </Link>
-                            <Link to="/main?value=End Sem Papers" onClick={handleSideNav}>
+                            <Link to="/main?value=End Sem Papers&?type=results" onClick={handleSideNav}>
                                 <div className="sidenav-item">
                                     <FontAwesomeIcon icon={faFileLines} />Endsem Papers
                                 </div>
                             </Link>
-                            <Link to="/main?value=Projects" onClick={handleSideNav}>
+                            <Link to="/main?value=Projects&?type=results" onClick={handleSideNav}>
                                 <div className="sidenav-item">
                                     <FontAwesomeIcon icon={faDiagramProject} />Projects
                                 </div>
                             </Link>
-                            <Link to="/main?value=Research papers" onClick={handleSideNav}>
+                            <Link to="/main?value=Research papers&?type=results" onClick={handleSideNav}>
                                 <div className="sidenav-item">
                                     <FontAwesomeIcon icon={faFileLines} />Research Papers
                                 </div>

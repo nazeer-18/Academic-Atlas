@@ -1,44 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react'; 
 import { faBook, faProjectDiagram, faFlask, faGraduationCap, faArrowRight, faFileLines, faFile } from '@fortawesome/free-solid-svg-icons';
+import ContributionCard from './ContributionCard';
 import '../styles/MyContributions.css';
-
-const ContributionCard = ({ title, count, manageLink, icon }) => {
-  return (
-    <div className="contribution-card">
-      <div className="card-icon">
-        <FontAwesomeIcon icon={icon} />
-      </div>
-      <div className="card-content">
-        <h2>{title}</h2>
-        <p>Contributions: <span className="count">{count}</span></p>
-        <Link to={manageLink} className="manage-btn">
-          Manage
-          <FontAwesomeIcon icon={faArrowRight} className="arrow-icon" />
-        </Link>
-      </div>
-    </div>
-  );
-};
+import contributionService from '../services/contributionService';
+import {useUser} from '../contexts/userContext'; 
 
 function MyContributions() {
+  const {user} = useUser();
   const [contributionCounts, setContributionCounts] = useState({
     endsem: 0,
     midsem: 0,
     project: 0,
     research: 0
-  });
-
+  }); 
   useEffect(() => {
-    // Fetch data from backend (using dummy data for now)
-    setContributionCounts({
-      endsem: 5,
-      midsem: 3,
-      project: 2,
-      research: 1
-    });
-  }, []);
+    const getContributions = async () => {
+      try{
+        const response = await contributionService.getContributions(user.email);
+        setContributionCounts(response.data.contributions);
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+    getContributions();
+  }, [user]);
 
   return (
     <div className="my-contributions">
@@ -46,26 +32,26 @@ function MyContributions() {
       <div className="contributions-container">
         <ContributionCard
           title="Endsem Papers"
-          count={contributionCounts.endsem}
-          manageLink="/manage-contributions/endsem"
+          count={contributionCounts.endSem}
+          manageLink="/main?value=End Sem Papers&?type=manage"
           icon={faFileLines}
         />
         <ContributionCard
           title="Midsem Papers"
-          count={contributionCounts.midsem}
-          manageLink="/manage-contributions/midsem"
+          count={contributionCounts.midSem}
+          manageLink="/main?value=Mid Sem Papers&?type=manage"
           icon={faFileLines}
         />
         <ContributionCard
           title="Projects"
           count={contributionCounts.project}
-          manageLink="/manage-contributions/project"
+          manageLink="/main?value=Projects&?type=manage"
           icon={faProjectDiagram}
         />
         <ContributionCard
           title="Research Papers"
           count={contributionCounts.research}
-          manageLink="/manage-contributions/research"
+          manageLink="/main?value=Research Papers&?type=manage"
           icon={faFileLines}
         />
       </div>

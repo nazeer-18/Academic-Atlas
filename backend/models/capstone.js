@@ -29,6 +29,10 @@ const capstoneSchema = new Schema({
     url: {
         type: String, //github for projects and papaer link for research papers
         required: true,
+    },
+    category:{
+        type: String, //project, research
+        required: true,
     }
 });
 
