@@ -36,8 +36,8 @@ connectDB.then(() => {
     console.log('Error connecting to MongoDB:', err.message);
 });
 
-// const authRoute = require('./routes/auth');
-// app.use('/api/auth', authRoute);
+const authRoute = require('./routes/auth');
+app.use('/api/auth', authRoute);
 
 const resourceRoute = require('./routes/resources');
 app.use('/api/resources', resourceRoute);
@@ -45,5 +45,12 @@ app.use('/api/resources', resourceRoute);
 const trackRoute = require('./routes/track');
 app.use('/api/track', trackRoute);
 
+
 const feedbackRoute = require('./routes/feedback');
 app.use('/api/feedback', feedbackRoute);
+
+const developerRoute = require('./routes/developer');
+app.use('/api/developer', developerRoute);
+
+const contributionRoute = require('./routes/contribution');
+app.use('/api/contribution', contributionRoute);

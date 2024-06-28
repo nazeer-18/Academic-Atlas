@@ -5,10 +5,10 @@ import landingIcon from '../assets/landingPageIcon.svg'
 import { useUser } from '../contexts/userContext'
 
 export default function HomePage() {
-    const { user ,setUser} = useUser();
-    useEffect(()=>{ 
+    const { user, setUser } = useUser();
+    useEffect(() => {
         setUser(user)
-    },[user])
+    }, [user])
     return (
         <div className="home-page">
             <div className="home-greeting">
@@ -23,16 +23,16 @@ export default function HomePage() {
                 </div>
             </div>
             <div className="home-content">
-                <Link to="/main?value=Mid Sem Papers">
+                <Link to="/main?value=Mid Sem Papers&type=results">
                     <div className="home-item">Mid Sem Papers</div>
                 </Link>
-                <Link to="/main?value=End Sem Papers">
+                <Link to="/main?value=End Sem Papers&type=results">
                     <div className="home-item">End Sem Papers</div>
                 </Link>
-                <Link to="/main?value=Projects">
+                <Link to="/main?value=Projects&type=results">
                     <div className="home-item">Projects</div>
                 </Link>
-                <Link to="/main?value=Research Papers">
+                <Link to="/main?value=Research Papers&type=results">
                     <div className="home-item">Research Papers</div>
                 </Link>
                 {/* <Link to="courses">

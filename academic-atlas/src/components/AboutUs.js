@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/AboutUs.css';
+import DeveloperItem from './DeveloperItem';
 
 export default function AboutUs() {
     return (
@@ -41,38 +42,57 @@ export default function AboutUs() {
                 <section className="developers">
                     <h2>Meet the Developers</h2>
                     <div className="developers-grid">
-                        <div className="developer-card">
-                            <img src="path/to/image1" alt="Developer 1" />
-                            <h3>Developer 1</h3>
-                            <p>Role and bio...</p>
-                        </div>
-                        <div className="developer-card">
-                            <img src="path/to/image2" alt="Developer 2" />
-                            <h3>Developer 2</h3>
-                            <p>Role and bio...</p>
-                        </div>
-                        <div className="developer-card">
-                            <img src="path/to/image3" alt="Developer 3" />
-                            <h3>Developer 3</h3>
-                            <p>Role and bio...</p>
-                        </div>
-                        <div className="developer-card">
-                            <img src="path/to/image4" alt="Developer 4" />
-                            <h3>Developer 4</h3>
-                            <p>Role and bio...</p>
-                        </div>
+                        <DeveloperItem />
+                        <DeveloperItem />
+                        <DeveloperItem />
+                        <DeveloperItem />
                     </div>
                 </section>
                 <section className="reviews">
                     <h2>Reviews and Ratings</h2>
-                    <div className="reviews-grid">
-                        <div className="review-card">
-                            <p>"This website has been a game-changer for me..." - Student A</p>
-                            <div className="rating">★★★★☆</div>
-                        </div>
-                        <div className="review-card">
-                            <p>"I love how easy it is to find resources..." - Student B</p>
-                            <div className="rating">★★★★★</div>
+                    <div className="reviews-wrapper">
+                        <div className="reviews-grid">
+                            <div className="review-card">
+                                <h3>Student A</h3>
+                                <div className="rating">★★★★☆</div>
+                                <p>"This website has been a game-changer for me..."</p>
+                            </div>
+                            <div className="review-card">
+                                <h3>Student B</h3>
+                                <div className="rating">★★★★★</div>
+                                <p>"I love how easy it is to find resources..."</p>
+                            </div>
+                            <div className="review-card">
+                                <h3>Student C</h3>
+                                <div className="rating">★★★★☆</div>
+                                <p>"A fantastic platform for academic preparation."</p>
+                            </div>
+                            <div className="review-card">
+                                <h3>Student D</h3>
+                                <div className="rating">★★★★☆</div>
+                                <p>"Highly recommend for all students."</p>
+                            </div>
+                            {/* Repeat reviews if needed to create the scrolling effect */}
+                            <div className="review-card">
+                                <h3>Student A</h3>
+                                <div className="rating">★★★★☆</div>
+                                <p>"This website has been a game-changer for me..."</p>
+                            </div>
+                            <div className="review-card">
+                                <h3>Student B</h3>
+                                <div className="rating">★★★★★</div>
+                                <p>"I love how easy it is to find resources..."</p>
+                            </div>
+                            <div className="review-card">
+                                <h3>Student C</h3>
+                                <div className="rating">★★★★☆</div>
+                                <p>"A fantastic platform for academic preparation."</p>
+                            </div>
+                            <div className="review-card">
+                                <h3>Student D</h3>
+                                <div className="rating">★★★★☆</div>
+                                <p>"Highly recommend for all students."</p>
+                            </div>
                         </div>
                     </div>
                 </section>

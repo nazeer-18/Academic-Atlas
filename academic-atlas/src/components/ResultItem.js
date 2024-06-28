@@ -41,27 +41,29 @@ export default function ResultItem(props) {
     return (
         <div className="result-item-page">
             <div className="result-item-container">
-                <div className="three-dots" title="more-actions">
-                    <FontAwesomeIcon icon={faEllipsisVertical} className="result-ellipsis" onClick={showOptions} />
-                </div>
-                <div id={`hidden-options-${index}`} className="hidden-options">
-                    <a href={fileUrl} target="_blank" rel="noreferrer">
-                        <div>View</div>
-                    </a>
-                    <div onClick={() => { handleDownload({ fileId }) }}>Download</div>
-                </div>
                 <span className="result-item-img">
                     <img src={thumbnail} alt="result" />
                 </span>
-                <div className="result-ay result-item-detail">
-                    <span className="result-item-label"></span> &nbsp;
-                    <span className="result-item-value">{academicYear}</span> <br />
-                    <span className="result-item-label"></span> &nbsp;
-                    <span className="result-item-value">{branch}</span> <br />
-                    <span className="result-item-label"></span> &nbsp;
-                    <span className="result-item-value">{course}</span> <br />
-                    <span className="result-item-label">Publisher:</span> &nbsp;
-                    <span className="result-item-value">{author}</span> <br />
+                <div className="hide-result-info show-result-info">
+                    <div className="three-dots" title="more-actions">
+                        <FontAwesomeIcon icon={faEllipsisVertical} className="result-ellipsis" onClick={showOptions} />
+                    </div>
+                    <div id={`hidden-options-${index}`} className="hidden-options">
+                        <a href={fileUrl} target="_blank" rel="noreferrer">
+                            <div>View</div>
+                        </a>
+                        <div onClick={() => { handleDownload({ fileId }) }}>Download</div>
+                    </div>
+                    <div className="result-ay result-item-detail">
+                        <span className="result-item-label"></span> &nbsp;
+                        <span className="result-item-value">{academicYear}</span> <br />
+                        <span className="result-item-label"></span> &nbsp;
+                        <span className="result-item-value">{branch}</span> <br />
+                        <span className="result-item-label"></span> &nbsp;
+                        <span className="result-item-value">{course}</span> <br />
+                        <span className="result-item-label">By:</span> &nbsp;
+                        <span className="result-item-value">{author}</span> <br />
+                    </div>
                 </div>
             </div>
         </div>

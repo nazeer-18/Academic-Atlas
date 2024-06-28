@@ -6,11 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
+import { useUser } from '../contexts/userContext';
 
 export default function MainPage() {
+    const { user } = useUser();
     const location = useLocation();
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
-    const [examPapers, setExamPapers] = useState([{}]);
+    const [type, setType] = useState(new URLSearchParams(location.search).get('type'));
+    const [results, setResults] = useState([{}]);
     const [branches, setBranches] = useState([]);
     const [courses, setCourses] = useState([]);
     const year = new Date().getFullYear();
@@ -18,9 +21,22 @@ export default function MainPage() {
     for (let i = year; i >= 2021; i--) {
         years.push(i + "-" + (i + 1));
     }
-
+    const updateResults = async () => {
+        try {
+            const academicYear = document.getElementById('filterByYear').value;
+            const branch = document.getElementById('filterByBranch').value;
+            const course = document.getElementById('filterByCourse').value;
+            const category = value === "Mid Sem Papers" ? "midSem" : value === "End Sem Papers" ? "endSem" : value === "Projects" ? "project" : "research";
+            const path = (category === "midSem" || category === "endSem") ? resourceService.getExam : resourceService.getCapstone;
+            const response = await path(academicYear, branch, course, category, (type === 'manage' ?  user.email:''));
+            setResults(response.data.results);
+        } catch (err) {
+            alert(err);
+        }
+    };
     useEffect(() => {
         setValue(new URLSearchParams(location.search).get('value'));
+        setType(new URLSearchParams(location.search).get('type'));
         const getTracks = async () => {
             try {
                 const response = await trackService.getBranches();
@@ -37,32 +53,21 @@ export default function MainPage() {
             }
         };
         getTracks();
-
-    }, [location]);
-
-    const handleSearch = async () => {
-        try {
-            const academicYear = document.getElementById('filterByYear').value;
-            const branch = document.getElementById('filterByBranch').value;
-            const course = document.getElementById('filterByCourse').value;
-            const response = await resourceService.getExam(academicYear, branch, course);
-            setExamPapers(response.data.examPapers);
-        } catch (err) {
-            alert(err);
-        }
-    };
+        updateResults();
+        clearFilters();
+    }, [location,type,value]);
 
     const clearFilters = () => {
         document.getElementById('filterByYear').value = "";
         document.getElementById('filterByBranch').value = "";
         document.getElementById('filterByCourse').value = "";
-        handleSearch();
+        updateResults();
     };
 
     useEffect(() => {
-        handleSearch();
+        updateResults();
         // eslint-disable-next-line
-    }, []);
+    },[])
 
     return (
         <div className="mainpage">
@@ -125,7 +130,7 @@ export default function MainPage() {
                         <button onClick={clearFilters}>
                             Clear All
                         </button>
-                        <button onClick={handleSearch}>
+                        <button onClick={updateResults}>
                             Apply
                         </button>
                     </div>
@@ -138,10 +143,10 @@ export default function MainPage() {
                 </div>
                 <div className="mainpage-result-container">
                     <div className="result-container">
-                        {examPapers.length === 0 ? (
+                        {results.length === 0 ? (
                             <div className="no-results">No Results Found</div>
                         ) : (
-                            examPapers.map((examPaper, index) => {
+                            results.map((examPaper, index) => {
                                 return <ResultItem key={index} examPaper={examPaper} index={index} />;
                             })
                         )}

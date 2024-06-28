@@ -38,7 +38,7 @@ function App() {
         try {
           const token = tokenInLocalStorage || tokenInSessionStorage;
           const response = await userService.validateToken(token);
-          const success = response.data.success; 
+          const success = response.data.success;
           if (!success) {
             localStorage.clear();
             sessionStorage.clear();
@@ -100,5 +100,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;
