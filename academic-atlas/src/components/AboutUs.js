@@ -1,8 +1,24 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import '../styles/AboutUs.css';
 import DeveloperItem from './DeveloperItem';
+import developerService from '../services/developerService';
 
 export default function AboutUs() {
+    const [developers, setDevelopers] = useState([]);
+
+    useEffect(() => {
+        const getDevelopers = async () => {
+            try {
+                const response = await developerService.getDevelopers();
+                console.log(response.data.developers);
+                setDevelopers(response.data.developers);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        getDevelopers();
+    }, []);
     return (
         <div className="aboutus-page">
             <header className="hero-section">
@@ -42,10 +58,10 @@ export default function AboutUs() {
                 <section className="developers">
                     <h2>Meet the Developers</h2>
                     <div className="developers-grid">
-                        <DeveloperItem />
-                        <DeveloperItem />
-                        <DeveloperItem />
-                        <DeveloperItem />
+                        { 
+                            developers.length !== 0 &&
+                            developers.map(developer => <DeveloperItem key={developer._id} developer={developer} />)
+                        } 
                     </div>
                 </section>
                 <section className="reviews">

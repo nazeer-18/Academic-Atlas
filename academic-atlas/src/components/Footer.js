@@ -17,10 +17,10 @@ export default function Footer() {
                     <Link to="/aboutus">About Us</Link>
                 </div>
                 <div className="footer-link">
-                    <a href="/ContactUs">Contact Us</a>
+                    <Link to="/ContactUs">Contact Us</Link>
                 </div>
                 <div className="footer-link">
-                    <a href="/curriculum">Curriculum</a>
+                    <Link to="/curriculum">Curriculum</Link>
                 </div>
                 <div className="footer-link">
                     <Link to="/faq">FAQ</Link>
