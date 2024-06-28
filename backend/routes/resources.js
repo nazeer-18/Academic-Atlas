@@ -125,6 +125,20 @@ resourceRouter.post('/add-exam', upload.single('pdfFile'), async (req, res) => {
     }
 });
 
+resourceRouter.delete('/delete-exam/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const resource = await exam.findByIdAndDelete(id);
+        if (!resource) {
+            return res.status(404).json({ message: "Resource not found", success: false });
+        }
+        await updateContribution(resource.author, resource.category, id);
+        res.json({ message: "Resource deleted successfully", success: true });
+    } catch (err) {
+        res.json({ message: err.message, success: false });
+    }
+});
+
 resourceRouter.get('/download/:fileId', async (req, res) => {
     const fileId = req.params.fileId;
     try {
@@ -201,6 +215,20 @@ resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
         }
     } catch (err) {
         console.log(err)
+        res.json({ message: err.message, success: false });
+    }
+});
+
+resourceRouter.delete('/delete-capstone/:id', async (req, res) => { 
+    try {
+        const id = req.params.id;
+        const resource = await capstone.findByIdAndDelete(id);
+        if (!resource) {
+            return res.status(404).json({ message: "Resource not found", success: false });
+        }
+        await updateContribution(resource.author, resource.category, id);
+        res.json({ message: "Resource deleted successfully", success: true });
+    } catch (err) {
         res.json({ message: err.message, success: false });
     }
 });
