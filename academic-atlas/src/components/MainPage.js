@@ -55,7 +55,11 @@ export default function MainPage() {
         getTracks();
         updateResults();
         clearFilters();
-    }, [location,type,value]);
+    }, [location]);
+
+    useEffect(()=>{
+        updateResults();
+    })
 
     const clearFilters = () => {
         document.getElementById('filterByYear').value = "";

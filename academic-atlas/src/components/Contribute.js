@@ -7,7 +7,8 @@ import { useUser } from '../contexts/userContext';
 export default function Contribute() {
     const { user } = useUser();
     useEffect(() => {
-        setData({ ...data, author: user.email })
+        setData({ ...data, author: user.email });
+        setEmailValid(validateEmail(user.email));
     }, [user])
     const [data, setData] = useState({
         title: '',
@@ -22,6 +23,7 @@ export default function Contribute() {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const [branches, setBranches] = useState([]);
+    const [emailValid, setEmailValid] = useState(false);
     const year = new Date().getFullYear();
     const years = [];
     for (let i = year; i >= 2021; i--) {
@@ -55,6 +57,11 @@ export default function Contribute() {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
     };
+
+    const validateEmail = (email) => {
+        const regex = /@ch\.amrita\.edu$|@ch\.students\.amrita\.edu$/;
+        return regex.test(email);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,126 +109,142 @@ export default function Contribute() {
 
     return (
         <div className="contributepage">
-            <div className="contribute-container">
-                <div className="contribute-header">
-                    Contribute Resource
-                </div>
-                <div className="contribute-content filter-choice">
-                    <label className='contributequestion' for="typefields">What would you like to contribute today ?</label>
-                    <select
-                        id="contribution"
-                        className="contribution-choice"
-                        onChange={(e) => setChoice(e.target.value)}>
-                        <option value="">Select Type</option>
-                        <option value="capstone">Capstone</option>
-                        <option value="exam">Sem papers</option>
-                    </select>
-                </div>
+            {
+                emailValid &&
+                <div className="contribute-container">
+                    <div className="contribute-header">
+                        Contribute Resource
+                    </div>
+                    <div className="contribute-content filter-choice">
+                        <label className='contributequestion' for="typefields">What would you like to contribute today ?</label>
+                        <select
+                            id="contribution"
+                            className="contribution-choice"
+                            onChange={(e) => setChoice(e.target.value)}>
+                            <option value="">Select Type</option>
+                            <option value="capstone">Capstone</option>
+                            <option value="exam">Sem papers</option>
+                        </select>
+                    </div>
 
-                <form id="contribution-form" onSubmit={handleSubmit} encType="multipart/form-data">
-                    {
-                        <>
-                            <label className="contributefields" htmlFor="title">Year: </label>
-                            <select name="academicYear" id="filterByYear" required
-                                value={data.academicYear}
-                                onChange={handleChange}
-                            >
-                                <option value="">Choose Academic Year</option>
+                    <form id="contribution-form" onSubmit={handleSubmit} encType="multipart/form-data">
+                        {
+                            <>
+                                <label className="contributefields" htmlFor="title">Year: </label>
+                                <select name="academicYear" id="filterByYear" required
+                                    value={data.academicYear}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Choose Academic Year</option>
+                                    {
+                                        years.map((year) => {
+                                            return <option value={year} key={year}>{year}</option>
+                                        })
+                                    }
+                                </select>
+
+                                <label className="contributefields" htmlFor="title">Branch: </label>
+                                <select name="branch" className="mainpage-branch-filter" required id="filterByBranch" onChange={handleChange}>
+                                    <option value="">Choose Branch</option>
+                                    {
+                                        branches.map((branch) => {
+                                            return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
+                                        })
+                                    }
+                                </select>
+
+                                <label className="contributefields" htmlFor="title">Courses: </label>
+                                <select name="course" required className="mainpage-course-filter" id="filterByCourse" onChange={handleChange} >
+                                    <option value="">Choose Course</option>
+                                    {
+                                        courses.map((course) => {
+                                            return <option value={course.course} key={course._id}>{course.course}</option>
+                                        })
+                                    }
+                                </select>
+                            </>
+                        }
+                        {
+
+                            choice === 'capstone' &&
+
+                            <>
+                                <label className="contributefields" htmlFor="category">Category: </label>
+                                <select required name="category" onChange={handleChange}>
+                                    <option value="">Select Category</option>
+                                    <option value="project">Project</option>
+                                    <option value="research">Research</option>
+                                </select>
+                                <label className="resultfields" htmlFor="title">Title: </label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    required
+                                    placeholder="Enter title of your project"
+                                    value={data.title}
+                                    onChange={handleChange}
+                                />
+
+                                <label className="contributefields" htmlFor="title">Link: </label>
+                                <input
+                                    type="text"
+                                    name="url"
+                                    required
+                                    placeholder="Paste the github url of your project"
+                                    value={data.url}
+                                    onChange={handleChange}
+                                />
+                            </>
+                        }
+
+                        {
+
+                            choice !== '' && choice !== "capstone" &&
+                            <>
+                                <label className="contributefields" htmlFor="category">Category: </label>
+                                <select required name="category" onChange={handleChange}>
+                                    <option value="">Select Category</option>
+                                    <option value="midSem">Mid Sem</option>
+                                    <option value="endSem">End Sem</option>
+                                </select>
+                                <input
+                                    type="file"
+                                    required
+                                    accept="application/pdf"
+                                    onChange={handleFileChange}
+                                />
+                            </>
+                        }
+                        {
+                            choice !== "" &&
+                            <>
                                 {
-                                    years.map((year) => {
-                                        return <option value={year} key={year}>{year}</option>
-                                    })
+                                    message !== '' &&
+                                    <div className={`login-response-msg ${success}`}>
+                                        {message}
+                                    </div>
                                 }
-                            </select>
-
-                            <label className="contributefields" htmlFor="title">Branch: </label>
-                            <select name="branch" className="mainpage-branch-filter" required id="filterByBranch" onChange={handleChange}>
-                                <option value="">Choose Branch</option>
-                                {
-                                    branches.map((branch) => {
-                                        return <option value={branch.branch} key={branch._id}>{branch.branch}</option>
-                                    })
-                                }
-                            </select>
-
-                            <label className="contributefields" htmlFor="title">Courses: </label>
-                            <select name="course" required className="mainpage-course-filter" id="filterByCourse" onChange={handleChange} >
-                                <option value="">Choose Course</option>
-                                {
-                                    courses.map((course) => {
-                                        return <option value={course.course} key={course._id}>{course.course}</option>
-                                    })
-                                }
-                            </select>
-                        </>
-                    }
-                    {
-
-                        choice === 'capstone' &&
-
-                        <>
-                            <label className="contributefields" htmlFor="category">Category: </label>
-                            <select required name="category" onChange={handleChange}>
-                                <option value="">Select Category</option>
-                                <option value="project">Project</option>
-                                <option value="research">Research</option>
-                            </select>
-                            <label className="resultfields" htmlFor="title">Title: </label>
-                            <input
-                                type="text"
-                                name="title"
-                                required
-                                placeholder="Enter title of your project"
-                                value={data.title}
-                                onChange={handleChange}
-                            />
-
-                            <label className="contributefields" htmlFor="title">Link: </label>
-                            <input
-                                type="text"
-                                name="url"
-                                required
-                                placeholder="Paste the github url of your project"
-                                value={data.url}
-                                onChange={handleChange}
-                            />
-                        </>
-                    }
-
-                    {
-
-                        choice !== '' && choice !== "capstone" &&
-                        <>
-                            <label className="contributefields" htmlFor="category">Category: </label>
-                            <select required name="category" onChange={handleChange}>
-                                <option value="">Select Category</option>
-                                <option value="midSem">Mid Sem</option>
-                                <option value="endSem">End Sem</option>
-                            </select>
-                            <input
-                                type="file"
-                                required
-                                accept="application/pdf"
-                                onChange={handleFileChange}
-                            />
-                        </>
-                    }
-                    {
-                        choice !== "" &&
-                        <>
-                            {
-                                message !== '' &&
-                                <div className={`login-response-msg ${success}`}>
-                                    {message}
+                                <div className='contribution-btn-container'>
+                                    <button className="atlas-btn" type="submit">Submit</button>
                                 </div>
-                            }
-                            <div className='contribution-btn-container'>
-                                <button className="atlas-btn" type="submit">Submit</button>
-                            </div>
-                        </>
-                    }
-                </form>
-            </div>
+                            </>
+                        }
+                    </form>
+                </div>
+            }
+            {
+                !emailValid &&
+                <div className="contribute-container">
+                    <div className="contribute-header">
+                        Contribute Resource
+                    </div>
+                    <div className="contribute-content">
+                        <div className="contribute-message">
+                            Please login with your Amrita email to contribute resources.
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     );
 }
