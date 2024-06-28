@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server_url ='https://academic-atlas-server-yr73.onrender.com' || 'http://localhost:8080' ||  'https://academic-atlas-server.onrender.com';
+const server_url = 'https://academic-atlas-server-yr73.onrender.com' || 'http://localhost:8080' ||  'https://academic-atlas-server.onrender.com';
 
 class resourceService {
     addExam(formData) {
@@ -9,8 +9,8 @@ class resourceService {
             },
         });
     }
-    getExam(academicYear, branch, course,category) { 
-        return axios.post(`${server_url}/api/resources/get-exam`, {academicYear, branch, course,category })
+    getExam(academicYear, branch, course,category,author) { 
+        return axios.post(`${server_url}/api/resources/get-exam`, {academicYear, branch, course,category,author })
     }
     addCapstone(formData) {
         return axios.post(`${server_url}/api/resources/add-capstone`, formData, {
@@ -19,8 +19,8 @@ class resourceService {
             },
         });
     }
-    getCapstone(academicYear, branch, course,category) {
-        return axios.post(`${server_url}/api/resources/get-capstone`, {academicYear, branch, course,category})
+    getCapstone(academicYear, branch, course,category,author) {
+        return axios.post(`${server_url}/api/resources/get-capstone`, {academicYear, branch, course,category,author})
     }
     downloadPdf = async (fileId, fileName) => {
         try {

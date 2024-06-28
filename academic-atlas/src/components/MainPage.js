@@ -6,10 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
+import { useUser } from '../contexts/userContext';
 
 export default function MainPage() {
+    const { user } = useUser();
     const location = useLocation();
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
+    const [type, setType] = useState(new URLSearchParams(location.search).get('type'));
     const [results, setResults] = useState([{}]);
     const [branches, setBranches] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -25,7 +28,7 @@ export default function MainPage() {
             const course = document.getElementById('filterByCourse').value;
             const category = value === "Mid Sem Papers" ? "midSem" : value === "End Sem Papers" ? "endSem" : value === "Projects" ? "project" : "research";
             const path = (category === "midSem" || category === "endSem") ? resourceService.getExam : resourceService.getCapstone;
-            const response = await path(academicYear, branch, course, category); 
+            const response = await path(academicYear, branch, course, category, (type === 'manage' ?  user.email:''));
             setResults(response.data.results);
         } catch (err) {
             alert(err);
@@ -33,6 +36,7 @@ export default function MainPage() {
     };
     useEffect(() => {
         setValue(new URLSearchParams(location.search).get('value'));
+        setType(new URLSearchParams(location.search).get('type'));
         const getTracks = async () => {
             try {
                 const response = await trackService.getBranches();
@@ -50,7 +54,8 @@ export default function MainPage() {
         };
         getTracks();
         updateResults();
-    }, [location]);
+        clearFilters();
+    }, [location,type,value]);
 
     const clearFilters = () => {
         document.getElementById('filterByYear').value = "";
@@ -62,7 +67,7 @@ export default function MainPage() {
     useEffect(() => {
         updateResults();
         // eslint-disable-next-line
-    })
+    },[])
 
     return (
         <div className="mainpage">

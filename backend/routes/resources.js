@@ -55,13 +55,13 @@ const updateContribution = async (mail, category, id) => {
 
 resourceRouter.post('/get-exam', async (req, res) => {
     try {
-        const { academicYear, branch, course, category } = req.body;
+        const { academicYear, branch, course, category ,author} = req.body;
         let query = {};
         if (academicYear) query.academicYear = academicYear;
         if (branch) query.branch = branch;
         if (course) query.course = course;
         if (category) query.category = category;
-
+        if (author) query.author = author;
         const results = await exam.find(query);
         res.json({ results: results, success: true });
     } catch (err) {
@@ -163,12 +163,13 @@ resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
 
 resourceRouter.post('/get-capstone', async (req, res) => {
     try {
-        const { academicYear, branch, course, category } = req.body;
+        const { academicYear, branch, course, category ,author} = req.body;
         const query = {};
         if (academicYear) query.academicYear = academicYear;
         if (branch) query.branch = branch;
         if (course) query.course = course;
         if (category) query.category = category;
+        if (author) query.author = author;
         const results = await capstone.find(query);
         res.json({ results: results, success: true });
     } catch (err) {
@@ -178,7 +179,7 @@ resourceRouter.post('/get-capstone', async (req, res) => {
 
 resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
     try {
-        const { title, academicYear, branch, course, author, url, category } = req.body;
+        const { title, academicYear, branch, course, author, url, category} = req.body;
         const isExisting = await capstone.findOne({ title: title, academicYear: academicYear, branch: branch, category: category });
         if (isExisting) {
             res.json({ message: "Resource already exists", success: false });
