@@ -32,4 +32,19 @@ developerRoute.post('/addDeveloper',async(req,res)=>{
         })
     }
 });
+
+developerRoute.get('/getDevelopers',async(req,res)=>{
+    try{
+        const developers = await Developer.find();
+        return res.json({
+            success: true,
+            developers: developers
+        })
+    }catch(err){
+        return res.json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+});
 module.exports =developerRoute ; 
