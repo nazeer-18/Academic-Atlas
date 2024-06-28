@@ -146,8 +146,8 @@ export default function MainPage() {
                         {results.length === 0 ? (
                             <div className="no-results">No Results Found</div>
                         ) : (
-                            results.map((examPaper, index) => {
-                                return <ResultItem key={index} examPaper={examPaper} index={index} />;
+                            results.map((resultItem, index) => {
+                                return <ResultItem key={index} resultItem={resultItem} index={index} />;
                             })
                         )}
                     </div>

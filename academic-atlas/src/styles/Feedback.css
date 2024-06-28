@@ -87,7 +87,9 @@
   box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.25);
 }
 
-.feedback-page-submit-btn {
+.feedback-page-submit-btn,
+.feedback-page-edit-btn,
+.feedback-page-update-btn {
   padding: 10px 20px;
   background-color: #6c5ce7;
   color: white;
@@ -101,10 +103,32 @@
   align-self: center;
 }
 
-.feedback-page-submit-btn:hover {
+.feedback-page-submit-btn:hover,
+.feedback-page-edit-btn:hover,
+.feedback-page-update-btn:hover {
   background-color: #5649c9;
   transform: translateY(-1px);
   box-shadow: 0 3px 10px rgba(108, 92, 231, 0.4);
+}
+
+.feedback-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'Merriweather', serif;
+  color: #F00731;
+  background-color: rgb(214, 222, 214);
+  border-radius: 18px;
+  margin: 10px auto;
+  padding: 5px;
+}
+
+.true {
+  color: #0A7A0A;
+}
+
+.false {
+  color: #F00731;
 }
 
 @keyframes fadeIn {
@@ -131,7 +155,9 @@
     font-size: 0.85em;
   }
 
-  .feedback-page-submit-btn {
+  .feedback-page-submit-btn,
+  .feedback-page-edit-btn,
+  .feedback-page-update-btn {
     font-size: 14px;
     padding: 8px 16px;
   }
@@ -159,7 +185,9 @@
     min-height: 100px;
   }
 
-  .feedback-page-submit-btn {
+  .feedback-page-submit-btn,
+  .feedback-page-edit-btn,
+  .feedback-page-update-btn {
     font-size: 12px;
     padding: 6px 12px;
   }
@@ -194,7 +222,9 @@
     margin-bottom: 10px;
   }
 
-  .feedback-page-submit-btn {
+  .feedback-page-submit-btn,
+  .feedback-page-edit-btn,
+  .feedback-page-update-btn {
     padding: 6px 12px;
     font-size: 12px;
   }
@@ -223,7 +253,9 @@
     margin-bottom: 5px;
   }
 
-  .feedback-page-submit-btn {
+  .feedback-page-submit-btn,
+  .feedback-page-edit-btn,
+  .feedback-page-update-btn {
     padding: 4px 8px;
     font-size: 10px;
   }

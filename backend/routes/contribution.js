@@ -32,5 +32,19 @@ contributionRouter.post('/getContributions/:userEmail', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+contributionRouter.delete('/deleteContribution/:userEmail/:category/:id', async (req, res) => {
+    const { userEmail, category, id } = req.params;
+    console.log(req.params)
+    try { 
+        const contributions = await Contribution.deleteOne({ userEmail: userEmail, [category]: { _id: id } });
+        if (contributions.nModified === 0) {
+            return res.status(404).json({ error: 'Contribution not found' });
+        }
+        return res.json({ success: true, message: 'Contribution deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting contribution:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+}); 
 
 module.exports = contributionRouter;
