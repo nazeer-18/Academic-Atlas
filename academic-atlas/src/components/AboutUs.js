@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/AboutUs.css';
 import DeveloperItem from './DeveloperItem';
 import developerService from '../services/developerService';
@@ -58,10 +58,10 @@ export default function AboutUs() {
                 <section className="developers">
                     <h2>Meet the Developers</h2>
                     <div className="developers-grid">
-                        { 
+                        {
                             developers.length !== 0 &&
                             developers.map(developer => <DeveloperItem key={developer._id} developer={developer} />)
-                        } 
+                        }
                     </div>
                 </section>
                 <section className="reviews">

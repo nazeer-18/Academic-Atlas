@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server_url ='https://academic-atlas-server-yr73.onrender.com' || 'https://academic-atlas-server.onrender.com';
+const server_url = 'https://academic-atlas-server-yr73.onrender.com' || 'https://academic-atlas-server.onrender.com';
 
 class resourceService {
     addExam(formData) {
@@ -9,8 +9,8 @@ class resourceService {
             },
         });
     }
-    getExam(academicYear, branch, course,category,author) { 
-        return axios.post(`${server_url}/api/resources/get-exam`, {academicYear, branch, course,category,author })
+    getExam(academicYear, branch, course, category, author) {
+        return axios.post(`${server_url}/api/resources/get-exam`, { academicYear, branch, course, category, author })
     }
     deleteExam(Id) {
         return axios.delete(`${server_url}/api/resources/delete-exam/${Id}`);
@@ -22,15 +22,15 @@ class resourceService {
             },
         });
     }
-    getCapstone(academicYear, branch, course,category,author) {
-        return axios.post(`${server_url}/api/resources/get-capstone`, {academicYear, branch, course,category,author})
+    getCapstone(academicYear, branch, course, category, author) {
+        return axios.post(`${server_url}/api/resources/get-capstone`, { academicYear, branch, course, category, author })
     }
     deleteCapstone(Id) {
         return axios.delete(`${server_url}/api/resources/delete-capstone/${Id}`);
     }
     downloadPdf = async (fileId, fileName) => {
         try {
-            const response = await axios.get(`${server_url}/api/resources/download/${fileId.fileId}`, {
+            const response = await axios.get(`${server_url}/api/resources/download/${fileId}`, {
                 responseType: 'blob', // Ensure the response is treated as a binary object
             });
 

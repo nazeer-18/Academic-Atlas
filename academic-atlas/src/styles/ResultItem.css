@@ -13,54 +13,16 @@
 }
 
 .result-item-page:hover .show-result-info{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: absolute;
-    top:50px;
+    top:0px;
     left:0px;
     width: 100%;
+    height:100%; 
+    background-color: #88828261; 
     overflow-wrap: break-word;
-}
-
-
-.three-dots{
-    position: absolute;
-    top:4px;
-    right:0px;
-    cursor: pointer;
-}
-
-.three-dots:hover{
-    background-color: #bedef4;
-    border-radius: 7px;;
-}
-    
-.three-dots svg{
-    padding: 6px;
-}
-
-.hidden-options{
-    position: absolute;
-    top:5px;
-    right:28px;
-    text-align: center;
-    cursor: pointer;
-    display: none;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.hidden-options a{
-    list-style: none;
-    text-decoration: none;
-}
-
-.hidden-options div{
-    border-bottom: 1px solid black; 
-}
-
-.hidden-options div:hover{
-    background-color: #bedef4; 
 }
 
 .show-options{
@@ -72,18 +34,80 @@
 
 .result-item-detail{
     padding: 2px 6px;
-    text-align: center;
+    text-align: center; 
+    font-weight: 540;
+    font-family: 'merriweather', sans-serif;
 }
 
 .result-item-img{
-    padding: 7px 0px;   
     display: flex;
     justify-content: center;
     align-items: center; 
-    background-color:rgb(233 233 233);
+    margin: auto; 
+    height:100%;
+    background-color:rgb(233 233 233); 
 }
 
 .result-item-img img{
-    width: 80%;
-    height: 99%;
+    width: 80%; 
+    max-height: 95%; 
+    padding: 4px;
+}
+
+.result-item-btn-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 0px;
+    width:90%; 
+    margin: 0px auto;
+}
+
+.result-item-btn-container a{
+    text-decoration: none; 
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.result-item-btn{
+    min-width:25px;
+    width:auto;
+}
+
+.year-badge{
+    position: absolute;
+    top:5px;
+    right:4px;
+    background-color: #296FE0;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 10px;
+}
+
+.branch-badge{
+    position: absolute;
+    bottom:5px;
+    left: 10px;
+    background-color: #296FE0;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 10px;
+}
+
+.author-details{
+    text-align: center;
+}
+
+.capstone-title{
+    width: 90%;
+    text-align: center;
+    margin: 0px auto;
+    padding: 5px 0px;
+    font-family: 'merriweather', sans-serif;
+    font-weight: 500;
+}
+
+.result-item-page:hover .capstone-title{
+    display: none;
 }

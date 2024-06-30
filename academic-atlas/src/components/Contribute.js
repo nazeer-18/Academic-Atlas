@@ -59,7 +59,7 @@ export default function Contribute() {
     };
 
     const validateEmail = (email) => {
-        const regex = /@ch\.amrita\.edu$|@ch\.students\.amrita\.edu$/;
+        const regex = /@ch\.students\.amrita\.edu$/;
         return regex.test(email);
     }
 
@@ -91,8 +91,12 @@ export default function Contribute() {
                         academicYear: '',
                         branch: '',
                         course: '',
+                        category: '',
                         pdfFile: null,
                     });
+                    document.getElementById('contribution-form').reset();
+                    document.getElementById('contribution').value = '';
+                    setChoice('');
                 }
             } catch (err) {
                 console.log(err);
@@ -153,7 +157,7 @@ export default function Contribute() {
                                     }
                                 </select>
 
-                                <label className="contributefields" htmlFor="title">Courses: </label>
+                                <label className="contributefields" htmlFor="title">Course: </label>
                                 <select name="course" required className="mainpage-course-filter" id="filterByCourse" onChange={handleChange} >
                                     <option value="">Choose Course</option>
                                     {

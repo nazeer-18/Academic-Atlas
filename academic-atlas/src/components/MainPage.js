@@ -13,6 +13,9 @@ export default function MainPage() {
     const location = useLocation();
     const [value, setValue] = useState(new URLSearchParams(location.search).get('value'));
     const [type, setType] = useState(new URLSearchParams(location.search).get('type'));
+    const [showYear,setShowYear] = useState(true);
+    const [showBranch,setShowBranch] = useState(true);
+    const [showCourse,setShowCourse] = useState(true);
     const [results, setResults] = useState([{}]);
     const [branches, setBranches] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -26,6 +29,9 @@ export default function MainPage() {
             const academicYear = document.getElementById('filterByYear').value;
             const branch = document.getElementById('filterByBranch').value;
             const course = document.getElementById('filterByCourse').value;
+            setShowYear(academicYear === "" ? true : false);
+            setShowBranch(branch === "" ? true : false);
+            setShowCourse(course === "" ? true : false);
             const category = value === "Mid Sem Papers" ? "midSem" : value === "End Sem Papers" ? "endSem" : value === "Projects" ? "project" : "research";
             const path = (category === "midSem" || category === "endSem") ? resourceService.getExam : resourceService.getCapstone;
             const response = await path(academicYear, branch, course, category, (type === 'manage' ?  user.email:''));
@@ -134,9 +140,9 @@ export default function MainPage() {
                         <button onClick={clearFilters}>
                             Clear All
                         </button>
-                        <button onClick={updateResults}>
+                        {/* <button onClick={updateResults}>
                             Apply
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
@@ -151,7 +157,7 @@ export default function MainPage() {
                             <div className="no-results">No Results Found</div>
                         ) : (
                             results.map((resultItem, index) => {
-                                return <ResultItem key={index} resultItem={resultItem} index={index} />;
+                                return <ResultItem key={index} resultItem={resultItem} index={index} type={type} showYear={showYear} showBranch={showBranch} showCourse={showCourse} />;
                             })
                         )}
                     </div>
