@@ -6,7 +6,7 @@ const Feedback = require('../models/feedback');
 feedbackRouter.post('/submit', async (req, res) => {
     try {
         const { userId, rating, description } = req.body;
-
+        console.log(req.body)
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found', success: false });
@@ -26,6 +26,7 @@ feedbackRouter.post('/submit', async (req, res) => {
                 description
             });
             await newFeedback.save();
+            console.log("feedback submitted sucesfully");
             return res.json({ message: 'Feedback submitted successfully', success: true });
         }
     } catch (error) {
