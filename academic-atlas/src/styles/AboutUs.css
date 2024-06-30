@@ -176,6 +176,7 @@ section h2 {
 
 .review-card h3 {
     margin-bottom: 10px;
+    word-wrap: break-word;
     font-size: 1.2rem;
     color: rgb(49, 49, 202);
 }

@@ -23,7 +23,6 @@ export function UserProvider({ children }) {
                 } else {
                     const response = await userService.validateToken(token);
                     const updatedUser = await userService.fetchUser(response.data.user.email);
-                    console.log(updatedUser.data)
                     setUser(updatedUser.data.user);
                     setLogged(true);
                 }

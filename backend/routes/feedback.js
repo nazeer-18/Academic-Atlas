@@ -5,14 +5,13 @@ const Feedback = require('../models/feedback');
 
 feedbackRouter.post('/submit', async (req, res) => {
     try {
-        const { userId, rating, description } = req.body;
-        console.log(req.body)
-        const user = await User.findById(userId);
+        const { email, rating, description } = req.body; 
+        const user = await User.findOne({email:email});
         if (!user) {
             return res.status(404).json({ message: 'User not found', success: false });
         }
 
-        let existingFeedback = await Feedback.findOne({ user: userId });
+        let existingFeedback = await Feedback.findOne({ email: email });
 
         if (existingFeedback) {
             existingFeedback.rating = rating;
@@ -21,12 +20,11 @@ feedbackRouter.post('/submit', async (req, res) => {
             return res.json({ message: 'Feedback updated successfully', success: true });
         } else {
             const newFeedback = new Feedback({
-                user: userId,
+                email: email,
                 rating,
                 description
             });
-            await newFeedback.save();
-            console.log("feedback submitted sucesfully");
+            await newFeedback.save(); 
             return res.json({ message: 'Feedback submitted successfully', success: true });
         }
     } catch (error) {
@@ -34,10 +32,10 @@ feedbackRouter.post('/submit', async (req, res) => {
     }
 });
 
-feedbackRouter.get('/:userId', async (req, res) => {
+feedbackRouter.get('/get-feedback/:email', async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const feedback = await Feedback.findOne({ user: userId });
+        const email = req.params.email; 
+        const feedback = await Feedback.findOne({ email: email });
         if (feedback) {
             res.json({ feedback: feedback, success: true });
         } else {
@@ -45,6 +43,15 @@ feedbackRouter.get('/:userId', async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while fetching feedback', success: false });
+    }
+});
+
+feedbackRouter.get('/all', async (req, res) => {
+    try { 
+        const feedbacks = await Feedback.find(); 
+        return res.json({ feedbacks: feedbacks, success: true });
+    } catch (error) {
+        return res.json({ message: 'An error occurred while fetching feedbacks', success: false });
     }
 });
 

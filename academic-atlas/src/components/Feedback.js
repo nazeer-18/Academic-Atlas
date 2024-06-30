@@ -16,20 +16,17 @@ const Feedback = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (user._id) {
+    if (user.email !== '') { 
       checkExistingFeedback();
-    } else {
-      setIsLoading(false);
     }
-  }, [user._id]);
+  },[user.email]);
 
   const checkExistingFeedback = async () => {
     try {
-      const response = await feedbackService.checkExistingFeedback(user._id);
-      
-      if (response.success && response.feedback) {
-        setRating(response.feedback.rating);
-        setFeedback(response.feedback.description);
+      const response = await feedbackService.checkExistingFeedback(user.email);
+      if (response.data.success) {
+        setRating(response.data.feedback.rating);
+        setFeedback(response.data.feedback.description);
         setIsSubmitted(true);
       }
     } catch (error) {
@@ -41,7 +38,7 @@ const Feedback = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!rating || !feedback) {
       setMessage('Please provide both rating and feedback.');
       setIsSuccess(false);
@@ -50,19 +47,19 @@ const Feedback = () => {
 
     try {
       setIsLoading(true);
-      const response = await feedbackService.submitFeedback(user._id, rating, feedback);
+      const response = await feedbackService.submitFeedback(user.email, rating, feedback);
 
-      if (response.success) {
+      if (response.data.success) {
         setMessage(isSubmitted ? 'Your feedback has been updated!' : 'Thank you for your feedback!');
         setIsSuccess(true);
-        
+
         setTimeout(() => {
           setIsSubmitted(true);
           setIsEditing(false);
           setMessage('');
         }, 2000);
       } else {
-        setMessage(response.message);
+        setMessage(response.data.message);
         setIsSuccess(false);
       }
     } catch (error) {
@@ -86,7 +83,7 @@ const Feedback = () => {
       <div className="feedback-page-content">
         <h1 className="feedback-page-title">How was your experience?</h1>
         <p className="feedback-page-subtitle">We'd love to hear your thoughts!</p>
-        
+
         <form className="feedback-page-form" onSubmit={handleSubmit}>
           <div className="feedback-page-rating">
             {[...Array(5)].map((star, index) => {
@@ -113,14 +110,14 @@ const Feedback = () => {
             })}
           </div>
           <textarea
-          className="feedback-page-textarea"
-          placeholder="Tell us about your experience... (max 50 characters)"
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value.slice(0, 50))}
-          disabled={isSubmitted && !isEditing}
-          maxLength={50}
+            className="feedback-page-textarea"
+            placeholder="Tell us about your experience... (max 50 characters)"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value.slice(0, 50))}
+            disabled={isSubmitted && !isEditing}
+            maxLength={50}
           />
-          
+
           {message && (
             <p className={`feedback-message ${isSuccess ? 'true' : 'false'}`}>
               {message}

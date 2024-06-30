@@ -2,22 +2,32 @@ import React, { useState, useEffect } from 'react';
 import '../styles/AboutUs.css';
 import DeveloperItem from './DeveloperItem';
 import developerService from '../services/developerService';
+import feedbackService from '../services/feedbackService';
 
 export default function AboutUs() {
     const [developers, setDevelopers] = useState([]);
-
+    const [reviews, setReviews] = useState([]);
     useEffect(() => {
         const getDevelopers = async () => {
             try {
                 const response = await developerService.getDevelopers();
-                console.log(response.data.developers);
                 setDevelopers(response.data.developers);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        };
+        const getFeedbacks = async () => {
+            try {
+                const response = await feedbackService.getAllFeedbacks();
+                setReviews(response.data.feedbacks);
             }
             catch (err) {
                 console.log(err);
             }
         }
         getDevelopers();
+        getFeedbacks();
     }, []);
     return (
         <div className="aboutus-page">
@@ -68,47 +78,16 @@ export default function AboutUs() {
                     <h2>Reviews and Ratings</h2>
                     <div className="reviews-wrapper">
                         <div className="reviews-grid">
-                            <div className="review-card">
-                                <h3>Student A</h3>
-                                <div className="rating">★★★★☆</div>
-                                <p>"This website has been a game-changer for me..."</p>
-                            </div>
-                            <div className="review-card">
-                                <h3>Student B</h3>
-                                <div className="rating">★★★★★</div>
-                                <p>"I love how easy it is to find resources..."</p>
-                            </div>
-                            <div className="review-card">
-                                <h3>Student C</h3>
-                                <div className="rating">★★★★☆</div>
-                                <p>"A fantastic platform for academic preparation."</p>
-                            </div>
-                            <div className="review-card">
-                                <h3>Student D</h3>
-                                <div className="rating">★★★★☆</div>
-                                <p>"Highly recommend for all students."</p>
-                            </div>
-                            {/* Repeat reviews if needed to create the scrolling effect */}
-                            <div className="review-card">
-                                <h3>Student A</h3>
-                                <div className="rating">★★★★☆</div>
-                                <p>"This website has been a game-changer for me..."</p>
-                            </div>
-                            <div className="review-card">
-                                <h3>Student B</h3>
-                                <div className="rating">★★★★★</div>
-                                <p>"I love how easy it is to find resources..."</p>
-                            </div>
-                            <div className="review-card">
-                                <h3>Student C</h3>
-                                <div className="rating">★★★★☆</div>
-                                <p>"A fantastic platform for academic preparation."</p>
-                            </div>
-                            <div className="review-card">
-                                <h3>Student D</h3>
-                                <div className="rating">★★★★☆</div>
-                                <p>"Highly recommend for all students."</p>
-                            </div>
+                            {
+                                reviews.length !== 0 &&
+                                reviews.map(review => (
+                                    <div key={review._id} className="review-card">
+                                        <h3>{review.email}</h3>
+                                        <div className="rating">{'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}</div>
+                                        <p>{review.description}</p>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
                 </section>
