@@ -82,7 +82,7 @@ export default function AboutUs() {
                                 reviews.length !== 0 &&
                                 reviews.map(review => (
                                     <div key={review._id} className="review-card">
-                                        <h3>{review.email}</h3>
+                                        <span className='review-email'>{review.email}</span>
                                         <div className="rating">{'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}</div>
                                         <p>{review.description}</p>
                                     </div>
