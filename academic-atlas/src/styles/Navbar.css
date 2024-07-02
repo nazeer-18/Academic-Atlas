@@ -163,6 +163,7 @@
 
 .show-profile {
     right: 2px;
+    position: absolute;
     max-width: 250px;
 }
 
