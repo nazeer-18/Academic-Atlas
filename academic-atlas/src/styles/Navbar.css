@@ -158,19 +158,22 @@
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 3px solid #4056aa;
+    border: 3px solid #4056aa;
+    max-height: calc(100vh - 75px);
+    border: 3px solid #4056aa; 
     max-height: calc(100vh - 75px);
 }
 
 .show-profile {
     right: 2px;
+    top:65px;
     position: absolute;
     max-width: 250px;
 }
 
 .profile-content {
-    padding: 8px;
-    overflow-y: auto;
-    max-height: calc(100vh - 105px);
+    padding: 8px; 
+    height:fit-content; 
 }
 
 .profile-content a {

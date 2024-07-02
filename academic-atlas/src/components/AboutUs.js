@@ -8,8 +8,8 @@ import userService from '../services/userService'; // Import the user service
 export default function AboutUs() {
     const [developers, setDevelopers] = useState([]);
     const [reviews, setReviews] = useState([]);
-    const [userCount, setUserCount] = useState(500); // State to track total user count
-    const [currentCount, setCurrentCount] = useState(0); // State for the dynamic counter
+    const [userCount, setUserCount] = useState(0); 
+    const [currentCount, setCurrentCount] = useState(0); 
 
     useEffect(() => {
         const getDevelopers = async () => {

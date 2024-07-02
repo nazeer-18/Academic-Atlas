@@ -88,7 +88,7 @@ authRoute.post('/login', async (req, res) => {
     if (!isMatch) {
         return res.json({
             success: false,
-            message: 'Invalid password'
+            message: 'Incorrect password'
         })
     }
     const token = generateToken(user); 
