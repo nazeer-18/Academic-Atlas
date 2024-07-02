@@ -3,37 +3,69 @@ import '../styles/AboutUs.css';
 import DeveloperItem from './DeveloperItem';
 import developerService from '../services/developerService';
 import feedbackService from '../services/feedbackService';
+import userService from '../services/userService'; // Import the user service
 
 export default function AboutUs() {
     const [developers, setDevelopers] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [userCount, setUserCount] = useState(500); // State to track total user count
+    const [currentCount, setCurrentCount] = useState(0); // State for the dynamic counter
+
     useEffect(() => {
         const getDevelopers = async () => {
             try {
                 const response = await developerService.getDevelopers();
                 setDevelopers(response.data.developers);
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         };
+
         const getFeedbacks = async () => {
             try {
                 const response = await feedbackService.getAllFeedbacks();
                 setReviews(response.data.feedbacks);
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
-        }
+        };
+
+        const getUserCount = async () => {
+            try {
+                const response = await userService.getUserCount();
+                setUserCount(response.data.count); // Assume the API returns { count: number }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         getDevelopers();
         getFeedbacks();
+        getUserCount(); // Fetch user count
     }, []);
+
+    useEffect(() => {
+        if (currentCount < userCount) {
+            const interval = setInterval(() => {
+                setCurrentCount(prevCount => {
+                    if (prevCount < userCount) {
+                        return prevCount + 1;
+                    } else {
+                        clearInterval(interval);
+                        return prevCount;
+                    }
+                });
+            }, 50); // Increment speed: 100ms
+
+            return () => clearInterval(interval); // Clear interval on unmount
+        }
+    }, [currentCount, userCount]);
+
     return (
         <div className="aboutus-page">
             <header className="hero-section">
                 <h1>About Us</h1>
-                <p>Discover how we make a difference in students academic lives.</p>
+                <p>Discover how we make a difference in students academic lives</p>
             </header>
             <div className="content">
                 <section className="problems">
@@ -42,7 +74,7 @@ export default function AboutUs() {
                 </section>
                 <section className="solutions">
                     <h2>How Our Website Solves Those Problems</h2>
-                    <p>Our website, Academic-Atlas, revolutionizes the way AVV Chennai students access and utilize academic resources. By centralizing past midterm and endterm papers, course-related projects, and research works, we eliminate the frustration of scattered information. With an intuitive interface, students can effortlessly find and contribute valuable materials, ensuring a continuous flow of knowledge. This not only enhances individual learning but also fosters a culture of collaboration, where students support each other by sharing insights and resources. Our platform transforms academic preparation into a streamlined and enriching experience</p>
+                    <p>Our website, Academic-Atlas, revolutionizes the way AVV Chennai students access and utilize academic resources. By centralizing past midterm and endterm papers, course-related projects, and research works, we eliminate the frustration of scattered information. With an intuitive interface, students can effortlessly find and contribute valuable materials, ensuring a continuous flow of knowledge. This not only enhances individual learning but also fosters a culture of collaboration, where students support each other by sharing insights and resources. Our platform transforms academic preparation into a streamlined and enriching experience.</p>
                 </section>
                 <section className="features">
                     <h2>Features</h2>
@@ -89,6 +121,12 @@ export default function AboutUs() {
                                 ))
                             }
                         </div>
+                    </div>
+                </section>
+                <section className="user-count">
+                    <h2>User Count</h2>
+                    <div className="user-count-item">
+                        {currentCount}
                     </div>
                 </section>
             </div>
