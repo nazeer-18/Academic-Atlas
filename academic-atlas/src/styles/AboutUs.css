@@ -106,7 +106,7 @@ section h2 {
     gap: 20px;
     padding: 10px 0;
     white-space: nowrap;
-    animation: scroll-reviews 20s linear infinite;
+    animation: scroll-reviews 6s linear infinite;
 }
 
 @keyframes scroll-reviews {
@@ -120,7 +120,7 @@ section h2 {
 
 .review-card {
     flex: 0 0 auto;
-    width: 300px;
+    width: 320px;
     min-height: 200px;
     padding: 20px;
     border-radius: 10px;
@@ -138,14 +138,19 @@ section h2 {
 .review-email {
     margin-bottom: 10px;
     word-wrap: break-word;
-    font-size: 1.2rem;
-    color: rgb(49, 49, 202);
+    word-break: break-all;
+    font-size: 0.93rem;
+    color: rgb(2, 2, 27);
+    overflow-wrap: break-word;
+    max-width: 100%;
+    font-weight: 500 ;
 }
 
 .rating {
     color: #363078; /* Bright gold color for better visibility */
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-bottom: 10px;
+    margin-top:4px;
 }
 
 .review-card p {
@@ -158,4 +163,37 @@ section h2 {
     background-color: #ffffff; /* Neutral background color for the description */
     padding: 10px;
     border-radius: 5px;
+}
+.user-count {
+    text-align: center;
+    padding: 10px;
+    background: #E1F2FE;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.user-count h2{
+    font-size: 1.4rem;
+    
+}
+
+.user-count-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.user-count-item {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #131313;
+    margin: 0 auto;
+    display: inline-block;
 }

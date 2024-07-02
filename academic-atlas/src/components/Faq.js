@@ -32,6 +32,10 @@ export default function Faq() {
             question: "7. Who can access the uploaded academic resources?",
             answer: "Accessing resources is open to all users, but only Amrita students can contribute to the repository."
         },
+        {
+            question: "8. Who can contribute resources to the repository?",
+            answer: "Only Amrita students can contribute resources to the repository and they must login through thier university mail. This ensures that the materials are relevant and accurate for the student community."
+        },
     ];
 
     const [activeIndex, setActiveIndex] = useState(null);
