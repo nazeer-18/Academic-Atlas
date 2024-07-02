@@ -251,4 +251,22 @@ authRoute.post('/change-name', async (req, res) => {
     }
 })
 
+//fetch all users count
+authRoute.get('/fetch-all-users-count', async (req, res) => {
+    try {
+        const users = await User.find();
+        console.log(users.length)
+        return res.json({
+            success: true,
+            count: users.length
+        })
+    }
+    catch (err) {
+        return res.json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+})
+
 module.exports = authRoute;

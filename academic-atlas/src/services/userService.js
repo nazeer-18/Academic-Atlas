@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server_url = 'https://academic-atlas-server.onrender.com' ||  'https://academic-atlas-server-yr73.onrender.com';
+const server_url = 'https://academic-atlas-server.onrender.com' || 'https://academic-atlas-server-yr73.onrender.com';
 
 class userService {
     fetchUser(email) {
@@ -27,6 +27,9 @@ class userService {
     }
     changeName(email, userName) {
         return axios.post(server_url + '/api/auth/change-name', { email, userName });
+    }
+    getUserCount() {
+        return axios.get(server_url + '/api/auth/fetch-all-users-count');
     }
 }
 

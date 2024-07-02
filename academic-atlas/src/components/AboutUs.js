@@ -33,7 +33,7 @@ export default function AboutUs() {
         const getUserCount = async () => {
             try {
                 const response = await userService.getUserCount();
-                setUserCount(response.data.count); // Assume the API returns { count: number }
+                setUserCount(response.data.count); 
             } catch (err) {
                 console.log(err);
             }
@@ -41,7 +41,7 @@ export default function AboutUs() {
 
         getDevelopers();
         getFeedbacks();
-        getUserCount(); // Fetch user count
+        getUserCount();
     }, []);
 
     useEffect(() => {
