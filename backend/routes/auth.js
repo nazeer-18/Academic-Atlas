@@ -77,7 +77,7 @@ authRoute.post('/fetch-user', async (req, res) => {
 //login route
 authRoute.post('/login', async (req, res) => {
     const { email, password } = req.body; 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
         return res.json({
             success: false,
