@@ -126,15 +126,16 @@ export default function ResultItem(props) {
                                 </div>
                                 :
                                 <div className='result-item-btn-container'>
-                                    <button className="result-item-btn atlas-btn">
+                                    {/* <button className="result-item-btn atlas-btn">
                                         <FontAwesomeIcon icon={faPenToSquare} />
-                                    </button>
+                                    </button> */}
                                     <button className="result-item-btn atlas-btn" onClick={handleDelete}>
                                         <FontAwesomeIcon icon={faTrashAlt} className="delete-icon" />
                                     </button>
                                 </div>
                         }
                         {
+                            type === 'results' &&
                             <div className='author-details'>
                                 <span className="result-item-label">By:</span> &nbsp;
                                 <span className="result-item-value">{strippedName(author)}</span> <br />

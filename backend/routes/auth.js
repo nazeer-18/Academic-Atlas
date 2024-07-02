@@ -104,7 +104,7 @@ authRoute.post('/login', async (req, res) => {
 authRoute.post('/register', async (req, res) => {
     const { userName, email, password } = req.body;
     console.log(userName, email, password)
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email: email.toLowerCase() })
     try {
         if (user) {
             return res.json({
@@ -114,7 +114,7 @@ authRoute.post('/register', async (req, res) => {
         }
         const newUser = new User({
             userName: userName,
-            email: email,
+            email: email.toLowerCase(),
             password: await hashPassword(password)
         })
         await newUser.save()
@@ -136,7 +136,7 @@ authRoute.post('/register', async (req, res) => {
 authRoute.post('/verify-mail', async (req, res) => {
     try {
         const { email } = req.body;
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email.toLowerCase() });
         if (user) {
             return res.json({
                 success: false,
@@ -166,7 +166,7 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
     try {
         const { email } = req.body;
         const user = await User.findOne({
-            email: email
+            email: email.toLowerCase()
         });
         if (!user) {
             return res.json({
@@ -198,7 +198,7 @@ authRoute.post('/reset-password', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User
-            .findOne({ email: email })
+            .findOne({ email: email.toLowerCase() })
         if (!user) {
             return res.json({
                 success: false,
