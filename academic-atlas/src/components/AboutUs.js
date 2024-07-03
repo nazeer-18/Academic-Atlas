@@ -5,11 +5,13 @@ import developerService from '../services/developerService';
 import feedbackService from '../services/feedbackService';
 import userService from '../services/userService'; // Import the user service
 
+import { HiUserGroup } from "react-icons/hi";
+
 export default function AboutUs() {
     const [developers, setDevelopers] = useState([]);
     const [reviews, setReviews] = useState([]);
-    const [userCount, setUserCount] = useState(0); 
-    const [currentCount, setCurrentCount] = useState(0); 
+    const [userCount, setUserCount] = useState(0);
+    const [currentCount, setCurrentCount] = useState(0);
 
     useEffect(() => {
         const getDevelopers = async () => {
@@ -33,7 +35,7 @@ export default function AboutUs() {
         const getUserCount = async () => {
             try {
                 const response = await userService.getUserCount();
-                setUserCount(response.data.count); 
+                setUserCount(response.data.count);
             } catch (err) {
                 console.log(err);
             }
@@ -45,20 +47,31 @@ export default function AboutUs() {
     }, []);
 
     useEffect(() => {
-        if (currentCount < userCount) {
-            const interval = setInterval(() => {
-                setCurrentCount(prevCount => {
-                    if (prevCount < userCount) {
-                        return prevCount + 1;
-                    } else {
-                        clearInterval(interval);
-                        return prevCount;
-                    }
-                });
-            }, 50); // Increment speed: 100ms
+        const handleScroll = () => {
+            const section = document.querySelector('.user-count');
+            const sectionTop = section.getBoundingClientRect().top;
+            if (sectionTop <= window.innerHeight && currentCount === 0) {
+                startCount();
+            }
+        };
 
-            return () => clearInterval(interval); // Clear interval on unmount
-        }
+        const startCount = () => {
+            if (currentCount < userCount) {
+                const interval = setInterval(() => {
+                    setCurrentCount(prevCount => {
+                        if (prevCount < userCount) {
+                            return prevCount + 1;
+                        } else {
+                            clearInterval(interval);
+                            return prevCount;
+                        }
+                    });
+                }, 50); // Increment speed: 50ms
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, [currentCount, userCount]);
 
     return (
@@ -124,10 +137,12 @@ export default function AboutUs() {
                     </div>
                 </section>
                 <section className="user-count">
-                    <h2>User Count</h2>
-                    <div className="user-count-item">
-                        {currentCount}
-                    </div>
+                    
+                    <h2><HiUserGroup /> Users Registered</h2>
+                    
+                        <p> {currentCount}</p>
+                        
+                    
                 </section>
             </div>
         </div>
