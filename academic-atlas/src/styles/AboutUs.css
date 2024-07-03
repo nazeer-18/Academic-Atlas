@@ -169,11 +169,13 @@ section h2 {
     text-align: center; 
     background: #E1F2FE;
     border-radius: 10px;
+    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .user-count h2{
     font-size: 1.4rem;
+    color:#0d2138;
 }
 
 .user-count-grid {
@@ -190,7 +192,13 @@ section h2 {
     padding: 10px 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: #131313;
+    background: white;
     margin: 0 auto;
     display: inline-block;
+}
+.user-count p{
+    color:#4a90e2;
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin:auto;
 }
