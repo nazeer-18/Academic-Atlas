@@ -117,7 +117,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div>
+    <div className='update-password-page-container'>
       <div className="update-password-page">
         <div className="update-password-img">
           <img src={UpdatePasswordImg} alt="UpdatePassword" />
