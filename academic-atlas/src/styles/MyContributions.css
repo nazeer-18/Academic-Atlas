@@ -5,6 +5,10 @@
   margin: 0 auto;
   padding: 40px 20px;
   font-family: 'Poppins', sans-serif; 
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .my-contributions h1 {

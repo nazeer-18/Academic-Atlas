@@ -14,7 +14,7 @@
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 40px;
-  width: 95%;
+  width: 90%;
   max-width: 480px;
   transition: all 0.3s ease;
 }
@@ -55,6 +55,7 @@
 
 .view-profile-info-group {
   margin-bottom: 30px;
+  word-break: break-all;
 }
 
 .view-profile-label {
