@@ -129,9 +129,11 @@ resourceRouter.delete('/delete-exam/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const resource = await exam.findByIdAndDelete(id);
+        const fileId = resource.fileId;
         if (!resource) {
             return res.status(404).json({ message: "Resource not found", success: false });
         }
+        await drive.files.delete({ fileId: fileId });
         await updateContribution(resource.author, resource.category, id);
         res.json({ message: "Resource deleted successfully", success: true });
     } catch (err) {
@@ -207,8 +209,6 @@ resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
                 url: url,
                 category: category
             }); 
-
-
             await newResource.save();
             await updateContribution(author, category, newResource._id);
             res.json({ message: "Resource added successfully", success: true });
@@ -219,7 +219,8 @@ resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
     }
 });
 
-resourceRouter.delete('/delete-capstone/:id', async (req, res) => { 
+//delete capstone
+resourceRouter.delete('/delete-capstone/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const resource = await capstone.findByIdAndDelete(id);

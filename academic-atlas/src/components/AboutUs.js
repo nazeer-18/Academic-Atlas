@@ -66,7 +66,7 @@ export default function AboutUs() {
                             return prevCount;
                         }
                     });
-                }, 50); // Increment speed: 50ms
+                }, 30); // Increment speed: 50ms
             }
         };
 
