@@ -116,8 +116,10 @@ export default function Navbar() {
             </div>
             {
                 !hideButtons &&
-                <div className="user-icon" onClick={handleProfile}>
-                    <FontAwesomeIcon icon={faUser} />
+                <div className="right-nav">
+                    <div className="user-icon" onClick={handleProfile}>
+                        <FontAwesomeIcon icon={faUser} />
+                    </div>
                     <div className={`hidden-profile ${isProfileOpen ? 'show-profile' : ''}`} ref={profileRef}>
                         <div className="profile-content">
                             <Link to="/viewProfile" onClick={handleProfile}>
@@ -147,6 +149,6 @@ export default function Navbar() {
                     </div>
                 </div>
             }
-        </div>
+        </div >
     );
 }
