@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 .my-contributions {
-  width:95%;
+  width:fit-content;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Poppins', sans-serif;
-  z-index: -10;
+  font-family: 'Poppins', sans-serif; 
 }
 
 .my-contributions h1 {
@@ -125,6 +124,7 @@
   letter-spacing: 1px;
   font-size: 0.85em;
   margin-top: 15px;
+  cursor: pointer;
 }
 
 .manage-btn:hover {
@@ -164,12 +164,5 @@
   .contribution-card {
     flex-basis: 100%;
     max-width: 100%;
-  }
-
-  .contribution-card:hover{
-    transform: translateY(0);
-  }
-  .manage-btn:hover{
-    transform: translateY(0);
   }
 }
