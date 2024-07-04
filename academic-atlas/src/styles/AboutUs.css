@@ -54,7 +54,7 @@
 section h2 {
     font-size: 1.5rem;
     color: var(--primary-color);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .features-grid, 
@@ -97,38 +97,25 @@ section h2 {
 }
 
 .reviews-wrapper {
-    overflow: hidden;
-    position: relative;
-}
-
-.reviews-grid {
     display: flex;
-    gap: 20px;
-    padding: 10px 0;
-    white-space: nowrap;
-    animation: scroll-reviews 2s linear infinite;
+    width:100%;
+    height:200px;
+    justify-content: center;
+    align-items: center; 
+    flex-wrap: no-wrap;
+    overflow: hidden; 
 }
 
-@keyframes scroll-reviews {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-.review-card {
-    flex: 0 0 auto;
-    width:320px;
-    max-width: 320px;
-    min-height: 200px;
-    padding: 20px;
+.review-card { 
+    display: inline-block;
+    width: 320px;
+    height: 130px;
+    padding: 15px;
     border-radius: 10px;
+    margin:0 5px;
     background: rgb(187, 192, 241);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
 .review-card:hover {
@@ -169,7 +156,6 @@ section h2 {
     text-align: center; 
     background: #E1F2FE;
     border-radius: 10px;
-    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 

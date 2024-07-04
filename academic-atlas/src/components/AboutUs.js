@@ -122,21 +122,21 @@ export default function AboutUs() {
                 <section className="reviews">
                     <h2>Reviews and Ratings</h2>
                     <div className="reviews-wrapper">
-                        <div className="reviews-grid">
+                        <marquee scrollAmount="15">
                             {
                                 reviews.length !== 0 &&
                                 reviews.map(review => (
                                     <div key={review._id} className="review-card">
-                                        <span className='review-email'>{review.email}</span>
+                                        <span className="review-email">{review.email}</span>
                                         <div className="rating">{'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}</div>
                                         <p>{review.description}</p>
                                     </div>
                                 ))
                             }
-                        </div>
+                        </marquee>
                     </div>
                 </section>
-                <section className="user-count">
+                <section className="user-count"> 
                     <div className="user-count-container">
                         <div className="user-count-item">
                             <h2><HiUserGroup /> Users Registered</h2>
@@ -146,7 +146,9 @@ export default function AboutUs() {
                             <h2>Average Rating</h2>
                             <p>4.5</p>
                         </div>
-                    </div>
+                    </div> 
+                    <h2><HiUserGroup /> Users Registered</h2>
+                    <p> {currentCount}</p>
                 </section>
             </div>
         </div>
