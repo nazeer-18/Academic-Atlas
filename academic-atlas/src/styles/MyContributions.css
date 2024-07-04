@@ -2,13 +2,15 @@
 
 .my-contributions {
   width:fit-content;
-  margin: 0 auto;
+  height:fit-content;
+  margin: auto;
   padding: 40px 20px;
   font-family: 'Poppins', sans-serif; 
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .my-contributions h1 {
