@@ -84,16 +84,19 @@ export default function Contribute() {
                 setMessage(res.data.message);
                 setSuccess(res.data.success)
                 if (res.data.success) {
-                    setData({
-                        title: '',
-                        url: '',
-                        category: '',
-                        academicYear: '',
-                        branch: '',
-                        course: '',
-                        category: '',
-                        pdfFile: null,
-                    });
+                    setTimeout(() => {
+                        setMessage('Resource added successfully')
+                        setData({
+                            title: '',
+                            url: '',
+                            category: '',
+                            academicYear: '',
+                            branch: '',
+                            course: '',
+                            category: '',
+                            pdfFile: null,
+                        });
+                    }, 3000)
                     document.getElementById('contribution-form').reset();
                     document.getElementById('contribution').value = '';
                     setChoice('');
@@ -220,14 +223,14 @@ export default function Contribute() {
                             </>
                         }
                         {
+                            message !== '' &&
+                            <div className={`login-response-msg ${success}`}>
+                                {message}
+                            </div>
+                        }
+                        {
                             choice !== "" &&
                             <>
-                                {
-                                    message !== '' &&
-                                    <div className={`login-response-msg ${success}`}>
-                                        {message}
-                                    </div>
-                                }
                                 <div className='contribution-btn-container'>
                                     <button className="atlas-btn" type="submit">Submit</button>
                                 </div>
