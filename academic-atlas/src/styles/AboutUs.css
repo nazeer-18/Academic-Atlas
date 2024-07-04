@@ -152,6 +152,13 @@ section h2 {
     border-radius: 5px;
 }
 
+.user-count-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .user-count {
     text-align: center; 
     background: #E1F2FE;
@@ -179,8 +186,9 @@ section h2 {
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: white;
-    margin: 0 auto;
+    margin:  10px; 
     display: inline-block;
+    min-width: 250px;
 }
 
 .user-count p{
