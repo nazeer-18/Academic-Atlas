@@ -66,7 +66,7 @@ export default function Contribute() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = document.getElementById('contribution-form');
-        if (!form.checkValidity()) {
+        if (!form.checkValidity() || !validateEmail(data.author)) {
             form.reportValidity();
         } else {
             const formData = new FormData();
