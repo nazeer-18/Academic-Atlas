@@ -17,8 +17,7 @@
   max-width: 500px;
   width: 95%;
   transition: all 0.3s ease;
-  max-height: 70vh;
-  min-height: 50vh;
+  max-height: 70vh; 
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -44,8 +43,7 @@
 
 .feedback-page-form {
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  flex-direction: column; 
 }
 
 .feedback-page-rating {
@@ -70,7 +68,8 @@
 
 .feedback-page-textarea {
   flex-grow: 1;
-  min-height: 120px;
+  min-height: 20px;
+  height:fit-content;
   padding: 10px;
   margin-bottom: 20px;
   border: 2px solid #ddd;
@@ -181,8 +180,7 @@
   }
 
   .feedback-page-textarea {
-    font-size: 13px;
-    min-height: 100px;
+    font-size: 13px; 
   }
 
   .feedback-page-submit-btn,
@@ -217,9 +215,8 @@
     font-size: 25px;
   }
 
-  .feedback-page-textarea {
-    min-height: 70px;
-    margin-bottom: 10px;
+  .feedback-page-textarea { 
+    margin-bottom: 10px; 
   }
 
   .feedback-page-submit-btn,
@@ -248,8 +245,7 @@
     font-size: 20px;
   }
 
-  .feedback-page-textarea {
-    min-height: 50px;
+  .feedback-page-textarea { 
     margin-bottom: 5px;
   }
 
