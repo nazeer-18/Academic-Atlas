@@ -46,6 +46,16 @@ const updateContribution = async (mail, category, id) => {
         default:
             return ({ message: "Invalid category.", success: false });
     }
+    if (contribution.findOne({ userEmail: mail }) === null) {
+        const newContribution = new contribution({
+            userEmail: mail,
+            midSem: [],
+            endSem: [],
+            project: [],
+            research: []
+        });
+        await newContribution.save();
+    }
     await contribution.findOneAndUpdate(
         { userEmail: mail },
         { $push: { [category]: id } },
@@ -55,7 +65,7 @@ const updateContribution = async (mail, category, id) => {
 
 resourceRouter.post('/get-exam', async (req, res) => {
     try {
-        const { academicYear, branch, course, category ,author} = req.body;
+        const { academicYear, branch, course, category, author } = req.body;
         let query = {};
         if (academicYear) query.academicYear = academicYear;
         if (branch) query.branch = branch;
@@ -179,7 +189,7 @@ resourceRouter.get('/getThumbnail/:fileId', async (req, res) => {
 
 resourceRouter.post('/get-capstone', async (req, res) => {
     try {
-        const { academicYear, branch, course, category ,author} = req.body;
+        const { academicYear, branch, course, category, author } = req.body;
         const query = {};
         if (academicYear) query.academicYear = academicYear;
         if (branch) query.branch = branch;
@@ -195,7 +205,7 @@ resourceRouter.post('/get-capstone', async (req, res) => {
 
 resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
     try {
-        const { title, academicYear, branch, course, author, url, category} = req.body;
+        const { title, academicYear, branch, course, author, url, category } = req.body;
         const isExisting = await capstone.findOne({ title: title, academicYear: academicYear, branch: branch, category: category });
         if (isExisting) {
             res.json({ message: "Resource already exists", success: false });
@@ -208,7 +218,7 @@ resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
                 author: author,
                 url: url,
                 category: category
-            }); 
+            });
             await newResource.save();
             await updateContribution(author, category, newResource._id);
             res.json({ message: "Resource added successfully", success: true });
