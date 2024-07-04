@@ -136,13 +136,19 @@ export default function AboutUs() {
                         </marquee>
                     </div>
                 </section>
-                <section className="user-count">
-
+                <section className="user-count"> 
+                    <div className="user-count-container">
+                        <div className="user-count-item">
+                            <h2><HiUserGroup /> Users Registered</h2>
+                            <p>{currentCount}</p>
+                        </div>
+                        <div className="user-count-item">
+                            <h2>Average Rating</h2>
+                            <p>4.5</p>
+                        </div>
+                    </div> 
                     <h2><HiUserGroup /> Users Registered</h2>
-
                     <p> {currentCount}</p>
-
-
                 </section>
             </div>
         </div>
