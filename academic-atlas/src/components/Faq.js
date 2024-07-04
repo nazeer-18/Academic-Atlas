@@ -36,6 +36,10 @@ export default function Faq() {
             question: "8. Who can contribute resources to the repository?",
             answer: "Only Amrita students can contribute resources to the repository and they must login through thier university mail. This ensures that the materials are relevant and accurate for the student community."
         },
+        {
+            question: "9. what should i do if desired course is not available?",
+            answer: <>If you are unable to find the desired course, please <Link className='report-link' to="/contactus">report</Link> it to us so that we can add it to the repository.</>
+        },
     ];
 
     const [activeIndex, setActiveIndex] = useState(null);
