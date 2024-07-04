@@ -3,15 +3,16 @@ import '../styles/AboutUs.css';
 import DeveloperItem from './DeveloperItem';
 import developerService from '../services/developerService';
 import feedbackService from '../services/feedbackService';
-import userService from '../services/userService'; // Import the user service
-
+import userService from '../services/userService';
 import { HiUserGroup } from "react-icons/hi";
+import { VscGraph } from "react-icons/vsc";
 
 export default function AboutUs() {
     const [developers, setDevelopers] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [userCount, setUserCount] = useState(0);
     const [currentCount, setCurrentCount] = useState(0);
+    const [avgRating, setAvgRating] = useState(0);
 
     useEffect(() => {
         const getDevelopers = async () => {
@@ -27,6 +28,12 @@ export default function AboutUs() {
             try {
                 const response = await feedbackService.getAllFeedbacks();
                 setReviews(response.data.feedbacks);
+                let totalRating = 0;
+                for (let i = 0; i < response.data.feedbacks.length; i++) {
+                    totalRating += response.data.feedbacks[i].rating;
+                }
+                totalRating = (totalRating/response.data.feedbacks.length).toFixed(1); 
+                setAvgRating(totalRating);
             } catch (err) {
                 console.log(err);
             }
@@ -44,7 +51,7 @@ export default function AboutUs() {
         getDevelopers();
         getFeedbacks();
         getUserCount();
-    }, []);
+    });
 
     useEffect(() => {
         const handleScroll = () => {
@@ -136,19 +143,17 @@ export default function AboutUs() {
                         </marquee>
                     </div>
                 </section>
-                <section className="user-count"> 
+                <section className="user-count">
                     <div className="user-count-container">
                         <div className="user-count-item">
                             <h2><HiUserGroup /> Users Registered</h2>
                             <p>{currentCount}</p>
                         </div>
-                        <div className="user-count-item">
-                            <h2>Average Rating</h2>
-                            <p>4.5</p>
+                        <div className="user-count-item review-item">
+                            <h2><VscGraph /> Average Rating</h2>
+                            <p>{avgRating}</p>
                         </div>
-                    </div> 
-                    <h2><HiUserGroup /> Users Registered</h2>
-                    <p> {currentCount}</p>
+                    </div>
                 </section>
             </div>
         </div>
