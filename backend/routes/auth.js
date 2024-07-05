@@ -76,7 +76,7 @@ authRoute.post('/fetch-user', async (req, res) => {
 
 //login route
 authRoute.post('/login', async (req, res) => {
-    const { email, password } = req.body; 
+    const { email, password } = req.body;
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
         return res.json({
@@ -91,7 +91,7 @@ authRoute.post('/login', async (req, res) => {
             message: 'Incorrect password'
         })
     }
-    const token = generateToken(user); 
+    const token = generateToken(user);
     return res.status(200).json({
         success: true,
         message: 'Login successful',
@@ -145,17 +145,7 @@ authRoute.post('/verify-mail', async (req, res) => {
         else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            const mailSent = sendOTPEmail(email, userName, otp, "mail");
-            if (!mailSent) {
-                return res.json({
-                    success: false,
-                    message: 'Error sending mail'
-                })
-            }
-            return res.json({
-                success: true,
-                otp: otp
-            })
+            await sendOTPEmail(email, userName, otp, "mail");
         }
     }
     catch (err) {
@@ -182,16 +172,10 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
         }
         else {
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            sendOTPEmail(email, user.userName, otp, "forgot");
-            return res.json({
-                message: "Otp sent successfully",
-                success: true,
-                otp: otp
-            })
+            await sendOTPEmail(email, user.userName, otp, "forgot");
         }
     }
-    catch (err) {
-        console.log(err)
+    catch (err) { 
         return res.status(500).json({
             success: false,
             message: 'Internal server error'
@@ -260,7 +244,7 @@ authRoute.post('/change-name', async (req, res) => {
 //fetch all users count
 authRoute.get('/fetch-all-users-count', async (req, res) => {
     try {
-        const users = await User.find(); 
+        const users = await User.find();
         return res.json({
             success: true,
             count: users.length
