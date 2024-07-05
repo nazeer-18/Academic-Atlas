@@ -140,17 +140,26 @@ authRoute.post('/verify-mail', async (req, res) => {
         if (user) {
             return res.json({
                 success: false,
+                message: 'User already exists, please login to continue'
             })
         }
         else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            sendOTPEmail(email, userName, otp, "mail");
-            return res.json({
-                success: true,
-                message: 'OTP sent to your email',
-                otp: otp
-            })
+            try {
+                await sendOTPEmail(email, userName, otp, "mail");
+                return res.json({
+                    success: true,
+                    message: 'OTP sent to your email',
+                    otp: otp
+                })
+            } catch (err) {
+                console.log('Failed to send email', err)
+                return res.json({
+                    success: false,
+                    message: 'Failed to send OTP, please try again later'
+                })
+            }
         }
     }
     catch (err) {
@@ -177,15 +186,23 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
         }
         else {
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            sendOTPEmail(email, user.userName, otp, "forgot");
-            return res.json({
-                success: true,
-                message: 'OTP sent to your email',
-                otp: otp
-            })
+            try {
+                await sendOTPEmail(email, user.userName, otp, "forgot");
+                return res.json({
+                    success: true,
+                    message: 'OTP sent to your email',
+                    otp: otp
+                })
+            } catch (err) {
+                console.log('Failed to send email', err)
+                return res.json({
+                    success: false,
+                    message: 'Failed to send OTP, please try again later'
+                })
+            }
         }
     }
-    catch (err) { 
+    catch (err) {
         return res.status(500).json({
             success: false,
             message: 'Internal server error'

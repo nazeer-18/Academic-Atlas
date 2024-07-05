@@ -21,30 +21,24 @@ export default function SignupMail() {
                 const response = await userService.verify(mail);
                 const status = response.data.success;
                 setSuccess(status);
-                if (status) {
-                    const otp = response.data.otp;
+                setMessage(response.data.message);
+                const otp = response.data.otp;
+                if (otp) {
                     setMessage("Proceeding with email verification");
-                    if (otp) {
-                        setTimeout(() => {
-                            setMessage("Otp sent succesfully")
-                        }, 1000)
-                        setTimeout(() => {
-                            setUser({ ...user, email: mail })
-                            navigate('/verifyotp', {
-                                state: {
-                                    otp: otp,
-                                    email: mail,
-                                    choice: "signup"
-                                }
-                            })
-                        }, 2500)
-                    }
-                    else {
-                        setMessage("unable to send mail.Please try later");
-                        setSuccess(false);
-                    }
-                } else {
-                    setMessage("User already exists with this email. Please login.");
+                    setTimeout(() => {
+                        setMessage("Otp sent succesfully")
+                    }, 1000)
+                    setTimeout(() => {
+                        setUser({ ...user, email: mail })
+                        navigate('/verifyotp', {
+                            state: {
+                                otp: otp,
+                                email: mail,
+                                choice: "signup"
+                            }
+                        })
+                    }, 2500)
+                } else if (status === false ) {
                     setTimeout(() => {
                         navigate('/login')
                     }, 1000)
