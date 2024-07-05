@@ -42,7 +42,8 @@ export default function ForgotPassword() {
                         }, 2500)
                     }
                     else {
-                        setMessage("unable to send mail.Please try later")
+                        setMessage("unable to send mail.Please try later");
+                        setSuccess(false); 
                     }
                 } else {
                     setTimeout(() => {
@@ -53,6 +54,7 @@ export default function ForgotPassword() {
             catch (err) {
                 console.log(err)
                 setMessage("Internal server error");
+                setSuccess(false);
             }
         }
         setTimeout(() => {
