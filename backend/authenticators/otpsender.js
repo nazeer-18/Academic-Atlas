@@ -41,8 +41,10 @@ const sendOTPEmail = async (emailId, userName, otp, choice) => {
         if (error) {
             console.log('Error occurred while sending mail');
             console.log(error);
+            return false;
         } else {
             console.log('Email sent: ' + info.response);
+            return true;
         }
     });
 };

@@ -145,7 +145,13 @@ authRoute.post('/verify-mail', async (req, res) => {
         else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            sendOTPEmail(email, userName, otp, "mail");
+            const mailSent = sendOTPEmail(email, userName, otp, "mail");
+            if (!mailSent) {
+                return res.json({
+                    success: false,
+                    message: 'Error sending mail'
+                })
+            }
             return res.json({
                 success: true,
                 otp: otp
@@ -254,8 +260,7 @@ authRoute.post('/change-name', async (req, res) => {
 //fetch all users count
 authRoute.get('/fetch-all-users-count', async (req, res) => {
     try {
-        const users = await User.find();
-        console.log(users.length)
+        const users = await User.find(); 
         return res.json({
             success: true,
             count: users.length
