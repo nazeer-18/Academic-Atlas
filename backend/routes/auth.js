@@ -148,7 +148,8 @@ authRoute.post('/verify-mail', async (req, res) => {
             sendOTPEmail(email, userName, otp, "mail");
             return res.json({
                 success: true,
-                message: 'OTP sent to your email'
+                message: 'OTP sent to your email',
+                otp: otp
             })
         }
     }
@@ -179,7 +180,8 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
             sendOTPEmail(email, user.userName, otp, "forgot");
             return res.json({
                 success: true,
-                message: 'OTP sent to your email'
+                message: 'OTP sent to your email',
+                otp: otp
             })
         }
     }
