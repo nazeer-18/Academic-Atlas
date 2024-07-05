@@ -40,8 +40,7 @@ const sendOTPEmail = async (emailId, userName, otp, choice) => {
     transporter.sendMail(mailContent, (error, info) => {
         if (error) {
             console.log('Error occurred while sending mail');
-            console.log(error);
-            throw new Error('Error occurred while sending mail');
+            console.log(error); 
         } else {
             console.log('Email sent: ' + info.response);
         }
