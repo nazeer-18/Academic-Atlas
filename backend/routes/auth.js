@@ -145,7 +145,7 @@ authRoute.post('/verify-mail', async (req, res) => {
         else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            await sendOTPEmail(email, userName, otp, "mail");
+            sendOTPEmail(email, userName, otp, "mail");
             return res.json({
                 success: true,
                 message: 'OTP sent to your email'
@@ -176,7 +176,7 @@ authRoute.post('/verify-forgot-mail', async (req, res) => {
         }
         else {
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            await sendOTPEmail(email, user.userName, otp, "forgot");
+            sendOTPEmail(email, user.userName, otp, "forgot");
             return res.json({
                 success: true,
                 message: 'OTP sent to your email'
