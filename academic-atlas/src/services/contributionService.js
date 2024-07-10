@@ -1,5 +1,5 @@
 import axios from 'axios'; 
-const server_url = 'https://academic-atlas-server.onrender.com' ||  'https://academic-atlas-server-yr73.onrender.com';
+const server_url = process.env.REACT_APP_SERVER_URL;
 
 class contributionService {
     getContributions(userEmail) { 
