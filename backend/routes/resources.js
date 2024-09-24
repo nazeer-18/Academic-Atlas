@@ -23,9 +23,9 @@ const drive = google.drive({
 });
 
 const uploadDir = process.env.UPLOAD_DIR;
-// if (!fs.existsSync(uploadDir)) {
-//     fs.mkdirSync(uploadDir, { recursive: true },err=>{});
-// }
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true },err=>{});
+}
 const upload = multer({ dest: uploadDir });
 
 const updateContribution = async (mail, category, id) => {
