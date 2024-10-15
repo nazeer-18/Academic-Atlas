@@ -85,7 +85,9 @@ def index():
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
+    print("hi deployed")
     data = request.json
+    print(data)
     pdf_url = data.get('pdf')
     print(pdf_url)
     if pdf_url:
