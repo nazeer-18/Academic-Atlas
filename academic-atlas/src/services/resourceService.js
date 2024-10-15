@@ -53,6 +53,9 @@ class resourceService {
     getThumbnail(fileId) {
         return axios.get(`${server_url}/api/resources/getThumbnail/${fileId}`);
     }
+    handleSummary(url,id){
+        return axios.post(`${server_url}/api/resources/generateSummary`, {url,id});
+    }
 }
 const newService = new resourceService();
 export default newService;

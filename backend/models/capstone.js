@@ -33,6 +33,10 @@ const capstoneSchema = new Schema({
     category:{
         type: String, //project, research
         required: true,
+    },
+    summary:{
+        type:String,
+        required:false,
     }
 });
 

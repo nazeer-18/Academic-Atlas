@@ -83,6 +83,9 @@ export default function Contribute() {
                 const res = await method(formData);
                 setMessage(res.data.message);
                 setSuccess(res.data.success)
+                if(data.category==='research'){
+                    resourceService.handleSummary(data.url,res.data.id);
+                }
                 if (res.data.success) {
                     setTimeout(() => {
                         setMessage('Resource added successfully')
