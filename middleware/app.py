@@ -101,4 +101,4 @@ def summarize():
         return jsonify({"summary": summary})
 
 if __name__ == '__main__':
-    app.run(debug=True,port=5001)
+    app.run(host='0.0.0.0',port=5001)
