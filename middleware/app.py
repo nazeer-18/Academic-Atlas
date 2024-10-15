@@ -79,7 +79,7 @@ def extract_text_from_pdf(pdf_path):
         text += page.get_text("text")
     return text
 
-@app.route('/')
+@app.route('/',methods=['GET'])
 def index():
     return render_template('index.html')
 
@@ -101,4 +101,4 @@ def summarize():
         return jsonify({"summary": summary})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5001)
+    app.run(host='0.0.0.0',port=5001,debug=True)
