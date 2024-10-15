@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 import fitz,requests
 import base64
 from celery import Celery
@@ -78,6 +78,10 @@ def extract_text_from_pdf(pdf_path):
         page = doc.load_page(page_num)
         text += page.get_text("text")
     return text
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
