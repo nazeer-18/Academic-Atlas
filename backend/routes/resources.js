@@ -248,7 +248,7 @@ resourceRouter.delete('/delete-capstone/:id', async (req, res) => {
 //generate summary
 resourceRouter.post('/generateSummary', async (req, res) => {
     try {
-        const { url,id } = req.body; // Get the GitHub URL from the request body
+        const { url, id } = req.body; // Get the GitHub URL from the request body
         console.log(id)
         const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)(\/tree\/([^\/]+))?/;
         const match = url.match(regex);
