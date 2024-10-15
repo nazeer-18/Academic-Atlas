@@ -1,17 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import fitz,requests
-import base64
-from celery import Celery
 from transformers import T5Tokenizer, T5ForConditionalGeneration
-import joblib
-
 app = Flask(__name__)
-
-# Celery configuration
-app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
 # Load the pre-trained T5 model
 model = T5ForConditionalGeneration.from_pretrained('t5-large')
 tokenizer = T5Tokenizer.from_pretrained('t5-large')
@@ -70,7 +60,6 @@ def summarize_large_text(text, max_length=200):
 
     return final_summary
 
-@celery.task
 def extract_text_from_pdf(pdf_path):
     doc = fitz.open(pdf_path)
     text = ""
@@ -85,6 +74,9 @@ def index():
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
+    print("hi deployed")
+    print("Headers: ", request.headers)
+    print("Body: ", request.get_data())  # Logs raw body data to check if it arrives correctly
     print("hi deployed")
     data = request.json
     print(data)
@@ -104,6 +96,10 @@ def summarize():
         else:
             return jsonify({"error": "Unable to fetch PDF from provided URL"}), 400
     else:
+        print(pdf_url)
+        print("in else")
+        print("Headers: ", request.headers)
+        print("Body: ", request.get_data())
         return jsonify({"error": "No PDF URL provided"}), 400
     
 if __name__ == '__main__':
