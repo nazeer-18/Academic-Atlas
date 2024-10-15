@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/ResultItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenToSquare, faDownload, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPenToSquare, faDownload, faEye, faFilter } from '@fortawesome/free-solid-svg-icons';
 import resourceService from '../services/resourceService';
 
 import contributionService from '../services/contributionService';
@@ -122,6 +122,14 @@ export default function ResultItem(props) {
                                     {
                                         download &&
                                         <button className="result-item-btn atlas-btn" onClick={() => handleDownload(fileId)}><FontAwesomeIcon icon={faDownload} /></button>
+                                    }
+                                    {
+                                        category === 'research' &&
+                                        <a href={reference} target="_blank" rel="noreferrer" title='Summarize'>
+                                            <button className="result-item-btn atlas-btn" >
+                                                <FontAwesomeIcon icon={faFilter} />
+                                            </button>
+                                        </a>
                                     }
                                 </div>
                                 :

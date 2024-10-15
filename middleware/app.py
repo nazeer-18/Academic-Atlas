@@ -94,11 +94,15 @@ def summarize():
         if response.status_code == 200:
             with open('paper.pdf', 'wb') as pdf_file:
                 pdf_file.write(response.content)
-        extracted_text = extract_text_from_pdf('paper.pdf')
-        summary = summarize_large_text(extracted_text)
-        print("-----------------------------------------------------------------------")
-        print("final summmary is : ", summary)
-        return jsonify({"summary": summary})
-
+            extracted_text = extract_text_from_pdf('paper.pdf')
+            summary = summarize_large_text(extracted_text)
+            print("-----------------------------------------------------------------------")
+            print("final summmary is : ", summary)
+            return jsonify({"summary": summary})
+        else:
+            return jsonify({"error": "Unable to fetch PDF from provided URL"}), 400
+    else:
+        return jsonify({"error": "No PDF URL provided"}), 400
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5001)
