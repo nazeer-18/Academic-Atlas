@@ -8,7 +8,6 @@ const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
-const axios = require('axios');
 
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -24,9 +23,9 @@ const drive = google.drive({
 });
 
 const uploadDir = process.env.UPLOAD_DIR;
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true }, err => { });
-}
+// if (!fs.existsSync(uploadDir)) {
+//     fs.mkdirSync(uploadDir, { recursive: true },err=>{});
+// }
 const upload = multer({ dest: uploadDir });
 
 const updateContribution = async (mail, category, id) => {
@@ -222,7 +221,7 @@ resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
             });
             await newResource.save();
             await updateContribution(author, category, newResource._id);
-            res.json({ message: "Resource added successfully", success: true, id: newResource._id });
+            res.json({ message: "Resource added successfully", success: true });
         }
     } catch (err) {
         console.log(err)
@@ -244,49 +243,5 @@ resourceRouter.delete('/delete-capstone/:id', async (req, res) => {
         res.json({ message: err.message, success: false });
     }
 });
-
-//generate summary
-resourceRouter.post('/generateSummary', async (req, res) => {
-    try {
-        const { url, id } = req.body; // Get the GitHub URL from the request body
-        console.log(id)
-        const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)(\/tree\/([^\/]+))?/;
-        const match = url.match(regex);
-        if (!match) {
-            return res.status(400).json({ message: "Provided URL is not a valid GitHub repository URL", success: false });
-        }
-        // Extract owner, repo, and branch from the URL
-        const owner = match[1];
-        const repo = match[2];
-        // Fetch the contents of the repository
-        const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents`);
-        const files = response.data;
-        // Filter out PDF files
-        const pdfFiles = files.filter(file => file.name.endsWith('.pdf'));
-        if (pdfFiles.length === 0) {
-            return res.status(404).json({ message: "No PDF files found in the repository", success: false });
-        }
-
-        // Assuming you want the first PDF file found
-        const pdfFile = pdfFiles[0];
-        const pdfUrl = pdfFile.download_url;
-        const generatedResponse = await axios.post('http://localhost:5001/summarize', {
-            pdf: pdfUrl
-        }, {
-            timeout: 600000 // 600,000 ms = 10 minutes
-        });
-        const summary = generatedResponse.data.summary;
-        const researchPaper = await capstone.findByIdAndUpdate(
-            id,
-            { summary: summary },
-            { new: true } // Return the updated document
-        );
-        res.json({ message: "summary fetched and saved successfully", success: true, summary: summary });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: err.message, success: false });
-    }
-})
-
 
 module.exports = resourceRouter;

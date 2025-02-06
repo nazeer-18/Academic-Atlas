@@ -1,56 +1,52 @@
-const axios = require('axios');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const mailApiUrl = process.env.MAIL_API_URL;
-const appkey = process.env.MAIL_API_APP_KEY;
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.ADMIN_MAIL,
+        pass: process.env.MAIL_PASSWORD,
+    },
+});
+
+const serverUrl = process.env.SERVER_URL;
 
 const sendOTPEmail = async (emailId, userName, otp, choice) => {
     return new Promise((resolve, reject) => {
-        let subject = (choice === "mail")
-            ? 'Email verification for Academic Atlas'
-            : 'OTP to reset password for Academic Atlas';
-
-        const content = `
-        Dear ${userName},
-        
-        Greetings from Academic Atlas!
-        
-        ${choice === "mail"
-            ? `Thank you for registering with us. Please verify your email address to complete the registration process.`
-            : `We have received a request to reset your password. To complete the password reset process, please use the One-Time Password (OTP) provided below:`}
-        
-        Your OTP: ${otp}
-        
-        If you did not request this verification, please ignore this email. Your account will remain secure.
-        
-        Thank you for using our service!
-        
-        Best regards,
-        Academic Atlas
-        
-        Note:
-        1. Do not share your OTP with anyone.
-        2. If you encounter any issues, please contact our support team at academicatlas.ase@gmail.com.
-                `;
-
-        const payload = {
-            userEmail: emailId,
-            subject: subject,
-            content: content
+        let subject = '';
+        const mailContent = {
+            from: process.env.ADMIN_MAIL,
+            to: emailId,
+            subject: (choice === "mail") ? 'Email verification for Academic Atlas' : "Otp to reset password for Academic Atlas",
+            html: `
+            <p>Dear ${userName},</p>
+            <p>Greetings from Academic Atlas!</p>
+            ${choice === "mail" ? `<p>Thank you for registering with us. Please verify your email address to complete the registration process.</p>` : `<p>We have received a request to reset your password. To complete the password reset process, please use the One-Time Password (OTP) provided below:</p>`}
+            <hr>
+            <h2>Your OTP: ${otp}</h2>
+            <hr>
+            <p>If you did not request this verification, please ignore this email. Your account will remain secure.</p>
+            <p>Thank you for using our service!</p>
+            <p>Best regards,</p>
+            <p>Academic atlas<br>
+            <hr>
+            <p>Note:</p>
+            <ol>
+                <li>Do not share your OTP with anyone.</li>
+                <li>If you encounter any issues, please contact our support team at academicatlas.ase@gmail.com.</li>
+            </ol>
+        `
         };
 
-        axios.post(mailApiUrl, payload, {
-            headers: {
-                'APP-KEY': appkey
+        transporter.sendMail(mailContent, async (error, info) => {
+            if (error) {
+                console.log('Error occurred while sending mail');
+                console.log(error);
+                reject(false);
+            } else {
+                console.log('Email sent: ' + info.response);
+                resolve(true);
             }
-        })
-        .then(response => {
-            console.log('Email sent successfully:', response.data);
-            resolve(true);
-        })
-        .catch(error => {
-            console.error('Error sending email:', error);
-            reject(false);
         });
     });
 };

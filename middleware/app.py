@@ -74,10 +74,6 @@ def index():
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
-    print("hi deployed")
-    print("Headers: ", request.headers)
-    print("Body: ", request.get_data())  # Logs raw body data to check if it arrives correctly
-    print("hi deployed")
     data = request.json
     print(data)
     pdf_url = data.get('pdf')
