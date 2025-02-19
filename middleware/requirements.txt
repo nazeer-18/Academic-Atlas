@@ -1,0 +1,8 @@
+Flask
+torch
+torchvision
+nltk
+google-generativeai
+transformers
+python-dotenv
+flask-cors
