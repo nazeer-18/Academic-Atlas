@@ -18,6 +18,7 @@
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^2.16.105",
     "react": "^18.3.1",
+    "react-chatbotify": "^2.0.0-beta.28",
     "react-dom": "^18.3.1",
     "react-fontawesome": "^1.7.1",
     "react-icons": "^5.2.1",
