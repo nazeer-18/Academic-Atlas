@@ -3,6 +3,7 @@ import resourceService from '../services/resourceService';
 import '../styles/ContributePage.css';
 import trackService from '../services/trackService';
 import { useUser } from '../contexts/userContext';
+import aiService from '../services/aiService';
 
 export default function Contribute() {
     const { user } = useUser();
@@ -84,7 +85,8 @@ export default function Contribute() {
                 setMessage(res.data.message);
                 setSuccess(res.data.success)
                 if (data.category === 'research') {
-                    resourceService.handleSummary(data.url, res.data.id);
+                    const rawUrl=await resourceService.getRawUrl(data.url)
+                    aiService.generateSummaryAndUpdateDB(rawUrl,res.data.id);                    
                 }
                 if (res.data.success) {
                     setTimeout(() => {

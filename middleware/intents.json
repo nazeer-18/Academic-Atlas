@@ -1858,6 +1858,15 @@
             "responses": [
                 "3/2 is an improper fraction. It can also be expressed as a mixed number or a decimal.\n\n*   <b>As a mixed number:</b> 3/2 = 1 1/2\n*   <b>As a decimal:</b> 3/2 = 1.5"
             ]
+        },
+        {
+            "tag": "W_9567268",
+            "patterns": [
+                "What is 3/55?"
+            ],
+            "responses": [
+                "3/55 is a fraction.  As a decimal, it's approximately <b>0.054545...</b>\n\nYou can also express it as a percentage, which would be approximately <b>5.45%</b>."
+            ]
         }
     ]
 }

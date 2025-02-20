@@ -6,3 +6,5 @@ google-generativeai
 transformers
 python-dotenv
 flask-cors
+PyMuPDF
+sentencepiece

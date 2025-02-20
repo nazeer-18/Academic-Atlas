@@ -9,6 +9,10 @@ class aiService{
     updateDatabase(pattern,intent){
         return axios.put(serverUrl+'/updateDatabase',{pattern,intent})
     }
+
+    generateSummaryAndUpdateDB(url,id){
+        return axios.post(serverUrl + '/summarize' , {url,id})
+    }
 }
 
 export default new aiService();
