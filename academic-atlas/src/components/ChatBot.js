@@ -12,8 +12,14 @@ export default function Chatbot() {
     const settings = {
         header: {title:"AI ChatBot"},
         notifications: {disabled: true},
-        botBubble: {showAvatar:false},
-        tooltip: {mode:"START",text:"Your AI chatbot is here!"},
+        botBubble: {
+            showAvatar:false,
+            dangerouslySetInnerHtml: true
+        },
+        tooltip: {
+            mode:"START",
+            text:"Your AI chatbot is here!"
+        },
         chatButton: {icon: Icon}
       }
     

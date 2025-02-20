@@ -1833,15 +1833,6 @@
             ]
         },
         {
-            "tag": "5_8400211",
-            "patterns": [
-                "5/2"
-            ],
-            "responses": [
-                "5/2 is a fraction. Here are a few ways to express it:\n\n*   **Fraction:** 5/2\n*   **Decimal:** 2.5\n*   **Mixed Number:** 2 1/2"
-            ]
-        },
-        {
             "tag": "9_5786311",
             "patterns": [
                 "9/2"
@@ -1857,6 +1848,15 @@
             ],
             "responses": [
                 "6 / 2 = 3"
+            ]
+        },
+        {
+            "tag": "3_1203153",
+            "patterns": [
+                "3/2"
+            ],
+            "responses": [
+                "3/2 is an improper fraction. It can also be expressed as a mixed number or a decimal.\n\n*   <b>As a mixed number:</b> 3/2 = 1 1/2\n*   <b>As a decimal:</b> 3/2 = 1.5"
             ]
         }
     ]

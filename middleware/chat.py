@@ -11,6 +11,7 @@ from query_processing import processing
 from intent_validator import validator
 from dotenv import load_dotenv
 import os
+import re
 
 load_dotenv()  # Load variables from .env file
 
@@ -96,6 +97,22 @@ def get_response(msg):
         res=res[:-1]
     if query[-1:]=='\n' or query[-1:]=='"':
         query=query[:-1]
+    # print(res)
+    if ai:
+        res=re.sub(r"\*\*", "<b>", res)
+        def textf(text):
+            def match(s):
+                global flag                
+                if flag:
+                    flag=not flag
+                    return "</b>"
+                else:
+                    flag=not flag
+                    return s.group(0)
+            global flag
+            flag=False 
+            return re.sub(r"<b>", match, text)
+        res=textf(res)
     return [query,res,ai]
 
 
