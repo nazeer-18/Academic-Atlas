@@ -3,7 +3,7 @@ from flask_cors import CORS
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
-
+import nltk
 
 from chat import get_response
 from reccursive_learning import ReccursiveLearn
@@ -53,4 +53,5 @@ def summarize():
     return jsonify({"status":"Sucess"})
     
 if __name__=="__main__":
+    nltk.download('punkt_tab')
     app.run(debug=True)
