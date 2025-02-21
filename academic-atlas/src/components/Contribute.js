@@ -187,25 +187,37 @@ export default function Contribute() {
                                     <option value="project">Project</option>
                                     <option value="research">Research</option>
                                 </select>
-                                <label className="resultfields" htmlFor="title">Title: </label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    required
-                                    placeholder="Enter title of your project"
-                                    value={data.title}
-                                    onChange={handleChange}
-                                />
+                                { data.category!='' &&
+                                    <>
+                                        <label className="resultfields" htmlFor="title">Title: </label>
+                                        <input
+                                            type="text"
+                                            name="title"
+                                            required
+                                            placeholder={data.category=="research"?
+                                                            "Enter title of research paper"
+                                                            :
+                                                            "Enter title of your project"
+                                                        }
+                                            value={data.title}
+                                            onChange={handleChange}
+                                        />
 
-                                <label className="contributefields" htmlFor="title">Link: </label>
-                                <input
-                                    type="text"
-                                    name="url"
-                                    required
-                                    placeholder="Paste the github url of your project"
-                                    value={data.url}
-                                    onChange={handleChange}
-                                />
+                                        <label className="contributefields" htmlFor="title">Link: </label>
+                                        <input
+                                            type="text"
+                                            name="url"
+                                            required
+                                            placeholder={data.category=="research"?
+                                                "Paste github url of your research"
+                                                :
+                                                "Paste the github url of your project"
+                                            }
+                                            value={data.url}
+                                            onChange={handleChange}
+                                        />
+                                </>
+                            }
                             </>
                         }
 
