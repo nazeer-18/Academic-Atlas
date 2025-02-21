@@ -1,15 +1,22 @@
 from flask import Flask,render_template,request,jsonify
 from flask_cors import CORS
 import requests
+from apscheduler.schedulers.background import BackgroundScheduler
+import time
+
 
 from chat import get_response
 from reccursive_learning import ReccursiveLearn
 from research_paper_summarize import generate_summary
 from better_response import newResponse
+from train import train_intents
 
 app=Flask(__name__)
 CORS(app)
 
+scheduler = BackgroundScheduler()
+scheduler.add_job(train_intents, 'cron', hour=3, minute=0)  # Runs every day at 3:00 AM
+scheduler.start()
 
 @app.post("/response")
 def ans():

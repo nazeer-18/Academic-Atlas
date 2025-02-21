@@ -8,3 +8,4 @@ python-dotenv
 flask-cors
 PyMuPDF
 sentencepiece
+apscheduler
