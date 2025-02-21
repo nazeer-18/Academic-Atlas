@@ -4,8 +4,10 @@ import json
 from train import train_intents
 
 def ReccursiveLearn(pattern,intent):
-    id=random.randint(10**6, 10**7-1)
-    dict={"tag":pattern[0]+"_"+str(id),"patterns":[pattern],"responses":[intent]}
+    id=random.randint(10**7, 10**8-1)
+    if type(pattern) != type([]):
+        pattern=[pattern]
+    dict={"tag":"ai_"+str(id),"patterns": pattern,"responses":[intent]}
     with open("intents.json",'r+') as f:
         data=json.load(f)
         data["intents"].append(dict)

@@ -10,8 +10,8 @@ class aiService{
         return axios.put(serverUrl+'/updateDatabase',{pattern,intent})
     }
 
-    generateSummaryAndUpdateDB(url,id){
-        return axios.post(serverUrl + '/summarize' , {url,id})
+    generateSummaryAndUpdateDB(title,url,id){
+        return axios.post(serverUrl + '/summarize' , { title, url, id })
     }
 
     getBetterResponse(query,response){

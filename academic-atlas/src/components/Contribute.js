@@ -86,7 +86,7 @@ export default function Contribute() {
                 setSuccess(res.data.success)
                 if (data.category === 'research') {
                     const rawUrl=await resourceService.getRawUrl(data.url)
-                    aiService.generateSummaryAndUpdateDB(rawUrl,res.data.id);                    
+                    aiService.generateSummaryAndUpdateDB(data.title, rawUrl, res.data.id);                    
                 }
                 if (res.data.success) {
                     setTimeout(() => {

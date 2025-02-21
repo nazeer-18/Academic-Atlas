@@ -35,17 +35,14 @@ def updateDatabase():
 
 @app.post('/summarize')
 def summarize():
+    title=request.get_json().get("title")
     url = request.get_json().get("url")
     id = request.get_json().get("id")
-    # print(url)
     summary=generate_summary(url)
-    # summary="testxxxxx"
-    # print("summary generated:",summary)
     server_url="http://localhost:8080"
     res=requests.post(server_url+'/api/resources/updateSummary',json={"summary":summary,"id":id})
-    # print(res.json())
-    print("updated db," )
-    #todo: add this to intent.json
+    patterns=[title,"summary of "+title,"summarize "+title]
+    ReccursiveLearn(patterns,"summary of "+title+": \n"+summary)
     return jsonify({"status":"Sucess"})
     
 if __name__=="__main__":
