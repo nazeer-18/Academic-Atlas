@@ -44,6 +44,21 @@ model.eval()
 
 genai.configure(api_key=api_key)
 
+def text_formatting(text):
+            def match(s):
+                global flag                
+                if flag:
+                    flag=not flag
+                    return "</b>"
+                else:
+                    flag=not flag
+                    return s.group(0)
+            
+            text=re.sub(r"\*\*", "<b>", text)
+            global flag
+            flag=False 
+            return re.sub(r"<b>", match, text)
+
 def get_response(msg):
     query=processing(msg)
     sentence = tokenize(query)
@@ -99,20 +114,7 @@ def get_response(msg):
         query=query[:-1]
     # print(res)
     if ai:
-        res=re.sub(r"\*\*", "<b>", res)
-        def textf(text):
-            def match(s):
-                global flag                
-                if flag:
-                    flag=not flag
-                    return "</b>"
-                else:
-                    flag=not flag
-                    return s.group(0)
-            global flag
-            flag=False 
-            return re.sub(r"<b>", match, text)
-        res=textf(res)
+        res=text_formatting(res)
     return [query,res,ai]
 
 

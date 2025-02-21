@@ -5,6 +5,7 @@ import requests
 from chat import get_response
 from reccursive_learning import ReccursiveLearn
 from research_paper_summarize import generate_summary
+from better_response import newResponse
 
 app=Flask(__name__)
 CORS(app)
@@ -16,6 +17,14 @@ def ans():
     response=get_response(text)
     js={"query":response[0],"response":response[1],"ai":response[2]}
     return jsonify(js)
+
+@app.post('/betterResponse')
+def ansAgain():
+    query=request.get_json().get("query")
+    response=request.get_json().get("response")
+    new_response=newResponse(query,response)
+    print(new_response)
+    return jsonify({"betterResponse": new_response})
 
 @app.put("/updateDatabase")
 def updateDatabase():

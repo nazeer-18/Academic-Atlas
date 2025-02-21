@@ -13,6 +13,10 @@ class aiService{
     generateSummaryAndUpdateDB(url,id){
         return axios.post(serverUrl + '/summarize' , {url,id})
     }
+
+    getBetterResponse(query,response){
+        return axios.post(serverUrl + '/betterResponse', { query, response })
+    }
 }
 
 const newService = new aiService();

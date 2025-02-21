@@ -35,6 +35,19 @@ export default function Chatbot() {
         }
       }
 
+      const getBetterResponse = async (params) => {
+        try {
+            const res= await aiService.getBetterResponse(recentFeedback[0],recentFeedback[1]);
+            console.log(res);
+			await params.injectMessage("Sorry,we'll try to improve next time. Here's another response for your query,\n\n\n"+res.data.betterResponse);
+            recentFeedback=[recentFeedback[0],res.data.betterResponse];
+            await params.goToPath("newFeedBack");
+		} catch (error) {
+			await params.injectMessage("Unable to load model, looks like a backend issue!");
+			hasError = true;
+		}
+      }
+
       const getResponse = async (params) => {
 		try {
             const res= await aiService.getChatBotResponse(params.userInput);
@@ -86,7 +99,7 @@ export default function Chatbot() {
                     break;
                     }
                 case "no":{
-                    console.log("Feedback no");
+                    // console.log("Feedback no");
                     return "feedback_no";
                     break;
                 }
@@ -100,8 +113,15 @@ export default function Chatbot() {
             path:"loop"
         },
         feedback_no:{
-            message:"Sorry,we'll try to improve next time. Any other queries?",
-            path:"loop"
+            message:async (params) => {
+				await getBetterResponse(params);
+			},
+            path:"newFeedBack"
+        },
+        newFeedBack:{
+            message:"Is this new response Helpful?(you can ignore this)",
+            options: feedback_options,
+            path:"process_feedback"
         },
         end: {
             message: () => `Error!! \n Restart bot`,
