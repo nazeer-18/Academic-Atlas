@@ -28,7 +28,8 @@ export default function ResultItem(props) {
                 console.log(err);
             }
         };
-        fetchThumbnail();
+        if(!capstone)
+            fetchThumbnail();
     }, [fileId]);
 
     const handleDownload = async (fileId) => {
