@@ -15,6 +15,7 @@ export default function ResultItem(props) {
     const showYear = props.showYear;
     const showBranch = props.showBranch;
     const showCourse = props.showCourse;
+    const showPopUp = props.showPopUp;
     const capstone = category === "project" || category === "research" ? true : false;
     const reference = capstone ? url : fileUrl;
     const download = capstone ? false : true;
@@ -39,6 +40,11 @@ export default function ResultItem(props) {
             console.log(err);
         }
     };
+
+    const handleSummary = async() =>{
+        // console.log(summary);
+        showPopUp(title,summary);
+    }
 
     const handleDelete = async () => {
         try {
@@ -127,7 +133,7 @@ export default function ResultItem(props) {
                                     {
                                         category === 'research' &&
                                         <a target="_blank" rel="noreferrer" title='Summary'>
-                                            <button className="result-item-btn atlas-btn" >
+                                            <button className="result-item-btn atlas-btn" onClick={handleSummary}>
                                             <RiGeminiFill />
                                             </button>
                                         </a>
