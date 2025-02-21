@@ -15,4 +15,5 @@ class aiService{
     }
 }
 
-export default new aiService();
+const newService = new aiService();
+export default newService;
