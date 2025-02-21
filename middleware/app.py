@@ -4,6 +4,8 @@ import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
 import nltk
+from dotenv import load_dotenv
+import os
 
 from chat import get_response
 from reccursive_learning import ReccursiveLearn
@@ -13,6 +15,10 @@ from train import train_intents
 
 app=Flask(__name__)
 CORS(app)
+
+load_dotenv()  # Load variables from .env file
+
+backend_server_url = os.getenv("backend_server_url")
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(train_intents, 'cron', hour=3, minute=0)  # Runs every day at 3:00 AM
@@ -46,8 +52,7 @@ def summarize():
     url = request.get_json().get("url")
     id = request.get_json().get("id")
     summary=generate_summary(url)
-    server_url="http://localhost:8080"
-    res=requests.post(server_url+'/api/resources/updateSummary',json={"summary":summary,"id":id})
+    res=requests.post(backend_server_url+'/api/resources/updateSummary',json={"summary":summary,"id":id})
     patterns=[title,"summary of "+title,"summarize "+title]
     ReccursiveLearn(patterns,"summary of "+title+": \n"+summary)
     return jsonify({"status":"Sucess"})
