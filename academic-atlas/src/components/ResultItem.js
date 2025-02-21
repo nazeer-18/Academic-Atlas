@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/ResultItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenToSquare, faDownload, faEye, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faDownload, faEye } from '@fortawesome/free-solid-svg-icons';
+import { RiGeminiFill } from "react-icons/ri";
 import resourceService from '../services/resourceService';
 
 import contributionService from '../services/contributionService';
@@ -9,7 +10,7 @@ import contributionService from '../services/contributionService';
 export default function ResultItem(props) {
     const { resultItem, index } = props;
     const [thumbnail, setThumbnail] = useState(null);
-    const { author, academicYear, branch, course, fileUrl, fileId, title, url, category } = resultItem;
+    const { author, academicYear, branch, course, fileUrl, fileId, title, url, category, summary } = resultItem;
     const type = props.type;
     const showYear = props.showYear;
     const showBranch = props.showBranch;
@@ -125,9 +126,9 @@ export default function ResultItem(props) {
                                     }
                                     {
                                         category === 'research' &&
-                                        <a href={reference} target="_blank" rel="noreferrer" title='Summarize'>
+                                        <a target="_blank" rel="noreferrer" title='Summary'>
                                             <button className="result-item-btn atlas-btn" >
-                                                <FontAwesomeIcon icon={faFilter} />
+                                            <RiGeminiFill />
                                             </button>
                                         </a>
                                     }
