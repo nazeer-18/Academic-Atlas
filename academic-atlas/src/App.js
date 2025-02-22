@@ -24,6 +24,7 @@ import ViewProfile from './components/ViewProfile';
 import Feedback from './components/Feedback';
 import userService from './services/userService'
 import { UserProvider } from './contexts/userContext';
+import ChatBot from './components/ChatBot';
 
 function App() {
   useEffect(() => {
@@ -96,6 +97,7 @@ function App() {
 
         </Routes>
         <Footer />
+        <ChatBot />
       </UserProvider>
     </BrowserRouter>
   );

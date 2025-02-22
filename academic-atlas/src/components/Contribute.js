@@ -3,6 +3,7 @@ import resourceService from '../services/resourceService';
 import '../styles/ContributePage.css';
 import trackService from '../services/trackService';
 import { useUser } from '../contexts/userContext';
+import aiService from '../services/aiService';
 
 export default function Contribute() {
     const { user } = useUser();
@@ -84,7 +85,8 @@ export default function Contribute() {
                 setMessage(res.data.message);
                 setSuccess(res.data.success)
                 if (data.category === 'research') {
-                    resourceService.handleSummary(data.url, res.data.id);
+                    const rawUrl=await resourceService.getRawUrl(data.url)
+                    aiService.generateSummaryAndUpdateDB(data.title, rawUrl, res.data.id);                    
                 }
                 if (res.data.success) {
                     setTimeout(() => {
@@ -185,25 +187,37 @@ export default function Contribute() {
                                     <option value="project">Project</option>
                                     <option value="research">Research</option>
                                 </select>
-                                <label className="resultfields" htmlFor="title">Title: </label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    required
-                                    placeholder="Enter title of your project"
-                                    value={data.title}
-                                    onChange={handleChange}
-                                />
+                                { data.category!='' &&
+                                    <>
+                                        <label className="resultfields" htmlFor="title">Title: </label>
+                                        <input
+                                            type="text"
+                                            name="title"
+                                            required
+                                            placeholder={data.category=="research"?
+                                                            "Enter title of research paper"
+                                                            :
+                                                            "Enter title of your project"
+                                                        }
+                                            value={data.title}
+                                            onChange={handleChange}
+                                        />
 
-                                <label className="contributefields" htmlFor="title">Link: </label>
-                                <input
-                                    type="text"
-                                    name="url"
-                                    required
-                                    placeholder="Paste the github url of your project"
-                                    value={data.url}
-                                    onChange={handleChange}
-                                />
+                                        <label className="contributefields" htmlFor="title">Link: </label>
+                                        <input
+                                            type="text"
+                                            name="url"
+                                            required
+                                            placeholder={data.category=="research"?
+                                                "Paste github url of your research"
+                                                :
+                                                "Paste the github url of your project"
+                                            }
+                                            value={data.url}
+                                            onChange={handleChange}
+                                        />
+                                </>
+                            }
                             </>
                         }
 

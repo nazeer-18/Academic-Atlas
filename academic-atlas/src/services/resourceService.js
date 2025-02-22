@@ -50,11 +50,43 @@ class resourceService {
         }
     }
 
+    rawUrl = async(url) => {
+        try { 
+                    const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)(\/tree\/([^\/]+))?/;
+                    const match = url.match(regex);
+                    if (!match) {
+                        return "Provided URL is not a valid GitHub repository URL";
+                    }
+                    // Extract owner, repo, and branch from the URL
+                    const owner = match[1];
+                    const repo = match[2];
+                    // Fetch the contents of the repository
+                    const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents`);
+                    const files = response.data;
+                    // Filter out PDF files
+                    const pdfFiles = files.filter(file => file.name.endsWith('.pdf'));
+                    if (pdfFiles.length === 0) {
+                        return "No PDF files found in the repository";
+                    }
+            
+                    // Assuming you want the first PDF file found
+                    const pdfFile = pdfFiles[0];
+                    const pdfUrl = pdfFile.download_url;
+                    return pdfUrl
+                } catch (err) {
+                    console.log(err);
+                    return "x"
+                }
+    }
+
     getThumbnail(fileId) {
         return axios.get(`${server_url}/api/resources/getThumbnail/${fileId}`);
     }
     handleSummary(url,id){
         return axios.post(`${server_url}/api/resources/generateSummary`, {url,id});
+    }
+    getRawUrl(url){
+        return this.rawUrl(url);
     }
 }
 const newService = new resourceService();

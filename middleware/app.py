@@ -1,102 +1,62 @@
-from flask import Flask, render_template, request, jsonify
-import fitz,requests
-from transformers import T5Tokenizer, T5ForConditionalGeneration
-app = Flask(__name__)
-# Load the pre-trained T5 model
-model = T5ForConditionalGeneration.from_pretrained('t5-large')
-tokenizer = T5Tokenizer.from_pretrained('t5-large')
+from flask import Flask,render_template,request,jsonify
+from flask_cors import CORS
+import requests
+from apscheduler.schedulers.background import BackgroundScheduler
+import time
+import nltk
+from dotenv import load_dotenv
+import os
 
-def summarize_text(text, max_length=200):
-    # Preprocess the text to fit the T5 model's format
-    preprocess_text = "summarize: " + text
-    tokenized_text = tokenizer.encode(preprocess_text, return_tensors="pt", max_length=512, truncation=True)
+from chat import get_response
+from reccursive_learning import ReccursiveLearn
+from research_paper_summarize import generate_summary
+from better_response import newResponse
+from train import train_intents
 
-    # Generate the summary using the T5 model
-    summary_ids = model.generate(tokenized_text, max_length=max_length, min_length=30, length_penalty=2.0, num_beams=4, early_stopping=True)
+app=Flask(__name__)
+CORS(app)
 
-    # Decode the generated summary
-    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+load_dotenv()  # Load variables from .env file
 
-    return summary
+backend_server_url = os.getenv("backend_server_url")
 
-def chunk_text(text, max_chunk_length=512):
-    """
-    Split the input text into chunks that fit within the model's token limit.
-    """
-    sentences = text.split('. ')
-    current_chunk = []
-    current_length = 0
-    chunks = []
+scheduler = BackgroundScheduler()
+scheduler.add_job(train_intents, 'cron', hour=3, minute=0)  # Runs every day at 3:00 AM
+scheduler.start()
 
-    for sentence in sentences:
-        sentence_length = len(tokenizer.encode(sentence, add_special_tokens=False))
-        if current_length + sentence_length <= max_chunk_length:
-            current_chunk.append(sentence)
-            current_length += sentence_length
-        else:
-            chunks.append(". ".join(current_chunk) + ".")
-            current_chunk = [sentence]
-            current_length = sentence_length
+@app.post("/response")
+def ans():
+    text=request.get_json().get("query")
+    response=get_response(text)
+    js={"query":response[0],"response":response[1],"ai":response[2]}
+    return jsonify(js)
 
-    # Add the last chunk
-    if current_chunk:
-        chunks.append(". ".join(current_chunk) + ".")
+@app.post('/betterResponse')
+def ansAgain():
+    query=request.get_json().get("query")
+    response=request.get_json().get("response")
+    new_response=newResponse(query,response)
+    print(new_response)
+    return jsonify({"betterResponse": new_response})
 
-    return chunks
+@app.put("/updateDatabase")
+def updateDatabase():
+    pattern=request.get_json().get("pattern")
+    intent=request.get_json().get("intent")
+    ReccursiveLearn(pattern,intent)
+    return jsonify({"response":"updated intents"})
 
-def summarize_large_text(text, max_length=200):
-    """
-    Summarize large text by chunking it and summarizing each chunk separately.
-    """
-    chunks = chunk_text(text)
-    summaries = []
-    print("total number of chunks are",len(chunks))
-    for chunk in chunks:
-        summary = summarize_text(chunk, max_length=max_length)
-        summaries.append(summary)
-
-    # Combine all chunk summaries into a final summary
-    final_summary = " ".join(summaries)
-
-    return final_summary
-
-def extract_text_from_pdf(pdf_path):
-    doc = fitz.open(pdf_path)
-    text = ""
-    for page_num in range(doc.page_count):
-        page = doc.load_page(page_num)
-        text += page.get_text("text")
-    return text
-
-@app.route('/',methods=['GET'])
-def index():
-    return render_template('index.html')
-
-@app.route('/summarize', methods=['POST'])
+@app.post('/summarize')
 def summarize():
-    data = request.json
-    print(data)
-    pdf_url = data.get('pdf')
-    print(pdf_url)
-    if pdf_url:
-        response = requests.get(pdf_url)
-        # Check if the request was successful
-        if response.status_code == 200:
-            with open('paper.pdf', 'wb') as pdf_file:
-                pdf_file.write(response.content)
-            extracted_text = extract_text_from_pdf('paper.pdf')
-            summary = summarize_large_text(extracted_text)
-            print("-----------------------------------------------------------------------")
-            print("final summmary is : ", summary)
-            return jsonify({"summary": summary})
-        else:
-            return jsonify({"error": "Unable to fetch PDF from provided URL"}), 400
-    else:
-        print(pdf_url)
-        print("in else")
-        print("Headers: ", request.headers)
-        print("Body: ", request.get_data())
-        return jsonify({"error": "No PDF URL provided"}), 400
+    title=request.get_json().get("title")
+    url = request.get_json().get("url")
+    id = request.get_json().get("id")
+    summary=generate_summary(url)
+    res=requests.post(backend_server_url+'/api/resources/updateSummary',json={"summary":summary,"id":id})
+    patterns=[title,"summary of "+title,"summarize "+title]
+    ReccursiveLearn(patterns,"summary of "+title+": \n"+summary)
+    return jsonify({"status":"Sucess"})
     
-if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5001,debug=True)
+if __name__=="__main__":
+    nltk.download('punkt_tab')
+    app.run(debug=True)

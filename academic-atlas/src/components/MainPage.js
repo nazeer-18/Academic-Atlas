@@ -4,6 +4,7 @@ import ResultItem from './ResultItem';
 import '../styles/MainPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faSliders } from '@fortawesome/free-solid-svg-icons';
+import { IoClose } from "react-icons/io5";
 import resourceService from '../services/resourceService';
 import trackService from '../services/trackService';
 import { useUser } from '../contexts/userContext';
@@ -19,6 +20,9 @@ export default function MainPage() {
     const [results, setResults] = useState([{}]);
     const [branches, setBranches] = useState([]);
     const [courses, setCourses] = useState([]);
+    const [popUpIsOpen, setPopUpIsOpen] = useState(false);
+    const [popUpTitle, setpopUpTitle] = useState('Title')
+    const [summary, setSummary] = useState('Backend Error!!')
     const year = new Date().getFullYear();
     const years = [];
     for (let i = year; i >= 2021; i--) {
@@ -40,6 +44,21 @@ export default function MainPage() {
             alert(err);
         }
     };
+
+    const showPopUp = (t,s) => {
+        // console.log("main call");
+        // console.log(s);
+        setpopUpTitle("summary for "+t);
+        if(!s)
+            setSummary("Please wait, summary is being generated")
+        else
+            setSummary(s);
+        setPopUpIsOpen(true);
+    }
+
+    
+    const closePopup = () => setPopUpIsOpen(false);
+
     useEffect(() => {
         setValue(new URLSearchParams(location.search).get('value'));
         setType(new URLSearchParams(location.search).get('type'));
@@ -81,6 +100,17 @@ export default function MainPage() {
 
     return (
         <div className="mainpage">
+            {popUpIsOpen &&
+                <div className="popUpLayout" onClick={closePopup} >
+                    <div className="popUpBox" onClick={(e) => e.stopPropagation()} >
+                        <button onClick={closePopup} className="popUpClose">
+                            <IoClose/>
+                        </button>
+                        <h2 className="popUpTitle">{popUpTitle}</h2>
+                        <p className="popUpSummary">{summary}</p>
+                    </div>
+                </div>
+            }
             <div className="main-query">
                 <div className="mainpage-heading">
                     <FontAwesomeIcon icon={faFileLines} /> {value}
@@ -157,7 +187,7 @@ export default function MainPage() {
                             <div className="no-results">No Results Found</div>
                         ) : (
                             results.map((resultItem, index) => {
-                                return <ResultItem key={index} resultItem={resultItem} index={index} type={type} showYear={showYear} showBranch={showBranch} showCourse={showCourse} />;
+                                return <ResultItem key={index} resultItem={resultItem} index={index} type={type} showYear={showYear} showBranch={showBranch} showCourse={showCourse} showPopUp={showPopUp}/>;
                             })
                         )}
                     </div>

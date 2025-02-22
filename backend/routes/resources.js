@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const resourceRouter = express.Router();
 const exam = require('../models/exam');
 const capstone = require('../models/capstone');
@@ -221,7 +222,7 @@ resourceRouter.post('/add-capstone', upload.none(), async (req, res) => {
             });
             await newResource.save();
             await updateContribution(author, category, newResource._id);
-            res.json({ message: "Resource added successfully", success: true });
+            res.json({ message: "Resource added successfully", id: newResource._id, success: true});
         }
     } catch (err) {
         console.log(err)
@@ -242,6 +243,26 @@ resourceRouter.delete('/delete-capstone/:id', async (req, res) => {
     } catch (err) {
         res.json({ message: err.message, success: false });
     }
+});
+
+resourceRouter.post('/updateSummary',async(req,res) => {
+    // console.log(req.params);
+    const summary = req.body.summary;
+    const id = req.body.id;
+    // console.log(id)
+    const obj = new mongoose.Types.ObjectId(id);
+    // console.log( mongoose.Types.ObjectId.isValid(id));
+    // console.log(obj);
+    const researchPaper = await capstone.findByIdAndUpdate(
+        obj,
+        { summary: summary},
+        { new: true } // Return the updated document
+    );
+    // console.log(researchPaper);
+    if(!researchPaper)
+        res.json({message:"Invalid obectId / Document not found", success:false});
+    else
+        res.json({ message: "summary saved successfully", success: true});
 });
 
 module.exports = resourceRouter;

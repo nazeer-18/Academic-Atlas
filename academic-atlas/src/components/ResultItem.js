@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/ResultItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenToSquare, faDownload, faEye, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faDownload, faEye } from '@fortawesome/free-solid-svg-icons';
+import { RiGeminiFill } from "react-icons/ri";
 import resourceService from '../services/resourceService';
 
 import contributionService from '../services/contributionService';
@@ -9,11 +10,12 @@ import contributionService from '../services/contributionService';
 export default function ResultItem(props) {
     const { resultItem, index } = props;
     const [thumbnail, setThumbnail] = useState(null);
-    const { author, academicYear, branch, course, fileUrl, fileId, title, url, category } = resultItem;
+    const { author, academicYear, branch, course, fileUrl, fileId, title, url, category, summary } = resultItem;
     const type = props.type;
     const showYear = props.showYear;
     const showBranch = props.showBranch;
     const showCourse = props.showCourse;
+    const showPopUp = props.showPopUp;
     const capstone = category === "project" || category === "research" ? true : false;
     const reference = capstone ? url : fileUrl;
     const download = capstone ? false : true;
@@ -26,7 +28,8 @@ export default function ResultItem(props) {
                 console.log(err);
             }
         };
-        fetchThumbnail();
+        if(!capstone)
+            fetchThumbnail();
     }, [fileId]);
 
     const handleDownload = async (fileId) => {
@@ -38,6 +41,11 @@ export default function ResultItem(props) {
             console.log(err);
         }
     };
+
+    const handleSummary = async() =>{
+        // console.log(summary);
+        showPopUp(title,summary);
+    }
 
     const handleDelete = async () => {
         try {
@@ -125,9 +133,9 @@ export default function ResultItem(props) {
                                     }
                                     {
                                         category === 'research' &&
-                                        <a href={reference} target="_blank" rel="noreferrer" title='Summarize'>
-                                            <button className="result-item-btn atlas-btn" >
-                                                <FontAwesomeIcon icon={faFilter} />
+                                        <a target="_blank" rel="noreferrer" title='Summary'>
+                                            <button className="result-item-btn atlas-btn" onClick={handleSummary}>
+                                            <RiGeminiFill />
                                             </button>
                                         </a>
                                     }
