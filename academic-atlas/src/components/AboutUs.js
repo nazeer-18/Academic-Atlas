@@ -118,7 +118,7 @@ export default function AboutUs() {
                     </div>
                 </section>
                 <section className="developers">
-                    <h2>Meet the Developers</h2>
+                    <h2>Meet the Contributors</h2>
                     <div className="developers-grid">
                         {
                             developers.length !== 0 &&
