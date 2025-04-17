@@ -7,12 +7,9 @@ const examSchema = new Schema({
     academicYear: { type: String, required: true },
     branch: { type: String, required: true },
     course: { type: String, required: true },
-    subject: { type: String, required: true },
     fileUrl: { type: String, required: true },
     fileId: { type: String },
     authorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    tags: [String],
-    status: { type: String, enum: ['active', 'archived'], default: 'active' },
     views: { type: Number, default: 0 },
     downloads: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }

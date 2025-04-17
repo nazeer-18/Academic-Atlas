@@ -11,8 +11,6 @@ const capstoneSchema = new Schema({
     course: { type: String, required: true },
     url: { type: String, required: true }, 
     authorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    tags: [String],
-    status: { type: String, enum: ['active', 'archived'], default: 'active' },
     views: { type: Number, default: 0 },
     downloads: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }

@@ -4,8 +4,13 @@ const Schema = mongoose.Schema;
 const collegeSchema = new Schema({
     name: { type: String, required: true, index: true },
     location: { type: String },
-    branches: [String],
-    courses: [String],
+    branches: [{
+        name: { type: String, required: true },
+        courses: [{ 
+            type: String, 
+            required: true 
+        }]
+    }],
     studentDomain: { type: String }, 
     facultyDomain: { type: String },
     isActive: { type: Boolean, default: true },

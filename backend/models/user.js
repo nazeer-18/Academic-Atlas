@@ -13,7 +13,6 @@ const userSchema = new Schema({
     role: { type: String, enum: ['student','admin'], default: 'student', index: true },
     profilePicture: { type: String },
     bio: { type: String },
-    isActive: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now }
 });
 
