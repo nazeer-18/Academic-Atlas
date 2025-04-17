@@ -1,0 +1,17 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const collegeSchema = new Schema({
+    name: { type: String, required: true, index: true },
+    location: { type: String },
+    branches: [String],
+    courses: [String],
+    studentDomain: { type: String }, 
+    facultyDomain: { type: String },
+    isActive: { type: Boolean, default: true },
+    createdAt: { type: Date, default: Date.now }
+});
+
+collegeSchema.index({ name: 1, isActive: 1 });
+
+module.exports = mongoose.model('College', collegeSchema);
