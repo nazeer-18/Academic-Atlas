@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/ResultItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faDownload, faEye } from '@fortawesome/free-solid-svg-icons';
-import { RiGeminiFill } from "react-icons/ri";
+import { RiAiGenerate } from "react-icons/ri";
 import resourceService from '../services/resourceService';
 
 import contributionService from '../services/contributionService';
@@ -135,7 +135,7 @@ export default function ResultItem(props) {
                                         category === 'research' &&
                                         <a target="_blank" rel="noreferrer" title='Summary'>
                                             <button className="result-item-btn atlas-btn" onClick={handleSummary}>
-                                            <RiGeminiFill />
+                                            <RiAiGenerate />
                                             </button>
                                         </a>
                                     }
