@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/AboutUs.css';
-import DeveloperItem from './DeveloperItem';
-import developerService from '../services/developerService';
 import feedbackService from '../services/feedbackService';
 import userService from '../services/userService';
 import { HiUserGroup } from "react-icons/hi";
 import { VscGraph } from "react-icons/vsc";
 
 export default function AboutUs() {
-    const [developers, setDevelopers] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [userCount, setUserCount] = useState(0);
     const [currentCount, setCurrentCount] = useState(0);
     const [avgRating, setAvgRating] = useState(0);
 
     useEffect(() => {
-        const getDevelopers = async () => {
-            try {
-                const response = await developerService.getDevelopers();
-                setDevelopers(response.data.developers);
-            } catch (err) {
-                console.log(err);
-            }
-        };
 
         const getFeedbacks = async () => {
             try {
@@ -32,7 +21,7 @@ export default function AboutUs() {
                 for (let i = 0; i < response.data.feedbacks.length; i++) {
                     totalRating += response.data.feedbacks[i].rating;
                 }
-                totalRating = (totalRating/response.data.feedbacks.length).toFixed(1); 
+                totalRating = (totalRating / response.data.feedbacks.length).toFixed(1);
                 setAvgRating(totalRating);
             } catch (err) {
                 console.log(err);
@@ -47,8 +36,6 @@ export default function AboutUs() {
                 console.log(err);
             }
         };
-
-        getDevelopers();
         getFeedbacks();
         getUserCount();
     });
@@ -120,10 +107,11 @@ export default function AboutUs() {
                 <section className="developers">
                     <h2>Meet the Contributors</h2>
                     <div className="developers-grid">
-                        {
-                            developers.length !== 0 &&
-                            developers.map(developer => <DeveloperItem key={developer._id} developer={developer} />)
-                        }
+                        <p align="center">
+                            <a href="https://github.com/nazeer-18/Academic-Atlas/graphs/contributors" target="_blank" rel="noopener noreferrer">
+                                <img src="https://contrib.rocks/image?repo=nazeer-18/Academic-Atlas" />
+                            </a>
+                        </p>
                     </div>
                 </section>
                 <section className="reviews">
