@@ -5,18 +5,12 @@ const College = require('../models/college');
 
 collegeRouter.get('/get-colleges', async (req, res) => {
     try {
-        const { name, location, isActive } = req.body;
-        let query = {};
-        
-        if (name) query.name = name;
-        if (location) query.location = location;
-        if (isActive !== undefined) query.isActive = isActive;
-        const results = await College.find(query);
-        res.json({ results: results, success: true });
+      const results = await College.find({});
+      res.json({ results: results, success: true });
     } catch (err) {
-        res.status(500).json({ message: err.message, success: false });
+      res.status(500).json({ message: err.message, success: false });
     }
-});
+  });
 
 collegeRouter.post('/add-college', async (req, res) => {
     try {
@@ -192,27 +186,7 @@ collegeRouter.post('/add-courses/:id/:branchName', async (req, res) => {
     }
 });
 
-collegeRouter.put('/toggle-active/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        
-        const college = await College.findById(id);
-        if (!college) {
-            return res.status(404).json({ message: "College not found", success: false });
-        }
-        
-        college.isActive = !college.isActive;
-        await college.save();
-        
-        res.json({ 
-            message: `College ${college.isActive ? 'activated' : 'deactivated'} successfully`, 
-            result: college, 
-            success: true 
-        });
-    } catch (err) {
-        res.status(500).json({ message: err.message, success: false });
-    }
-});
+
 
 collegeRouter.delete('/remove-branch/:id/:branchName', async (req, res) => {
     try {
