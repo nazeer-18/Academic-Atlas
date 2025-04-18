@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user');
 const authRoute = express.Router();
 const sendOTPEmail = require('../authenticators/otpsender');
+const College = require('../models/college');
 
 async function hashPassword(password) {
     const saltRounds = 10; // The cost factor for hashing
@@ -102,48 +103,63 @@ authRoute.post('/login', async (req, res) => {
 
 //register route
 authRoute.post('/register', async (req, res) => {
-    const { userName, email, password } = req.body;
-    console.log(userName, email, password)
-    const user = await User.findOne({ email: email.toLowerCase() })
+    const { userName, email, password, collegeId } = req.body; // Include collegeId here
+    console.log(userName, email, password, collegeId);
+
+    // Check if user already exists
+    const user = await User.findOne({ email: email.toLowerCase() });
     try {
         if (user) {
             return res.json({
                 success: false,
                 message: 'User already exists'
-            })
+            });
         }
+
+        // Create a new user object, including the collegeId
         const newUser = new User({
             userName: userName,
             email: email.toLowerCase(),
-            password: await hashPassword(password)
-        })
-        await newUser.save()
+            password: await hashPassword(password),
+            collegeId: collegeId  // Add collegeId here
+        });
+
+        // Save the new user to the database
+        await newUser.save();
         return res.json({
             success: true,
             message: 'User registered successfully, Please login to continue'
-        })
-    }
-    catch (err) {
-        console.log(err)
+        });
+    } catch (err) {
+        console.log(err);
         return res.json({
             success: false,
             message: 'User not registered, please try again later'
-        })
+        });
     }
-})
+});
+
 
 //verify email route
 authRoute.post('/verify-mail', async (req, res) => {
     try {
         const { email } = req.body;
+
+        if (!email || typeof email !== 'string') {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid email format'
+            });
+        }
+
         const user = await User.findOne({ email: email.toLowerCase() });
+
         if (user) {
             return res.json({
                 success: false,
                 message: 'User already exists, please login to continue'
-            })
-        }
-        else {
+            });
+        } else {
             const userName = email;
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
             try {
@@ -152,24 +168,24 @@ authRoute.post('/verify-mail', async (req, res) => {
                     success: true,
                     message: 'OTP sent to your email',
                     otp: otp
-                })
+                });
             } catch (err) {
-                console.log('Failed to send email', err)
+                console.log('Failed to send email', err);
                 return res.json({
                     success: false,
                     message: 'Failed to send OTP, please try again later'
-                })
+                });
             }
         }
-    }
-    catch (err) {
-        console.log(err)
+    } catch (err) {
+        console.log(err);
         return res.status(500).json({
             success: false,
             message: 'Internal server error'
-        })
+        });
     }
-})
+});
+
 
 //verify forgot email route
 authRoute.post('/verify-forgot-mail', async (req, res) => {

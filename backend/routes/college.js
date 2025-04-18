@@ -5,12 +5,15 @@ const College = require('../models/college');
 
 collegeRouter.get('/get-colleges', async (req, res) => {
     try {
-        const { name, location, isActive } = req.body;
+        const { name, location, branch, course, isActive } = req.query; 
         let query = {};
-        
+
         if (name) query.name = name;
         if (location) query.location = location;
+        if (branch) query.branches = branch;
+        if (course) query.courses = course;
         if (isActive !== undefined) query.isActive = isActive;
+        
         const results = await College.find(query);
         res.json({ results: results, success: true });
     } catch (err) {
@@ -18,22 +21,13 @@ collegeRouter.get('/get-colleges', async (req, res) => {
     }
 });
 
+
 collegeRouter.post('/add-college', async (req, res) => {
     try {
-        const { name, location, branches, studentDomain, facultyDomain } = req.body;
+        const { name, location, branches, courses, studentDomain, facultyDomain } = req.body;
         const existingCollege = await College.findOne({ name: name });
         if (existingCollege) {
             return res.status(409).json({ message: "College already exists", success: false });
-        }
-        if (branches) {
-            for (const branch of branches) {
-                if (!branch.name || !branch.courses || !Array.isArray(branch.courses)) {
-                    return res.status(400).json({ 
-                        message: "Each branch must have a name and courses array", 
-                        success: false 
-                    });
-                }
-            }
         }
         
         const newCollege = new College({
@@ -41,21 +35,22 @@ collegeRouter.post('/add-college', async (req, res) => {
             location,
             branches: branches || [],
             studentDomain,
-            facultyDomain
+            facultyDomain,
+            isActive: true  
         });
-        
+
         await newCollege.save();
-        res.status(201).json({ 
-            message: "College added successfully", 
-            id: newCollege._id, 
-            success: true 
+        res.status(201).json({
+            message: "College added successfully",
+            result: newCollege,
+            success: true
         });
     } catch (err) {
         res.status(500).json({ message: err.message, success: false });
     }
 });
 
-collegeRouter.get('/get-college/:id', async (req, res) => {
+collegeRouter.get('/get-colleges/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const college = await College.findById(id);
