@@ -54,3 +54,6 @@ app.use('/api/developer', developerRoute);
 
 const contributionRoute = require('./routes/contribution');
 app.use('/api/contribution', contributionRoute);
+
+const collegeRouter = require('./routes/college');
+app.use('/api/college',collegeRouter);
