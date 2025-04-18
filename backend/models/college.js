@@ -6,17 +6,16 @@ const collegeSchema = new Schema({
     location: { type: String },
     branches: [{
         name: { type: String, required: true },
-        courses: [{ 
-            type: String, 
+        courses: [{
+            type: String,
             required: true 
         }]
     }],
-    studentDomain: { type: String }, 
+    studentDomain: { type: String },
     facultyDomain: { type: String },
-    isActive: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now }
 });
 
-collegeSchema.index({ name: 1, isActive: 1 });
+collegeSchema.index({ name: 1 });
 
 module.exports = mongoose.model('College', collegeSchema);

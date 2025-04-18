@@ -17,6 +17,6 @@ const userSchema = new Schema({
 });
 
 userSchema.index({ collegeId: 1, branch: 1, role: 1 });
-userSchema.index({ collegeId: 1, isActive: 1 });
+userSchema.index({ collegeId: 1});
 
 module.exports = mongoose.model('User', userSchema);

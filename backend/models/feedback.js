@@ -9,6 +9,5 @@ const feedbackSchema = new Schema({
 });
 
 feedbackSchema.index({ userId: 1 });
-feedbackSchema.index({ resourceId: 1, resourceType: 1 });
 
 module.exports = mongoose.model('Feedback', feedbackSchema);
