@@ -8,7 +8,7 @@ const sendOTPEmail = require('../authenticators/otpsender');
 const College = require('../models/college');
 
 async function hashPassword(password) {
-    const saltRounds = 10; // The cost factor for hashing
+    const saltRounds = 10;
     try {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         return hashedPassword;
@@ -103,7 +103,7 @@ authRoute.post('/login', async (req, res) => {
 
 //register route
 authRoute.post('/register', async (req, res) => {
-    const { userName, email, password, userType, collegeId, rollNo, branch, course } = req.body;
+    const { userName, email, password, userType, collegeId, rollNo, branch } = req.body;
 
     try {
         const existingUser = await User.findOne({ email: email.toLowerCase() });
@@ -123,15 +123,20 @@ authRoute.post('/register', async (req, res) => {
             }
         }
 
-        const newUser = new User({
+        const newUserData = {
             userName,
             email: email.toLowerCase(),
             password: await hashPassword(password),
             userType,
-            collegeId: userType === 'institute' ? collegeId : undefined,
-            rollNo: userType === 'institute' ? rollNo : undefined,
-            branch: userType === 'institute' ? branch : undefined,
-        });
+        };
+        
+        if (userType === 'institute') {
+            newUserData.collegeId = collegeId;
+            newUserData.branch = branch;
+            newUserData.course = course;
+        }
+        
+        const newUser = new User(newUserData);
 
         await newUser.save();
         return res.json({

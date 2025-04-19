@@ -30,8 +30,6 @@ const userSchema = new Schema({
             return this.userType === 'institute';
         }
     },
-    course: { type: String, index: true }, 
-
     role: { type: String, enum: ['student','admin'], default: 'student', index: true },
     profilePicture: { type: String },
     bio: { type: String },
