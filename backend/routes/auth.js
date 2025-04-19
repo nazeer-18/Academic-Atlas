@@ -103,33 +103,42 @@ authRoute.post('/login', async (req, res) => {
 
 //register route
 authRoute.post('/register', async (req, res) => {
-    const { userName, email, password, collegeId } = req.body; // Include collegeId here
-    console.log(userName, email, password, collegeId);
+    const { userName, email, password, userType, collegeId, rollNo, branch, course } = req.body;
 
-    // Check if user already exists
-    const user = await User.findOne({ email: email.toLowerCase() });
     try {
-        if (user) {
+        const existingUser = await User.findOne({ email: email.toLowerCase() });
+        if (existingUser) {
             return res.json({
                 success: false,
                 message: 'User already exists'
             });
         }
 
-        // Create a new user object, including the collegeId
+        if (userType === 'institute') {
+            if (!collegeId || !branch || !rollNo) {
+                return res.json({
+                    success: false,
+                    message: 'CollegeId , rollNo and branch are required for institute users'
+                });
+            }
+        }
+
         const newUser = new User({
-            userName: userName,
+            userName,
             email: email.toLowerCase(),
             password: await hashPassword(password),
-            collegeId: collegeId  
+            userType,
+            collegeId: userType === 'institute' ? collegeId : undefined,
+            rollNo: userType === 'institute' ? rollNo : undefined,
+            branch: userType === 'institute' ? branch : undefined,
         });
 
-        // Save the new user to the database
         await newUser.save();
         return res.json({
             success: true,
             message: 'User registered successfully, Please login to continue'
         });
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -138,6 +147,7 @@ authRoute.post('/register', async (req, res) => {
         });
     }
 });
+
 
 
 //verify email route

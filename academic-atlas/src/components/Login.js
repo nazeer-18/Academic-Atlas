@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { Link } from 'react-router-dom';
@@ -24,13 +24,13 @@ export default function Login() {
     });
 
     // Fetch colleges when component mounts
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchColleges = async () => {
             try {
                 const response = await collegeService.getColleges();
                 console.log("Response from college service:", response); 
                 if (response.data && response.data.results) {
-                    setColleges(response.data.results.filter(college => college.isActive || true));
+                    setColleges(response.data.results);
                 } else {
                     console.error("Colleges data is not in expected format.");
                     setMessage("Failed to load colleges. Please try again later.");

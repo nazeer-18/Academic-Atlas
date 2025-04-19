@@ -6,6 +6,8 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String }, 
     googleId: { type: String }, 
+    userType: { type: String, enum: ['personal', 'institute'], required: true },
+    
     collegeId: { type: Schema.Types.ObjectId, ref: 'College', required: true },
     rollNo:{type: String , unique: true},
     branch: { type: String, index: true },
