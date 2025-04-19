@@ -8,7 +8,7 @@ const sendOTPEmail = require('../authenticators/otpsender');
 const College = require('../models/college');
 
 async function hashPassword(password) {
-    const saltRounds = 10; // The cost factor for hashing
+    const saltRounds = 10;
     try {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         return hashedPassword;
@@ -103,36 +103,47 @@ authRoute.post('/login', async (req, res) => {
 
 //register route
 authRoute.post('/register', async (req, res) => {
-    const { userName, email, password, collegeId,rollNo,branch,course } = req.body; // Include collegeId here
-    console.log(userName, email, password, collegeId,rollNo,branch,course);
+    const { userName, email, password, userType, collegeId, rollNo, branch } = req.body;
 
-    // Check if user already exists
-    const user = await User.findOne({ email: email.toLowerCase() });
     try {
-        if (user) {
+        const existingUser = await User.findOne({ email: email.toLowerCase() });
+        if (existingUser) {
             return res.json({
                 success: false,
                 message: 'User already exists'
             });
         }
 
-        // Create a new user object, including the collegeId
-        const newUser = new User({
-            userName: userName,
+        if (userType === 'institute') {
+            if (!collegeId || !branch || !rollNo) {
+                return res.json({
+                    success: false,
+                    message: 'CollegeId , rollNo and branch are required for institute users'
+                });
+            }
+        }
+
+        const newUserData = {
+            userName,
             email: email.toLowerCase(),
             password: await hashPassword(password),
-            collegeId: collegeId,
-            rollNo: rollNo,
-            branch: branch,
-            course: course
-        });
+            userType,
+        };
+        
+        if (userType === 'institute') {
+            newUserData.collegeId = collegeId;
+            newUserData.branch = branch;
+            newUserData.course = course;
+        }
+        
+        const newUser = new User(newUserData);
 
-        // Save the new user to the database
         await newUser.save();
         return res.json({
             success: true,
             message: 'User registered successfully, Please login to continue'
         });
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -141,6 +152,7 @@ authRoute.post('/register', async (req, res) => {
         });
     }
 });
+
 
 
 //verify email route
