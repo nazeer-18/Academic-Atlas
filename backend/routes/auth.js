@@ -121,7 +121,7 @@ authRoute.post('/register', async (req, res) => {
             userName: userName,
             email: email.toLowerCase(),
             password: await hashPassword(password),
-            collegeId: collegeId  // Add collegeId here
+            collegeId: collegeId  
         });
 
         // Save the new user to the database
