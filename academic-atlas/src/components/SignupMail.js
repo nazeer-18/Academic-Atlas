@@ -24,7 +24,7 @@ export default function SignupMail() {
                 const response = await collegeService.getColleges();
                 console.log(response.data); 
                 if (response.data && Array.isArray(response.data.results)) {
-                    setColleges(response.data.results.filter(college => college.isActive));
+                    setColleges(response.data.results);
                 } else {
                     console.error('Colleges data not found or in wrong format.');
                 }

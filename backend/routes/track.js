@@ -1,9 +1,9 @@
 const express = require('express');
 const User = require('../models/user');
 const trackRoute = express.Router();
-//const Track = require('../models/track');
+const Track = require('../models/track');
 
-/*trackRoute.post('/addBranch',async(req,res)=>{
+trackRoute.post('/addBranch',async(req,res)=>{
     try{
         const {branch} = req.body;
         const track = await Track.findOne({branch: branch});
@@ -28,9 +28,9 @@ const trackRoute = express.Router();
             message: 'Internal server error'
         })
     }
-});*/
+});
 
-/*trackRoute.post('/addCourse',async(req,res)=>{
+trackRoute.post('/addCourse',async(req,res)=>{
     try{
         const {course} = req.body;
         const track = await Track.findOne({course: course});
@@ -55,9 +55,9 @@ const trackRoute = express.Router();
             message: 'Internal server error'
         })
     }
-});*/
+});
 
-/*trackRoute.get('/getBranches',async(req,res)=>{
+trackRoute.get('/getBranches',async(req,res)=>{
     try{
         const branches = await Track.find({branch: {$ne: null}});
         return res.status(200).json({
@@ -70,9 +70,9 @@ const trackRoute = express.Router();
             message: 'Internal server error'
         })
     }
-});*/
+});
 
-/*trackRoute.get('/getCourses',async(req,res)=>{
+trackRoute.get('/getCourses',async(req,res)=>{
     try{
         const courses = await Track.find({course: {$ne: null}});
         return res.status(200).json({
@@ -85,6 +85,6 @@ const trackRoute = express.Router();
             message: 'Internal server error'
         })
     }
-});*/
+});
 
 module.exports = trackRoute;
