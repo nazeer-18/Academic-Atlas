@@ -5,15 +5,13 @@ const College = require('../models/college');
 
 collegeRouter.get('/get-colleges', async (req, res) => {
     try {
-        const { name, location, branch, course, isActive } = req.query; 
+        const { name, location, branch, course } = req.query; 
         let query = {};
 
         if (name) query.name = name;
         if (location) query.location = location;
         if (branch) query.branches = branch;
         if (course) query.courses = course;
-        if (isActive !== undefined) query.isActive = isActive;
-        
         const results = await College.find(query);
         res.json({ results: results, success: true });
     } catch (err) {
@@ -36,7 +34,6 @@ collegeRouter.post('/add-college', async (req, res) => {
             branches: branches || [],
             studentDomain,
             facultyDomain,
-            isActive: true  
         });
 
         await newCollege.save();

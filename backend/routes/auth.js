@@ -103,8 +103,8 @@ authRoute.post('/login', async (req, res) => {
 
 //register route
 authRoute.post('/register', async (req, res) => {
-    const { userName, email, password, collegeId } = req.body; // Include collegeId here
-    console.log(userName, email, password, collegeId);
+    const { userName, email, password, collegeId,rollNo,branch,course } = req.body; // Include collegeId here
+    console.log(userName, email, password, collegeId,rollNo,branch,course);
 
     // Check if user already exists
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -121,7 +121,10 @@ authRoute.post('/register', async (req, res) => {
             userName: userName,
             email: email.toLowerCase(),
             password: await hashPassword(password),
-            collegeId: collegeId  // Add collegeId here
+            collegeId: collegeId,
+            rollNo: rollNo,
+            branch: branch,
+            course: course
         });
 
         // Save the new user to the database

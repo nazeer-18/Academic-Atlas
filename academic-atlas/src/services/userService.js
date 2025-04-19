@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server_url = 'http://localhost:8080';
+const server_url = process.env.REACT_APP_SERVER_URL;
 
 class userService {
     fetchUser(email) {
