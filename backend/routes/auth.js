@@ -133,7 +133,7 @@ authRoute.post('/register', async (req, res) => {
         if (userType === 'institute') {
             newUserData.collegeId = collegeId;
             newUserData.branch = branch;
-            newUserData.course = course;
+            newUserData.rollNo = rollNo;
         }
         
         const newUser = new User(newUserData);

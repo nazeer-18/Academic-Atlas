@@ -27,71 +27,57 @@ export default function SignupAcnt() {
     
     // College-specific states
     const [college, setCollege] = useState(null);
-    const [branches, setBranches] = useState([]);
-    const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     
     const [data, setData] = useState({
         name: "",
         password: "",
         confirmPassword: "",
-        branch: "",
-        course: ""
     });
 
     // Fetch college data on component mount
     useEffect(() => {
-        if (user.email === '' || !user.collegeId) {
+        if (user.email === '') {
             navigate('/login');
             return;
         }
 
-        const fetchCollegeData = async () => {
-            try {
-                const response = await collegeService.getCollegeById(user.collegeId);
-                console.log("Full Response:", response);
-                const collegeData = response.data?.result; 
-                console.log("College data:", collegeData);
-
-                // Check if collegeData exists and has the necessary properties
-                if (collegeData) {
-                    setCollege(collegeData);
-                    setBranches(collegeData.branches || []);
-                    // No need to set courses here as they are now branch-specific
-                } else {
-                    setResponse("College data not found.");
-                    setSuccess(false);
-                }
-                setLoading(false);
-            } catch (err) {
-                console.error("Failed to fetch college data:", err);
-                setResponse("Failed to load college data. Please try again later.");
-                setSuccess(false);
-                setLoading(false);
-            }
-        };
-        
-        fetchCollegeData();
-    }, [user.email, user.collegeId, navigate]);
-
-    // Update courses when branch is selected
-    useEffect(() => {
-        if (data.branch) {
-            const selectedBranch = branches.find(branch => branch._id === data.branch);
-            if (selectedBranch && selectedBranch.courses) {
-                setCourses(selectedBranch.courses);
-            } else {
-                setCourses([]);
-            }
-            // Reset the selected course when branch changes
-            setData(prevData => ({
-                ...prevData,
-                course: ""
-            }));
-        } else {
-            setCourses([]);
+        // For personal users, we don't need college data, so skip fetching
+        if (user.userType === 'personal') {
+            setLoading(false);
+            return;
         }
-    }, [data.branch, branches]);
+
+        // For institute users, fetch college data if collegeId exists
+        if (user.collegeId) {
+            const fetchCollegeData = async () => {
+                try {
+                    const response = await collegeService.getCollegeById(user.collegeId);
+                    console.log("Full Response:", response);
+                    const collegeData = response.data?.result; 
+                    console.log("College data:", collegeData);
+
+                    // Check if collegeData exists and has the necessary properties
+                    if (collegeData) {
+                        setCollege(collegeData);
+                    } else {
+                        setResponse("College data not found.");
+                        setSuccess(false);
+                    }
+                    setLoading(false);
+                } catch (err) {
+                    console.error("Failed to fetch college data:", err);
+                    setResponse("Failed to load college data. Please try again later.");
+                    setSuccess(false);
+                    setLoading(false);
+                }
+            };
+            
+            fetchCollegeData();
+        } else {
+            setLoading(false);
+        }
+    }, [user.email, user.collegeId, user.userType, navigate]);
 
     const handleMailClick = (e) => {
         setMailAlert("You can't change mail at this point");
@@ -158,21 +144,32 @@ export default function SignupAcnt() {
         }
     }
     
-    const handleBranchChange = (e) => {
-        setData({ ...data, branch: e.target.value });
-    }
-    
-    const handleCourseChange = (e) => {
-        setData({ ...data, course: e.target.value });
-    }
-    
     useEffect(() => {
-        if (nameValid && pwdValid && confirmPwdValid && data.branch && data.course) {
+        if (nameValid && pwdValid && confirmPwdValid) {
             setAllValid(true);
         } else {
             setAllValid(false);
         }
-    }, [nameValid, pwdValid, confirmPwdValid, data.branch, data.course]);
+    }, [nameValid, pwdValid, confirmPwdValid]);
+    
+    // Function to generate a unique roll number based on user details
+    const generateRollNumber = (userName, email) => {
+        // Extract first letters of the name
+        const nameInitials = userName
+            .split(' ')
+            .map(part => part[0])
+            .join('')
+            .toUpperCase();
+        
+        // Extract first part of email (before @)
+        const emailUsername = email.split('@')[0];
+        
+        // Get current timestamp in milliseconds (last 6 digits)
+        const timestamp = Date.now().toString().slice(-6);
+        
+        // Combine to create a unique roll number
+        return `${nameInitials}${timestamp}`;
+    };
     
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -181,14 +178,28 @@ export default function SignupAcnt() {
             e.preventDefault();
             form.reportValidity();
         } else {
+            // Process the name properly
+            const processedName = data.name.trim().split(/\s+/).join(' ');
+            
+            // Create new user object with both personal and institute fields
             const newUser = {
-                userName: data.name.trim().split(/\s+/).join(' '),
+                userName: processedName,
                 email: user.email,
                 password: data.password,
-                collegeId: user.collegeId,
-                branch: data.branch,
-                course: data.course,
-                role: 'student' // Default role
+                userType: user.userType // Important! Include the userType from context
+            };
+            
+            // Add collegeId only for institute users
+            if (user.userType === 'institute' && user.collegeId) {
+                newUser.collegeId = user.collegeId;
+                
+                // Auto-generate a roll number for institute users
+                newUser.rollNo = generateRollNumber(processedName, user.email);
+            }
+            
+            // Add branch if it exists in user context (for institute users)
+            if (user.branch) {
+                newUser.branch = user.branch;
             }
             
             try {
@@ -207,7 +218,11 @@ export default function SignupAcnt() {
             } catch (err) {
                 console.error("Registration failed:", err);
                 setSuccess(false);
-                setResponse("Registration failed. Please try again later.");
+                if (err.response && err.response.data && err.response.data.message) {
+                    setResponse(err.response.data.message);
+                } else {
+                    setResponse("Registration failed. Please try again later.");
+                }
                 setTimeout(() => {
                     setResponse(null);
                 }, 2000);
@@ -216,7 +231,7 @@ export default function SignupAcnt() {
     }
     
     if (loading) {
-        return <div className="loading-center">Loading college data...</div>
+        return <div className="loading-center">Loading user data...</div>
     }
     
     return (
@@ -227,7 +242,9 @@ export default function SignupAcnt() {
                 </div>
                 <div className="signup-acnt-content">
                     <div className="signup-acnt-title atlas-title">
-                        Signup for {college?.name || 'College'}
+                        {user.userType === 'institute' ? 
+                            `Signup for ${college?.name || 'College'}` : 
+                            'Complete Your Account'}
                     </div>
                     <div className="signup-acnt-form">
                         <form action="" id="atlas-form">
@@ -267,45 +284,6 @@ export default function SignupAcnt() {
                                     {nameAlert}
                                 </div>
                             }
-                            
-                            {/* Branch selection */}
-                            <div className="signup-acnt-form-component">
-                                <label className="atlas-label" htmlFor="branch">Branch</label> <br />
-                                <select
-                                    className="atlas-input"
-                                    id="branch"
-                                    name="branch"
-                                    required
-                                    value={data.branch}
-                                    onChange={handleBranchChange}>
-                                    <option value="">Select Branch</option>
-                                    {branches.map((branch) => (
-                                        <option key={branch._id} value={branch._id}>{branch.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {/* Course selection */}
-                            <div className="signup-acnt-form-component">
-                                <label className="atlas-label" htmlFor="course">Course</label> <br />
-                                <select
-                                    className="atlas-input"
-                                    id="course"
-                                    name="course"
-                                    required
-                                    value={data.course}
-                                    onChange={handleCourseChange}
-                                    disabled={!data.branch} // Disable until branch is selected
-                                >
-                                    <option value="">-- Select your course --</option>
-                                    {courses.map((course, index) => (
-                                        <option key={index} value={course}>
-                                            {course}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
                             
                             <div className="signup-acnt-form-component">
                                 <label className="atlas-label" htmlFor="password">Password</label> <br />
