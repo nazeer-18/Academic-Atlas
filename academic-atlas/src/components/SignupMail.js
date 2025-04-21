@@ -9,7 +9,14 @@ import { useUser } from '../contexts/userContext';
 export default function SignupMail() {
     const { user, setUser } = useUser();
     const navigate = useNavigate();
+    const [userType, setUserType] = useState('personal'); 
+    
+    const [personalEmail, setPersonalEmail] = useState('');
+    
     const [mail, setMail] = useState('');
+    const [rollNo, setRollNo] = useState('');
+    
+    // Common states
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
     const [colleges, setColleges] = useState([]);
@@ -17,7 +24,10 @@ export default function SignupMail() {
     const [loading, setLoading] = useState(true);
     const [domainError, setDomainError] = useState('');
 
-    // Fetch colleges on component mount
+    // Branch-related states (added from SignupAcnt)
+    const [branches, setBranches] = useState([]);
+    const [selectedBranch, setSelectedBranch] = useState('');
+
     useEffect(() => {
         const fetchColleges = async () => {
             try {
@@ -37,9 +47,32 @@ export default function SignupMail() {
             }
         };
         
-
         fetchColleges();
     }, []);
+
+    // Fetch branches when college is selected
+    useEffect(() => {
+        if (selectedCollege) {
+            const fetchBranches = async () => {
+                try {
+                    const response = await collegeService.getCollegeById(selectedCollege);
+                    if (response.data && response.data.result && response.data.result.branches) {
+                        setBranches(response.data.result.branches);
+                    } else {
+                        console.error('Branch data not found or in wrong format.');
+                        setBranches([]);
+                    }
+                } catch (err) {
+                    console.error("Failed to fetch branches:", err);
+                    setBranches([]);
+                }
+            };
+            
+            fetchBranches();
+        } else {
+            setBranches([]);
+        }
+    }, [selectedCollege]);
 
     // Validate email domain against selected college
     const validateEmailDomain = (email, collegeId) => {
@@ -54,14 +87,25 @@ export default function SignupMail() {
 
     const handleMailChange = (e) => {
         setMail(e.target.value);
-        // Clear domain error when email changes
         if (domainError) setDomainError('');
+    };
+
+    const handlePersonalEmailChange = (e) => {
+        setPersonalEmail(e.target.value);
     };
 
     const handleCollegeChange = (e) => {
         setSelectedCollege(e.target.value);
-        // Clear domain error when college changes
+        setSelectedBranch(''); // Reset branch when college changes
         if (domainError) setDomainError('');
+    };
+
+    const handleBranchChange = (e) => {
+        setSelectedBranch(e.target.value);
+    };
+
+    const handleUserTypeChange = (e) => {
+        setUserType(e.target.value);
     };
 
     const handleMailVerification = async (e) => {
@@ -73,64 +117,139 @@ export default function SignupMail() {
             return;
         }
 
-        // Check if college is selected
-        if (!selectedCollege) {
-            setMessage("Please select your college");
-            setSuccess(false);
-            setTimeout(() => setMessage(''), 2000);
-            return;
-        }
+        if (userType === 'personal') {
+            // Handle personal user verification
+            try {
+                // Assuming your backend can handle personal email verification
+                const response = await userService.verify({
+                    email: personalEmail,
+                    userType: 'personal'
+                });
 
-        // Validate email domain against selected college
-        if (!validateEmailDomain(mail, selectedCollege)) {
-            setDomainError(`Please use your college email domain (@${colleges.find(c => c._id === selectedCollege)?.studentDomain})`);
-            return;
-        }
+                const status = response.data.success;
+                setSuccess(status);
+                setMessage(response.data.message);
+                const otp = response.data.otp;
 
-        try {
-            const response = await userService.verify({
-                email: mail,
-                collegeId: selectedCollege
-            });
+                console.log("OTP:", otp);
 
-            const status = response.data.success;
-            setSuccess(status);
-            setMessage(response.data.message);
-            const otp = response.data.otp;
+                if (otp) {
+                    setMessage("Proceeding with email verification");
+                    setTimeout(() => {
+                        setMessage("OTP sent successfully")
+                    }, 1000);
 
-            console.log("OTP:", otp);
+                    setTimeout(() => {
+                        setUser({
+                            ...user,
+                            email: personalEmail,
+                            userType: 'personal'
+                        });
+                        navigate('/verifyotp', {
+                            state: {
+                                otp: otp,
+                                email: personalEmail,
+                                userType: 'personal',
+                                choice: "signup"
+                            }
+                        });
+                    }, 2500);
+                } else if (status === false) {
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 1000);
+                }
+            } catch (err) {
+                console.log(err);
+                setMessage("Internal server error");
+                setSuccess(false);
+                setTimeout(() => setMessage(''), 2000);
+            }
+        } else {
+            // Handle institute user verification
+            // Check if college and branch are selected
+            if (!selectedCollege) {
+                setMessage("Please select your college");
+                setSuccess(false);
+                setTimeout(() => setMessage(''), 2000);
+                return;
+            }
 
-            if (otp) {
-                setMessage("Proceeding with email verification");
-                setTimeout(() => {
-                    setMessage("OTP sent successfully")
-                }, 1000);
+            if (!selectedBranch) {
+                setMessage("Please select your branch");
+                setSuccess(false);
+                setTimeout(() => setMessage(''), 2000);
+                return;
+            }
 
-                setTimeout(() => {
-                    setUser({
-                        ...user,
-                        email: mail,
-                        collegeId: selectedCollege
-                    });
-                    navigate('/verifyotp', {
-                        state: {
-                            otp: otp,
+            // Check if roll number is provided
+            if (!rollNo) {
+                setMessage("Roll Number is required");
+                setSuccess(false);
+                setTimeout(() => setMessage(''), 2000);
+                return;
+            }
+
+            // Validate email domain against selected college
+            if (!validateEmailDomain(mail, selectedCollege)) {
+                setDomainError(`Please use your college email domain (@${colleges.find(c => c._id === selectedCollege)?.studentDomain})`);
+                return;
+            }
+
+            try {
+                const response = await userService.verify({
+                    email: mail,
+                    collegeId: selectedCollege,
+                    branch: selectedBranch, // Using selectedBranch instead of branch
+                    rollNo: rollNo,
+                    userType: 'institute'
+                });
+
+                const status = response.data.success;
+                setSuccess(status);
+                setMessage(response.data.message);
+                const otp = response.data.otp;
+
+                console.log("OTP:", otp);
+
+                if (otp) {
+                    setMessage("Proceeding with email verification");
+                    setTimeout(() => {
+                        setMessage("OTP sent successfully")
+                    }, 1000);
+
+                    setTimeout(() => {
+                        setUser({
+                            ...user,
                             email: mail,
                             collegeId: selectedCollege,
-                            choice: "signup"
-                        }
-                    });
-                }, 2500);
-            } else if (status === false) {
-                setTimeout(() => {
-                    navigate('/login');
-                }, 1000);
+                            branch: selectedBranch, // Using selectedBranch instead of branch
+                            rollNo: rollNo,
+                            userType: 'institute'
+                        });
+                        navigate('/verifyotp', {
+                            state: {
+                                otp: otp,
+                                email: mail,
+                                collegeId: selectedCollege,
+                                branch: selectedBranch, // Using selectedBranch instead of branch
+                                rollNo: rollNo,
+                                userType: 'institute',
+                                choice: "signup"
+                            }
+                        });
+                    }, 2500);
+                } else if (status === false) {
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 1000);
+                }
+            } catch (err) {
+                console.log(err);
+                setMessage("Internal server error");
+                setSuccess(false);
+                setTimeout(() => setMessage(''), 2000);
             }
-        } catch (err) {
-            console.log(err);
-            setMessage("Internal server error");
-            setSuccess(false);
-            setTimeout(() => setMessage(''), 2000);
         }
     };
 
@@ -145,48 +264,116 @@ export default function SignupMail() {
                 </div>
                 <div className="signupmail-form">
                     <form id="atlas-form">
-                        {loading ? (
-                            <div className="loading-spinner">Loading colleges...</div>
-                        ) : (
-                            <>
-                                <div className="signupmail-form-component">
-                                    <label className="atlas-font" htmlFor="college">Select College</label> <br />
-                                    <select
-                                        className="atlas-input"
-                                        id="college"
-                                        name="college"
-                                        value={selectedCollege}
-                                        onChange={handleCollegeChange}
-                                        required
-                                    >
-                                        <option value="">-- Select your college --</option>
-                                        {colleges.map(college => (
-                                            <option key={college._id} value={college._id}>
-                                                {college.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                        <div className="signupmail-form-component">
+                            <label className="atlas-font" htmlFor="userType">User Type</label> <br />
+                            <select
+                                className="atlas-input"
+                                id="userType"
+                                name="userType"
+                                value={userType}
+                                onChange={handleUserTypeChange}
+                                required
+                            >
+                                <option value="personal">Personal</option>
+                                <option value="institute">Institute</option>
+                            </select>
+                        </div>
 
-                                <div className="signupmail-form-component">
-                                    <label className="atlas-font" htmlFor="email">College Email</label> <br />
-                                    <input
-                                        value={mail}
-                                        onChange={handleMailChange}
-                                        className="atlas-input"
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        required
-                                        placeholder="Enter your college email" 
-                                    />
-                                    {domainError && (
-                                        <div className="domain-error text-red-merry">
-                                            {domainError}
-                                        </div>
-                                    )}
-                                </div>
-                            </>
+                        {userType === 'personal' ? (
+                            // Personal user form
+                            <div className="signupmail-form-component">
+                                <label className="atlas-font" htmlFor="personalEmail">Email</label> <br />
+                                <input
+                                    value={personalEmail}
+                                    onChange={handlePersonalEmailChange}
+                                    className="atlas-input"
+                                    type="email"
+                                    id="personalEmail"
+                                    name="personalEmail"
+                                    required
+                                    placeholder="Enter your email" 
+                                />
+                            </div>
+                        ) : (
+                            // Institute user form
+                            loading ? (
+                                <div className="loading-spinner">Loading colleges...</div>
+                            ) : (
+                                <>
+                                    <div className="signupmail-form-component">
+                                        <label className="atlas-font" htmlFor="college">Select College</label> <br />
+                                        <select
+                                            className="atlas-input"
+                                            id="college"
+                                            name="college"
+                                            value={selectedCollege}
+                                            onChange={handleCollegeChange}
+                                            required
+                                        >
+                                            <option value="">-- Select your college --</option>
+                                            {colleges.map(college => (
+                                                <option key={college._id} value={college._id}>
+                                                    {college.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Branch selection from SignupAcnt */}
+                                    <div className="signupmail-form-component">
+                                        <label className="atlas-font" htmlFor="branch">Branch</label> <br />
+                                        <select
+                                            className="atlas-input"
+                                            id="branch"
+                                            name="branch"
+                                            value={selectedBranch}
+                                            onChange={handleBranchChange}
+                                            required
+                                            disabled={!selectedCollege} // Disable until college is selected
+                                        >
+                                            <option value="">-- Select your branch --</option>
+                                            {branches.map((branch) => (
+                                                <option key={branch._id} value={branch._id}>
+                                                    {branch.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="signupmail-form-component">
+                                        <label className="atlas-font" htmlFor="rollNo">Roll Number</label> <br />
+                                        <input
+                                            value={rollNo}
+                                            onChange={(e) => setRollNo(e.target.value)}
+                                            className="atlas-input"
+                                            type="text"
+                                            id="rollNo"
+                                            name="rollNo"
+                                            required
+                                            placeholder="Enter your roll number" 
+                                        />
+                                    </div>
+
+                                    <div className="signupmail-form-component">
+                                        <label className="atlas-font" htmlFor="email">College Email</label> <br />
+                                        <input
+                                            value={mail}
+                                            onChange={handleMailChange}
+                                            className="atlas-input"
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            required
+                                            placeholder="Enter your college email" 
+                                        />
+                                        {domainError && (
+                                            <div className="domain-error text-red-merry">
+                                                {domainError}
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
+                            )
                         )}
 
                         <div>
@@ -203,10 +390,14 @@ export default function SignupMail() {
                             <button
                                 className="atlas-btn"
                                 onClick={handleMailVerification}
-                                disabled={loading}
+                                disabled={loading && userType === 'institute'}
                             >
                                 Proceed and verify email
                             </button>
+                        </div>
+                        
+                        <div className="signup-link">
+                            Already have an account? <a href="/login" className="text-red-merry">Login here</a>
                         </div>
                     </form>
                 </div>
